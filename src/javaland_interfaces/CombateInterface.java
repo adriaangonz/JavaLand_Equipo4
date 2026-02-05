@@ -9,5 +9,10 @@ package javaland_interfaces;
  * @author cu3nt
  */
 public interface CombateInterface {
-    
+
+    public void iniciarCombate(Valiente valiente, Monstruo monstruo);
+
+    public void turno(Atacante atacante, Defensor defensor);
+
+    public void combateTerminado(Valiente valiente, Monstruo monstruo);
 }
