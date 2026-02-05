@@ -8,6 +8,6 @@ package javaland_interfaces;
  *
  * @author cu3nt
  */
-public interface objeto {
+public interface PersonajesInterface {
     
 }
