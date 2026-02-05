@@ -9,5 +9,7 @@ package javaland_interfaces;
  * @author cu3nt
  */
 public interface MapaInterface {
-    
+    public void casillasVisibles(int posicion[][]);
+    public boolean hayMonstruo(int posicion[][]);
+    public boolean hayObjeto(int posicion[][]);
 }
