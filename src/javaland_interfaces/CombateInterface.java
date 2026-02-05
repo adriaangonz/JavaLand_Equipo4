@@ -12,7 +12,7 @@ public interface CombateInterface {
 
     public void iniciarCombate(Valiente valiente, Monstruo monstruo);
 
-    public void turno(Atacante atacante, Defensor defensor);
+    public<T> void turno(T atacante, T defensor);
 
     public void combateTerminado(Valiente valiente, Monstruo monstruo);
 }
