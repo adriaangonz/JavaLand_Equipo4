@@ -1,0 +1,8 @@
+# NetBeans - Archivos privados y de usuario
+nbproject/private/
+user.properties
+
+# Archivos de compilación
+build/
+dist/
+nbproject/incremental/
