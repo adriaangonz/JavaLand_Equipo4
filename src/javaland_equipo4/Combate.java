@@ -36,11 +36,10 @@ public class Combate implements CombateInterface {
     @Override
     public <T> void turno(T atacante, T defensor) {
         System.out.println("El atacante intenta el ataque: ");
-        atacante.atacar();
         int Variable_aleatoria = (int) (Math.random() * 101);
         if (Variable_aleatoria < 4 * atacante.getHabilidad() - defensor.getDefensa()) {
             System.out.println("Atace realizado con exito");
-            defensor.recibirDaño(atacante.getFuerza());
+            defensor.recibirDaño(atacante.atacar(defensor));
         } else {
             System.out.println("Ataque realizado sin exito");
         }
