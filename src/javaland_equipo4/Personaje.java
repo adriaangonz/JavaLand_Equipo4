@@ -29,6 +29,56 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
         this.nivel = nivel;
     }
 
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getFuerza() {
+        return fuerza;
+    }
+
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+    }
+
+    public int getHabilidad() {
+        return habilidad;
+    }
+
+    public void setHabilidad(int habilidad) {
+        this.habilidad = habilidad;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+    
+    
+
     @Override
     public <T> double atacar(T Personaje) {
         int danio = 0;
