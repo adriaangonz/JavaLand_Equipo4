@@ -9,5 +9,8 @@ package javaland_interfaces;
  * @author cu3nt
  */
 public interface JuegoInterface {
-    
+    public void iniciarJuego();
+    public void creacionOEleccionValiente();
+    public void explorarMapa();
+    public void mostrarEstadoJuego();
 }
