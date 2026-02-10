@@ -1,5 +1,5 @@
 
-package javaland_clases;
+package javaland_equipo4;
 
 /**
  *
