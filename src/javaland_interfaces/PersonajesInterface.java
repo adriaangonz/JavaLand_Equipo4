@@ -1,6 +1,8 @@
 
 package javaland_interfaces;
 
+import javaland_equipo4.Monstruo;
+
 /**
  *
  * @author cu3nt
@@ -23,7 +25,7 @@ public interface PersonajesInterface {
     
     public void generarMonstruos(int nivel);
     
-    public void eleminarMonstruo(Monstruo m);
+    public void eliminarMonstruo(Monstruo m);
     
     
    

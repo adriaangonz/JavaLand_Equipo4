@@ -1,14 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package javaland_equipo4;
+
+import javaland_interfaces.PersonajesInterface;
 
 /**
  *
  * @author DAM106
  */
-public class Personaje {
+public class Personaje implements PersonajesInterface { //Clase padre de ella heredan Valiente y Monstruo
     
     private int vida;
     private int fuerza;
@@ -29,6 +28,45 @@ public class Personaje {
         this.velocidad = velocidad;
         this.nivel = nivel;
     }
-    
+
+    @Override
+    public <T> double atacar(T Personaje) {
+        int danio = 0;
+        return danio;
+    }
+
+    @Override
+    public double recibirDaño(int cantidad) {
+        
+        int danio = 0;
+        return danio;
+    }
+
+    @Override
+    public void usarHabilidadEspecial(Monstruo m) {
+        
+    }
+
+    @Override
+    public void subirNivel() {
+        
+    }
+
+    @Override
+    public void crearValientesIniciales(int fuerza, int velocidad, String habilidad, int defensa) {
+        
+    }
+
+    @Override
+    public void generarMonstruos(int nivel) {
+        
+    }
+
+    @Override
+    public void eliminarMonstruo(Monstruo m) {
+        
+    }
+
+
     
 }
