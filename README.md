@@ -9,9 +9,3 @@ Este trabajo es un RPG por turnos donde los Valientes de JavaLand deben enfrenta
 * Ciro
 * Diego Berdial
 * Miguel Meñaca
-
-## Estructura del Proyecto
-El proyecto está organizado en tres paquetes:
-1. **interfaces**
-2. **clases**
-3. **main**
