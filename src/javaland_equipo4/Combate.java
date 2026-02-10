@@ -4,7 +4,7 @@
  */
 package javaland_equipo4;
 
-import javaland_interfaces.CombateInterface;
+import javaland_interfaces.*;
 
 /**
  *
@@ -13,7 +13,7 @@ import javaland_interfaces.CombateInterface;
 public class Combate implements CombateInterface {
 
     @Override
-    public void iniciarCombate(Object valiente, Object monstruo) {
+    public void iniciarCombate(Valiente valiente, Monstruo monstruo) {
         do {
             double Iniciativa_Valiente = valiente.getVelocidad()*
         } while (valiente.getVida()>0); 
