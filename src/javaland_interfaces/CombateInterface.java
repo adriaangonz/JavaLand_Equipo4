@@ -4,6 +4,8 @@
  */
 package javaland_interfaces;
 
+import javaland_equipo4.*;
+
 /**
  *
  * @author cu3nt

@@ -18,12 +18,12 @@ public class Combate implements CombateInterface {
             double Iniciativa_Valiente = valiente.getVelocidad() * (0.75 + Math.random() * 0.25);
             double Iniciativa_Monstruo = monstruo.getVelocidad() * (0.75 + Math.random() * 0.25);
 
-            if (Iniciativa_Valiente >= Iniciativa_Monstruo) { //Si la iniciativa de valiente es mayor o igual a la del monstruo, valiente ataca
+            if (Iniciativa_Valiente >= Iniciativa_Monstruo) { //si la iniciativa de valiente es mayor o igual a la del monstruo, valiente ataca
                 turno(valiente, monstruo);
                 if (monstruo.getVida() > 0) {
                     turno(monstruo, valiente); //si el monstruo sigue vivo, contraataca
                 }
-            } else { //En caso contrario, el monstruo ataca primero
+            } else { //en caso contrario, el monstruo ataca primero
                 turno(monstruo, valiente);
                 if (valiente.getVida() > 0) {
                     turno(valiente, monstruo); //si el valiente sigue vivo, contraataca
@@ -35,12 +35,28 @@ public class Combate implements CombateInterface {
 
     @Override
     public <T> void turno(T atacante, T defensor) {
-
+        System.out.println("El atacante intenta el ataque: ");
+        atacante.atacar();
+        int Variable_aleatoria = (int) (Math.random() * 101);
+        if (Variable_aleatoria < 4 * atacante.getHabilidad() - defensor.getDefensa()) {
+            System.out.println("Atace realizado con exito");
+            defensor.recibirDaño(atacante.getFuerza());
+        } else {
+            System.out.println("Ataque realizado sin exito");
+        }
     }
 
     @Override
-    public void combateTerminado(Object valiente, Object monstruo) {
-
+    public void combateTerminado(Valiente valiente, Monstruo monstruo) {
+        if (valiente.getVida() > 0) {
+            valiente.setVida(valiente.getVida() + 10);
+            valiente.setFuerza(valiente.getFuerza() + 1);
+            valiente.setDefensa(valiente.getDefensa() + 1);
+            valiente.setHabilidad(valiente.getHabilidad() + 1);
+            valiente.setVelocidad(valiente.getVelocidad() + 1);
+            System.out.println("El Valiente ha ganado, recibe...");
+        } else {
+            System.out.println("El monstruo ha ganado...");
+        }
     }
-
 }
