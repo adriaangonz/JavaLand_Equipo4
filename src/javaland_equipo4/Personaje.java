@@ -9,6 +9,7 @@ import javaland_interfaces.PersonajesInterface;
  */
 public class Personaje implements PersonajesInterface { //Clase padre de ella heredan Valiente y Monstruo
     
+    private String nombre;
     private int vida;
     private int fuerza;
     private int defensa;
@@ -20,7 +21,9 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
     
     public Personaje(){}
 
-    public Personaje(int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
+    public Personaje(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
+        
+        this.nombre = nombre;
         this.vida = vida;
         this.fuerza = fuerza;
         this.defensa = defensa;
@@ -29,6 +32,10 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
         this.nivel = nivel;
     }
 
+    public String getNombre(){
+        return nombre;
+    }
+    
     public int getVida() {
         return vida;
     }
@@ -77,6 +84,9 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
         this.nivel = nivel;
     }
     
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
     
 
     @Override
