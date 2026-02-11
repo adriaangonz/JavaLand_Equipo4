@@ -12,7 +12,7 @@ public interface PersonajesInterface {
     //Monstruos y valientes
     public<T> double atacar(T Personaje);
     
-    public double recibirDaño(int cantidad);
+    public void recibirDaño(int cantidad);
     
     //Valientes
     public void usarHabilidadEspecial(Monstruo m);
