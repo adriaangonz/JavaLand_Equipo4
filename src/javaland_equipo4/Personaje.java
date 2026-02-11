@@ -96,10 +96,8 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
     }
 
     @Override
-    public double recibirDaño(int cantidad) {
-        
-        int danio = 0;
-        return danio;
+    public void recibirDaño(int cantidad) {
+
     }
 
     @Override
