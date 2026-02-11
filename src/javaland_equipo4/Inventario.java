@@ -4,49 +4,38 @@
  */
 package javaland_equipo4;
 
-import java.util.ArrayList;
+import javaland_interfaces.InventarioInterface;
 
 /**
  *
  * @author diego
  */
-public class Inventario {
-    
-    private ArrayList<Objeto> objetos;
-    public Inventario() {
-        objetos = new ArrayList<>();
-    }
-    public void añadirObjeto(Objeto objeto) {
-        objetos.add(objeto);
-    }
+public class Inventario implements InventarioInterface {
 
-    // Usar un objeto del inventario
-    public void usarObjeto(int posicion, Valiente valiente) {
+    Objeto[] inventario = new Objeto[4];
 
-        if (posicion < 0 || posicion >= objetos.size()) {
-            System.out.println("Posición inválida.");
-            return;
+    @Override
+    public void agregarObjeto(Objeto obj) {
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] == null) {
+                inventario[i] = obj;
+                System.out.println("Objeto agregado");
+            }
         }
-
-        Objeto objeto = objetos.get(posicion);
-
-        // El objeto aplica su efecto
-        objeto.equipar(valiente);
-
-        // Se elimina del inventario (consumido/equipado)
-        objetos.remove(posicion);
     }
 
-    // Mostrar inventario
+    @Override
+    public void usarObjeto(String nombre, Valiente valiente) {
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i].equals(nombre)) {
+                
+            }
+        }
+    }
+
+    @Override
     public void mostrarInventario() {
 
-        if (objetos.isEmpty()) {
-            System.out.println("Inventario vacío.");
-            return;
-        }
-
-        for (int i = 0; i < objetos.size(); i++) {
-            System.out.println(i + " - " + objetos.get(i));
-        }
     }
+
 }

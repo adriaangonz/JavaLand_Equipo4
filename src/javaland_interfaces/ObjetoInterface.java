@@ -13,12 +13,4 @@ public interface ObjetoInterface {
     
     public void equipar(Valiente valiente);
     
-    public void agregar(Objeto obj);
-    
-    public void usarObjeto(String nombre, Valiente valiente);
-    
-    public void mostrarInventario();
-    
-    
-    
 }
