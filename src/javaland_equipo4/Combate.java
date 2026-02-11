@@ -39,7 +39,7 @@ public class Combate implements CombateInterface {
         int Variable_aleatoria = (int) (Math.random() * 101);
         if (Variable_aleatoria < 4 * atacante.getHabilidad() - defensor.getDefensa()) {
             System.out.println("Atace realizado con exito");
-            defensor.recibirDaño(atacante.atacar(defensor));
+            atacante.atacar(defensor);
         } else {
             System.out.println("Ataque realizado sin exito");
         }
