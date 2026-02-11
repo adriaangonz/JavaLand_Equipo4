@@ -15,13 +15,16 @@ import javaland_interfaces.JuegoInterface;
 public class Juego implements JuegoInterface {
     private Mapa mapa;
     private Valiente valiente;
-
+    private static int posicionX;
+    private static int posicionY;
     @Override
     public void iniciarJuego() {
         System.out.println("EL COMPILADOR OSCURO");
+        this.posicionX=1;
+        this.posicionY=1;
         this.valiente=creacionOEleccionValiente();
         if(valiente!=null){
-            valiente.setPosicion= [1][1];
+            valiente.setPosicion= [posicionY][posicionX];
             this.mapa= new Mapa(20,10);
             mostrarMenuPrincipal();
         }
@@ -99,10 +102,11 @@ public class Juego implements JuegoInterface {
     private void mostrarMapa(){
         for (int i = 0; i < this.mapa.getAlto(); i++) {
             for (int j = 0; j < this.mapa.getAncho(); j++) {
-                System.out.print(this.mapa[i][j]);
+                System.out.print(this.mapa.getCasillas()[i][j]);
             }
             System.out.println();
         }
+        mapa.mostrarCasillasAdyacentes(this.valiente.getPosicion());
     }
     @Override
     public void explorarMapa(){
@@ -111,17 +115,86 @@ public class Juego implements JuegoInterface {
         String opcion="";
             System.out.println("¿Hacia que direccion quieres moverte?: W/A/S/D");
             opcion=teclado.next().substring(0,1);
-            switch(opcion){
-            case "w"->this.valiente.getPosicionY+1;
-            case "a"->this.valiente.getPosicionX-1;
-            case "s"->this.valiente.getPosicionY-1;
-            case "d"->this.valiente.getPosicionX+1;
+            switch(opcion.toLowerCase()){
+            case "w"->{
+                if(movimientoValido(1,1)){
+                    mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionY--;
+                    mapa.setCasilla(posicionY,posicionX,"[*]");
+                    this.valiente.setPosicion[posicionY][posicionX];
+                    
+                }
+                else{
+                    System.out.println("no se puede mover");
+                }
+               
+            }
+            case "a"->{
+                if(movimientoValido(-1,-1)){
+                    mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionX--;
+                    mapa.setCasilla(posicionY,posicionX,"[*]");
+                    this.valiente.setPosicion[posicionY][posicionX];
+                }
+                else{
+                    System.out.println("no se puede mover");
+                }
+               
+            }
+            case "s"->{
+                if(movimientoValido(1,-1)){
+                    mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionY++;
+                    mapa.setCasilla(posicionY,posicionX,"[*]");
+                    this.valiente.setPosicion[posicionY][posicionX];
+                }
+                else{
+                    System.out.println("no se puede mover");
+                }
+                
+            }
+            case "d"->{
+                if(movimientoValido(-1,1)){
+                    mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionX++;
+                    mapa.setCasilla(posicionY,posicionX,"[*]");
+                    this.valiente.setPosicion[posicionY][posicionX];
+                }
+                else{
+                    System.out.println("no se puede mover");
+                }
+            }
             default->{
                 System.out.println("eso no es una opcion");
             }
             
         }
         
+    }
+    private boolean movimientoValido(int coordenada,int direccion){
+        boolean validacion;
+        if(coordenada==1){
+            //Y-1
+            if(direccion==1){
+                validacion = posicionY-1>=0;
+            }
+            //Y+1
+            else{
+                validacion= posicionY<mapa.getAlto()-1;
+            }
+        }
+        else{
+            //X+1
+            if(direccion==1){
+                validacion= posicionX<mapa.getAncho()-1;
+                
+            }
+            //X-1
+            else{
+                validacion = posicionX-1>=0;
+            }
+        }
+        return validacion;
     }
     
 }
