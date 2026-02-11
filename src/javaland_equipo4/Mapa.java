@@ -13,27 +13,53 @@ import javaland_interfaces.MapaInterface;
  */
 public class Mapa implements MapaInterface {
     Scanner teclado = new Scanner(System.in);
-    protected int[][] casillas;
+    protected String[][] casillas;
+    private int ancho;
+    private int alto;
     public Mapa(){
         System.out.println("Introduce el alto del mapa");
-        int x = teclado.nextInt();
+        int alto = teclado.nextInt();
         System.out.println("Introduce el ancho del mapa");
-        int y = teclado.nextInt();
-        this.casillas= new int[x][y];
+        int ancho = teclado.nextInt();
+        this.casillas= new String[alto][ancho];
+        for (int i = 0; i < this.casillas.length;i++) {
+            for (int j = 0; j < this.casillas[i].length; j++) {
+                   
+                System.out.println("[x]");
+            }
+        }
+        this.casillas[1][1]="[*]";
     }
 
-    @Override
-    public void casillasVisibles(int[][] posicion) {
+    public Mapa(int ancho, int alto) {
+        this.ancho = ancho;
+        this.alto = alto;
+        this.casillas= new String[alto][ancho];
+        for (int i = 0; i < this.casillas.length;i++) {
+            for (int j = 0; j < this.casillas[i].length; j++) {
+                   
+                System.out.println("[x]");
+            }
+        }
+        this.casillas[1][1]="[*]";
+    }
+    
+
+        @Override
+        public void mostrarCasillasAdyacentes(int[][] posicion) {
+
+        }
+        public int getAncho() {
+        return ancho;
     }
 
-    @Override
-    public boolean hayMonstruo(int[][] posicion) {
-        
+    public int getAlto() {
+        return alto;
     }
 
-    @Override
-    public boolean hayObjeto(int[][] posicion) {
-        
     }
+
+    
+    
     
 }

@@ -9,5 +9,7 @@ package javaland_interfaces;
  * @author cu3nt
  */
 public interface GestoresInterface {
-    
+    public static<T> T crearValientesIniciales(){
+        return null;
+    };
 }
