@@ -4,6 +4,7 @@
  */
 package javaland_equipo4;
 
+import java.util.Random;
 import java.util.Scanner;
 import javaland_interfaces.MapaInterface;
 
@@ -12,6 +13,7 @@ import javaland_interfaces.MapaInterface;
  * @author cococ
  */
 public class Mapa implements MapaInterface {
+    Random r;
     Scanner teclado = new Scanner(System.in);
     protected String[][] casillas;
     private int ancho;
@@ -25,20 +27,30 @@ public class Mapa implements MapaInterface {
         for (int i = 0; i < this.casillas.length;i++) {
             for (int j = 0; j < this.casillas[i].length; j++) {
                    
-                System.out.println("[x]");
+                System.out.println("[ ]");
             }
         }
         this.casillas[1][1]="[*]";
     }
 
     public Mapa(int ancho, int alto) {
+        int monstruos=5;
         this.ancho = ancho;
         this.alto = alto;
         this.casillas= new String[alto][ancho];
         for (int i = 0; i < this.casillas.length;i++) {
             for (int j = 0; j < this.casillas[i].length; j++) {
-                   
-                System.out.println("[x]");
+                if(r.nextInt(3)+1==1){
+                    System.out.println("[?]");
+                }
+                else if(r.nextInt(3)+1==2){
+                    System.out.println("[!]");
+                }
+                else{
+                    System.out.println("[ ]");
+                }
+                
+                
             }
         }
         this.casillas[1][1]="[*]";
@@ -57,9 +69,22 @@ public class Mapa implements MapaInterface {
         return alto;
     }
 
+    public String[][] getCasillas() {
+        return casillas;
     }
+
+    public void setCasilla(int Y,int X,String casilla) {
+        
+        this.casillas[Y][X] = casilla;
+    }
+    
+    
+
+    }
+
+
 
     
     
     
-}
+
