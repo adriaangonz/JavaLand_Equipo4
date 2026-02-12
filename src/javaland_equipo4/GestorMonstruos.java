@@ -8,10 +8,14 @@ package javaland_equipo4;
  *
  * @author DAM124
  */
-public class GestorMonstruos {
+import javaland_interfaces.GestoresInterface;
+
+
+public class GestorMonstruos implements GestoresInterface {
 
     private static int contadorMonstruos = 0;
 
+    @Override
     public Monstruo generarMonstruos(int nivel) {
         Monstruo m = null;
         if (contadorMonstruos > 10) {
@@ -24,15 +28,20 @@ public class GestorMonstruos {
         return m;
     }
 
+    @Override
     public void eliminarMonstruos(Monstruo m, Valiente v) {
 
         System.out.println("Monstruo eliminado");
         double dropExperiencia = m.getNivel() * 1.5;
 
-        v.setExperiencia(v.getExperiencia()+ dropExperiencia);
+        v.setExperiencia(v.getExperiencia() + dropExperiencia);
     }
 
     public static int getContadorMonstruos() {
         return contadorMonstruos;
+    }
+
+    @Override
+    public void crearValientesIniciales() {
     }
 }
