@@ -4,11 +4,11 @@ package javaland_equipo4;
  *
  * @author saul1
  */
-public class Plantas extends Objeto {
+public class Planta extends Objeto {
 
     private int recupera;
 
-    public Plantas(String nombre, String tipo, int recupera) {
+    public Planta(String nombre, String tipo, int recupera) {
         super(nombre, tipo);
         this.recupera = recupera;
     }
