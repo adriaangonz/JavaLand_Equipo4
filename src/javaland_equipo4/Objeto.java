@@ -37,6 +37,7 @@ public abstract class Objeto implements ObjetoInterface {
         this.tipo = tipo;
     }
 
+<<<<<<< Updated upstream
     public String getNombre() {
         return nombre;
     }
@@ -53,4 +54,6 @@ public abstract class Objeto implements ObjetoInterface {
         this.tipo = tipo;
     }
 
+=======
+>>>>>>> Stashed changes
 }
