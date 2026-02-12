@@ -14,8 +14,8 @@ public class Monstruo extends Personaje {
 
     private static final Random random = new Random();
 
-    public Monstruo(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel, double experiencia) {
-        super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel, experiencia);
+    public Monstruo(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
+        super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
     }
 
     public Monstruo(int nivel) {
