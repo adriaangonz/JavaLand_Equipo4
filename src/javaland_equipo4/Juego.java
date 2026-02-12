@@ -4,6 +4,7 @@
  */
 package javaland_equipo4;
 
+import java.util.Random;
 import java.util.Scanner;
 import javaland_interfaces.GestoresInterface;
 import javaland_interfaces.JuegoInterface;
@@ -18,11 +19,14 @@ public class Juego implements JuegoInterface,MapaInterface {
     private Valiente valiente;
     private static int posicionX;
     private static int posicionY;
+    private Random r;
+    private GestorMonstruos g1;
     @Override
     public void iniciarJuego() {
         System.out.println("EL COMPILADOR OSCURO");
         this.posicionX=1;
         this.posicionY=1;
+        g1=new GestorMonstruos();
         this.valiente=creacionOEleccionValiente();
         if(valiente!=null){
             this.mapa= new Mapa(20,10);
@@ -157,6 +161,7 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "w"->{
                 if(movimientoValido(1,1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionY--;
                     
                 }
                 else{
@@ -167,6 +172,7 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "a"->{
                 if(movimientoValido(-1,-1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionX--;
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -176,6 +182,7 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "s"->{
                 if(movimientoValido(1,-1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
+                    posicionY++;
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -186,7 +193,6 @@ public class Juego implements JuegoInterface,MapaInterface {
                 if(movimientoValido(-1,1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
                     posicionX++;
-                    mapa.setCasilla(posicionY,posicionX,"[*]");
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -199,7 +205,13 @@ public class Juego implements JuegoInterface,MapaInterface {
             
             
         }
-    }
+            if(mapa.getCasillas()[posicionX][posicionY].equals("[?]")){
+                
+            }
+            if(mapa.getCasillas()[posicionX][posicionY].equals("[!]")){
+                g1.generarMonstruos(r.nextInt((valiente.getNivel() + 5) - Math.max(1, valiente.getNivel() - 5) + 1) + Math.max(1, valiente.getNivel() - 5));
+
+            }
         
     }
     

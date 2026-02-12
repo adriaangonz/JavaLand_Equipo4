@@ -44,6 +44,7 @@ public class Mapa{
                 int random =r.nextInt(3)+1;
                 if(random==1 && objetos>0){
                     System.out.println("[?]");
+                    
                 }
                 else if(random==2 && monstruos>0){
                     System.out.println("[!]");
