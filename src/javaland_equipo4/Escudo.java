@@ -8,6 +8,11 @@ public class Escudo extends Objeto {
 
     private int defensa;
 
+    public Escudo(String nombre, String tipo, int defensa) {
+        super(nombre, tipo);
+        this.defensa = defensa;
+    }
+
     //Getters y setters
     public int getDefensa() {
         return defensa;
@@ -19,9 +24,7 @@ public class Escudo extends Objeto {
 
     @Override
     public void equipar(Valiente valiente) {
-
         valiente.setEscudo(this);
-
     }
 
 }
