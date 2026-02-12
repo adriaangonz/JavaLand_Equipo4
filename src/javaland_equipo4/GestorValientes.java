@@ -31,8 +31,8 @@ public class GestorValientes implements GestoresInterface {
     }
 
     @Override
-    public void eliminarMonstruos(Monstruo m) {
-
+    public void eliminarMonstruos(Monstruo m , Valiente v) {
+        
     }
 
 
