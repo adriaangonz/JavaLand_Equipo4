@@ -24,8 +24,11 @@ public class GestorMonstruos {
         return m;
     }
 
-    public void eliminarMonstruos(Monstruo m) {
-        System.out.println("Monstruo eliminado");
+    public void eliminarMonstruos(Monstruo m, Valiente v) {
+
+        double dropExperiencia = m.getNivel() * 1.5;
+
+        Valiente.setExperiencia(dropExperiencia);
     }
 
     public static int getContadorMonstruos() {
