@@ -25,7 +25,6 @@ public class Juego implements JuegoInterface,MapaInterface {
         this.posicionY=1;
         this.valiente=creacionOEleccionValiente();
         if(valiente!=null){
-            valiente.setPosicion(new int[posicionY][posicionX]);
             this.mapa= new Mapa(20,10);
             mostrarMenuPrincipal();
         }
@@ -97,7 +96,7 @@ public class Juego implements JuegoInterface,MapaInterface {
     private void equiparObjeto(){
         Scanner teclado = new Scanner(System.in);
         Inventario.mostrarInventario();
-        int posicion= teclado.nextInt();
+        String objeto= teclado.nextLine();
         Inventario.usarObjeto(posicion,this.valiente);
     }
     private void mostrarMapa(){
@@ -158,9 +157,6 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "w"->{
                 if(movimientoValido(1,1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
-                    posicionY--;
-                    mapa.setCasilla(posicionY,posicionX,"[*]");
-                    this.valiente.setPosicion(new int[posicionY][posicionX]);
                     
                 }
                 else{
@@ -171,9 +167,6 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "a"->{
                 if(movimientoValido(-1,-1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
-                    posicionX--;
-                    mapa.setCasilla(posicionY,posicionX,"[*]");
-                    this.valiente.setPosicion[posicionY][posicionX];
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -183,9 +176,6 @@ public class Juego implements JuegoInterface,MapaInterface {
             case "s"->{
                 if(movimientoValido(1,-1)){
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
-                    posicionY++;
-                    mapa.setCasilla(posicionY,posicionX,"[*]");
-                    this.valiente.setPosicion[posicionY][posicionX];
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -197,7 +187,6 @@ public class Juego implements JuegoInterface,MapaInterface {
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
                     posicionX++;
                     mapa.setCasilla(posicionY,posicionX,"[*]");
-                    this.valiente.setPosicion[posicionY][posicionX];
                 }
                 else{
                     System.out.println("no se puede mover");
@@ -206,6 +195,8 @@ public class Juego implements JuegoInterface,MapaInterface {
             default->{
                 System.out.println("eso no es una opcion");
             }
+            
+            
             
         }
     }
