@@ -4,12 +4,20 @@
  */
 package javaland_interfaces;
 
+import javaland_equipo4.Monstruo;
+
 /**
  *
  * @author cu3nt
  */
 public interface GestoresInterface {
-    public static<T> T crearValientesIniciales(){
-        return null;
-    };
+
+    public void crearValientesIniciales();
+    
+    public void generarMonstruos();
+    
+    public void eliminarMonstruo(Monstruo m);
+    
+    
+    
 }
