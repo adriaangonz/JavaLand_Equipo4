@@ -1,0 +1,47 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package javaland_equipo4;
+
+/**
+ *
+ * @author DAM124
+ */
+import javaland_interfaces.GestoresInterface;
+
+
+public class GestorMonstruos implements GestoresInterface {
+
+    private static int contadorMonstruos = 0;
+
+    @Override
+    public Monstruo generarMonstruos(int nivel) {
+        Monstruo m = null;
+        if (contadorMonstruos > 10) {
+            System.out.println("Máximo de monstruos generados");
+        } else {
+            contadorMonstruos++;
+
+            m = new Monstruo(nivel);
+        }
+        return m;
+    }
+
+    @Override
+    public void eliminarMonstruos(Monstruo m, Valiente v) {
+
+        System.out.println("Monstruo eliminado");
+        double dropExperiencia = m.getNivel() * 1.5;
+
+        v.setExperiencia(v.getExperiencia() + dropExperiencia);
+    }
+
+    public static int getContadorMonstruos() {
+        return contadorMonstruos;
+    }
+
+    @Override
+    public void crearValientesIniciales() {
+    }
+}
