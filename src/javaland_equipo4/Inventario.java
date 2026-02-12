@@ -28,7 +28,18 @@ public class Inventario implements InventarioInterface {
     public void usarObjeto(String nombre, Valiente valiente) {
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i].equals(nombre)) {
-                
+                switch (inventario[i].getTipo()) {
+                    case "Arma":
+                        valiente.setArma((Arma) inventario[i]);
+                        inventario[i]
+                        break;
+                    case "Escudo":
+
+                        break;
+                    case "Planta":
+
+                        break;
+                }
             }
         }
     }

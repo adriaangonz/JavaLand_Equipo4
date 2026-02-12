@@ -9,6 +9,11 @@ public class Arma extends Objeto {
 
     private int ataque;
 
+    public Arma(String nombre, String tipo, int ataque) {
+        super(nombre, tipo);
+        this.ataque = ataque;
+    }
+
     //Getters y setters
     public int getAtaque() {
         return ataque;
@@ -20,9 +25,7 @@ public class Arma extends Objeto {
 
     @Override
     public void equipar(Valiente valiente) {
-
         valiente.setArma(this);
-
     }
 
 }
