@@ -14,8 +14,8 @@ public class Monstruo extends Personaje {
 
     private static final Random random = new Random();
 
-    public Monstruo(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
-        super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
+    public Monstruo(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel, double experiencia) {
+        super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel, experiencia);
     }
 
     public Monstruo(int nivel) {
@@ -26,6 +26,7 @@ public class Monstruo extends Personaje {
                 random.nextInt(20) + 1, // defensa: 1 a 20
                 random.nextInt(20) + 1, // habilidad: 1 a 20
                 random.nextInt(20) + 1, // velocidad: 1 a 20
+                random.nextInt(20) + 1, 
                 nivel
         );
     }
