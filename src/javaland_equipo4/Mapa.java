@@ -12,7 +12,7 @@ import javaland_interfaces.MapaInterface;
  *
  * @author cococ
  */
-public class Mapa implements MapaInterface {
+public class Mapa{
     Random r;
     Scanner teclado = new Scanner(System.in);
     protected String[][] casillas;
@@ -35,15 +35,17 @@ public class Mapa implements MapaInterface {
 
     public Mapa(int ancho, int alto) {
         int monstruos=5;
+        int objetos=5;
         this.ancho = ancho;
         this.alto = alto;
         this.casillas= new String[alto][ancho];
         for (int i = 0; i < this.casillas.length;i++) {
             for (int j = 0; j < this.casillas[i].length; j++) {
-                if(r.nextInt(3)+1==1){
+                int random =r.nextInt(3)+1;
+                if(random==1 && objetos>0){
                     System.out.println("[?]");
                 }
-                else if(r.nextInt(3)+1==2){
+                else if(random==2 && monstruos>0){
                     System.out.println("[!]");
                 }
                 else{
@@ -55,12 +57,6 @@ public class Mapa implements MapaInterface {
         }
         this.casillas[1][1]="[*]";
     }
-    
-
-        @Override
-        public void mostrarCasillasAdyacentes(int[][] posicion) {
-
-        }
         public int getAncho() {
         return ancho;
     }

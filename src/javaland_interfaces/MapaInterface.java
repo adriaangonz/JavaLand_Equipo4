@@ -10,6 +10,6 @@ package javaland_interfaces;
  */
 public interface MapaInterface {
     
-    public void mostrarCasillasAdyacentes(int posicion[][]);
+    public boolean casillasAdyacentes(int fila,int columna);
     
 }

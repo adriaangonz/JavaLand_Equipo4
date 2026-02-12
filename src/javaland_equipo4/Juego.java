@@ -7,12 +7,13 @@ package javaland_equipo4;
 import java.util.Scanner;
 import javaland_interfaces.GestoresInterface;
 import javaland_interfaces.JuegoInterface;
+import javaland_interfaces.MapaInterface;
 
 /**
  *
  * @author cococ
  */
-public class Juego implements JuegoInterface {
+public class Juego implements JuegoInterface,MapaInterface {
     private Mapa mapa;
     private Valiente valiente;
     private static int posicionX;
@@ -24,7 +25,7 @@ public class Juego implements JuegoInterface {
         this.posicionY=1;
         this.valiente=creacionOEleccionValiente();
         if(valiente!=null){
-            valiente.setPosicion= [posicionY][posicionX];
+            valiente.setPosicion(new int[posicionY][posicionX]);
             this.mapa= new Mapa(20,10);
             mostrarMenuPrincipal();
         }
@@ -102,14 +103,52 @@ public class Juego implements JuegoInterface {
     private void mostrarMapa(){
         for (int i = 0; i < this.mapa.getAlto(); i++) {
             for (int j = 0; j < this.mapa.getAncho(); j++) {
-                System.out.print(this.mapa.getCasillas()[i][j]);
+                if(casillasAdyacentes(j,i)){
+                    System.out.print(this.mapa.getCasillas()[i][j]);
+                }
+                else{
+                    System.out.print("[x]");
+                }
+                
             }
             System.out.println();
-        }
-        mapa.mostrarCasillasAdyacentes(this.valiente.getPosicion());
     }
+    }
+        
+   
+    public boolean movimientoValido(int coordenada,int direccion){
+        boolean validacion;
+        if(coordenada==1){
+            //Y-1
+            if(direccion==1){
+                validacion = posicionY-1>=0;
+            }
+            //Y+1
+            else{
+                validacion= posicionY<mapa.getAlto()-1;
+            }
+        }
+        else{
+            //X+1
+            if(direccion==1){
+                validacion= posicionX<mapa.getAncho()-1;
+                
+            }
+            //X-1
+            else{
+                validacion = posicionX-1>=0;
+            }
+        }
+        return validacion;
+    }
+
     @Override
-    public void explorarMapa(){
+    public boolean casillasAdyacentes(int fila,int columna) {
+        return posicionY+1==fila || posicionY-1==fila || posicionX+1==columna || posicionX-1==columna;
+    }
+
+    @Override
+    public void explorarMapa() {
         mostrarMapa();
         Scanner teclado = new Scanner(System.in);
         String opcion="";
@@ -121,7 +160,7 @@ public class Juego implements JuegoInterface {
                     mapa.setCasilla(posicionY,posicionX,"[ ]");
                     posicionY--;
                     mapa.setCasilla(posicionY,posicionX,"[*]");
-                    this.valiente.setPosicion[posicionY][posicionX];
+                    this.valiente.setPosicion(new int[posicionY][posicionX]);
                     
                 }
                 else{
@@ -169,32 +208,11 @@ public class Juego implements JuegoInterface {
             }
             
         }
+    }
         
     }
-    private boolean movimientoValido(int coordenada,int direccion){
-        boolean validacion;
-        if(coordenada==1){
-            //Y-1
-            if(direccion==1){
-                validacion = posicionY-1>=0;
-            }
-            //Y+1
-            else{
-                validacion= posicionY<mapa.getAlto()-1;
-            }
-        }
-        else{
-            //X+1
-            if(direccion==1){
-                validacion= posicionX<mapa.getAncho()-1;
-                
-            }
-            //X-1
-            else{
-                validacion = posicionX-1>=0;
-            }
-        }
-        return validacion;
-    }
+    
+
+   
     
 }
