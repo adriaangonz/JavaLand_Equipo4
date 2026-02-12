@@ -41,6 +41,10 @@ public class Valiente extends Personaje {
     public void setExperiencia(double experiencia) {
         this.experiencia = experiencia;
     }
+
+    public double getExperiencia() {
+        return experiencia;
+    }
     
     
 
