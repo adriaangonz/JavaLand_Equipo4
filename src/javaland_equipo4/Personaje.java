@@ -15,11 +15,12 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
     private int habilidad;
     private int velocidad;
     private int nivel;
+    private double experiencia;
 
     public Personaje() {
     }
 
-    public Personaje(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
+    public Personaje(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel, double experiencia) {
 
         this.nombre = nombre;
         this.vida = vida;
@@ -28,6 +29,7 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
         this.habilidad = habilidad;
         this.velocidad = velocidad;
         this.nivel = nivel;
+        this.experiencia = experiencia;
     }
 
     public String getNombre() {
@@ -86,6 +88,17 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
         this.nombre = nombre;
     }
 
+    public double getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(double experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    
+    
+    
     @Override
     public <T> double atacar(T Personaje) {
         int danio = 0;

@@ -13,16 +13,14 @@ public class GestorMonstruos {
     private static int contadorMonstruos = 0;
 
     public Monstruo generarMonstruos(int nivel) {
-        
-        if (contadorMonstruos>10){
+        Monstruo m = null;
+        if (contadorMonstruos > 10) {
             System.out.println("Máximo de monstruos generados");
-            return null;
+        } else {
+            contadorMonstruos++;
+
+            m = new Monstruo(nivel);
         }
-        
-        contadorMonstruos++;
-
-        Monstruo m = new Monstruo(nivel);
-
         return m;
     }
 
