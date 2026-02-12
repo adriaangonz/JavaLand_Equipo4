@@ -5,7 +5,7 @@
 package javaland_interfaces;
 
 import javaland_equipo4.Monstruo;
-
+import javaland_equipo4.Valiente;
 /**
  *
  * @author cu3nt
@@ -14,9 +14,9 @@ public interface GestoresInterface {
 
     public void crearValientesIniciales();
     
-    public void generarMonstruos();
+    public Monstruo generarMonstruos(int nivel);
     
-    public void eliminarMonstruo(Monstruo m);
+    public void eliminarMonstruos(Monstruo m, Valiente v);
     
     
     

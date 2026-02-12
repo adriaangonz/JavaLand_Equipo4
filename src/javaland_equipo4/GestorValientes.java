@@ -26,12 +26,12 @@ public class GestorValientes implements GestoresInterface {
     }
 
     @Override
-    public void generarMonstruos() {
-
+    public Monstruo generarMonstruos(int nivel) {
+        return null;
     }
 
     @Override
-    public void eliminarMonstruo(Monstruo m) {
+    public void eliminarMonstruos(Monstruo m) {
 
     }
 

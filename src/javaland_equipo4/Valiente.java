@@ -1,6 +1,6 @@
 package javaland_equipo4;
 
-import javaland_interfaces.PersonajesInterface;
+
 import java.util.Scanner;
 
 /**
@@ -42,10 +42,10 @@ public class Valiente extends Personaje {
         this.experiencia = experiencia;
     }
 
+
     public double getExperiencia() {
         return experiencia;
     }
-    
     
 
     @Override
