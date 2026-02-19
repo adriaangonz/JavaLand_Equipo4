@@ -35,27 +35,32 @@ public class Combate implements CombateInterface {
 
     @Override
     public <T> void turno(T atacante, T defensor) {
-        System.out.println("El atacante intenta el ataque: ");
+        //convierto al atacante y al defensor en personakjes
+        Personaje Atacante = (Personaje) atacante;
+        Personaje Defensor = (Personaje) defensor;
+
+        System.out.println(Atacante.getNombre() + "intenta el ataque: ");
         int Variable_aleatoria = (int) (Math.random() * 101);
-        if (Variable_aleatoria < 4 * atacante.getHabilidad() - defensor.getDefensa()) {
-            System.out.println("Atace realizado con exito");
-            int cantidad = atacante.atacar(defensor);
-            defensor.recibirDaño(cantidad);
+
+        if (Variable_aleatoria < 4 * Atacante.getHabilidad() - Defensor.getDefensa()) {
+            System.out.println("ataque realizado con exito");
+            int cantidad = (int) Atacante.atacar(Defensor);
+            Defensor.recibirDaño(cantidad);
         } else {
-            System.out.println("Ataque realizado sin exito");
+            System.out.println("ataque fallido");
         }
     }
 
     @Override
     public void combateTerminado(Valiente valiente, Monstruo monstruo) {
-        if (valiente.getVida() > 0) {
+        if (valiente.getVida() > 0) { //si el valiente sobrevive aumenta estadisticas
             valiente.setVida(valiente.getVida() + 10);
             valiente.setFuerza(valiente.getFuerza() + 1);
             valiente.setDefensa(valiente.getDefensa() + 1);
             valiente.setHabilidad(valiente.getHabilidad() + 1);
             valiente.setVelocidad(valiente.getVelocidad() + 1);
             System.out.println("El Valiente ha ganado, recibe...");
-        } else {
+        } else { //si el valiente muere gana el monstruo
             System.out.println("El monstruo ha ganado...");
         }
     }
