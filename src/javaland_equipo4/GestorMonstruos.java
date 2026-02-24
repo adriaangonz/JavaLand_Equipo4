@@ -44,4 +44,6 @@ public class GestorMonstruos implements GestoresInterface {
     @Override
     public void crearValientesIniciales() {
     }
+
+
 }
