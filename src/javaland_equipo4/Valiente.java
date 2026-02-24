@@ -16,9 +16,31 @@ public class Valiente extends Personaje {
     private double experienciaNecesaria = 100;
     private int[][] posicion = {{1, 1}};
 
-    public Valiente(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel, double experiencia) {
+    
+    public Valiente(){
+        System.out.println(
+        "===== CREACIÓN DE PERSONAJE =====\n" +
+        "Puntos totales: 40\n" +
+        "Vida: 100  Ataque: 1  Defensa: 1  Habilidad: 1  Velocidad: 1\n" +
+        "Puntos restantes: 40");
+ 
+        System.out.println("Introduce un nombre para tu valiente: ");
+        String nombre = teclado.nextLine();
+        
+        System.out.println("Cuanta fuerza quieres bro? : ");
+        int fuerza = Integer.parseInt(teclado.nextLine());
+        System.out.println("Cuanta defensa quieres bro? : ");
+        int defensa = Integer.parseInt(teclado.nextLine());
+        System.out.println("Cuanta habilidad quieres bro?? : ");
+        int habilidad = Integer.parseInt(teclado.nextLine());
+        System.out.println("Cuanta Velocidad quieres bro? : ");
+        int velocidad = Integer.parseInt(teclado.nextLine());
+    
+    }
+    
+    public Valiente(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
-        this.experiencia = experiencia;
+        
     }
 
     //Getters y setters
