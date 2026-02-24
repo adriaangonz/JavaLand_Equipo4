@@ -36,5 +36,4 @@ public abstract class Objeto implements ObjetoInterface {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
 }

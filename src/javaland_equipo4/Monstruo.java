@@ -26,7 +26,6 @@ public class Monstruo extends Personaje {
                 random.nextInt(20) + 1, // defensa: 1 a 20
                 random.nextInt(20) + 1, // habilidad: 1 a 20
                 random.nextInt(20) + 1, // velocidad: 1 a 20
-                random.nextInt(20) + 1, 
                 nivel
         );
     }

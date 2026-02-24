@@ -20,6 +20,7 @@ public class Inventario implements InventarioInterface {
             if (inventario[i] == null) {
                 inventario[i] = obj;
                 System.out.println("Objeto agregado");
+                break;
             }
         }
     }
@@ -27,26 +28,34 @@ public class Inventario implements InventarioInterface {
     @Override
     public void usarObjeto(String nombre, Valiente valiente) {
         for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i].equals(nombre)) {
+            if (inventario[i] != null && inventario[i].getNombre().equals(nombre)) {
                 switch (inventario[i].getTipo()) {
                     case "Arma":
-                        valiente.setArma((Arma) inventario[i]);
-                        inventario[i]
+                        inventario[i].equipar(valiente);
+                        inventario[i] = null;
+                        System.out.println(nombre + " se ha añadido en la pos " + i);
                         break;
                     case "Escudo":
-
+                        inventario[i].equipar(valiente);
+                        inventario[i] = null;
+                        System.out.println(nombre + " se ha añadido en la pos " + i);
                         break;
                     case "Planta":
-
+                        inventario[i].equipar(valiente);
+                        System.out.println("Has usado " + nombre);
                         break;
                 }
+                break;
             }
         }
     }
 
     @Override
     public void mostrarInventario() {
-
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] != null) {
+                System.out.println(inventario[i].getNombre() + " - ");
+            }
+        }
     }
-
 }
