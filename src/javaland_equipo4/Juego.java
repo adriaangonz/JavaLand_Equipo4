@@ -14,29 +14,34 @@ import javaland_interfaces.MapaInterface;
  *
  * @author cococ
  */
-public class Juego implements JuegoInterface, MapaInterface {
+public class Juego implements JuegoInterface{
 
     private Mapa mapa;
     private Valiente valiente;
     private static int posicionX;
     private static int posicionY;
-    private Random r;
-    private GestorMonstruos g1;
-    private Inventario i1;
+    private final Random r= new Random();
+    boolean derrota;
+    boolean victoria;
 
     @Override
     public void iniciarJuego() {
         System.out.println("EL COMPILADOR OSCURO");
-        this.posicionX = 1;
-        this.posicionY = 1;
-        g1 = new GestorMonstruos();
-        i1= new Inventario();
+        this.posicionX = 0;
+        this.posicionY = 0;
+        this.victoria=false;
+        this.derrota=false;
         this.valiente = creacionOEleccionValiente();
         if (valiente != null) {
-            this.mapa = new Mapa(20, 10);
+            this.mapa = new Mapa(false);
             mostrarMenuPrincipal();
-        } else {
-            System.out.println("adios");
+            if(this.victoria){
+                System.out.println("Enhorabuena!");
+            }
+            if(this.derrota){
+                System.out.println("La proxima vez sera...");
+            }
+            
         }
 
     }
@@ -46,7 +51,6 @@ public class Juego implements JuegoInterface, MapaInterface {
         Scanner teclado = new Scanner(System.in);
         this.valiente = null;
         int opcion = 0;
-        do {
             System.out.println("1 - Crear Valiente");
             System.out.println("2 - Usar valientes Iniciales");
             System.out.println("3 - Salir");
@@ -56,18 +60,20 @@ public class Juego implements JuegoInterface, MapaInterface {
                 case 1 ->
                     this.valiente = new Valiente();
                 case 2 ->
-                    GestoresInterface.crearValientesIniciales();
+                    this.valiente = new Valiente();
                 default -> {
                     System.out.println("eso no es una opcion");
                 }
             }
-        } while (opcion != 3);
         return valiente;
 
     }
 
     @Override
     public void mostrarEstadoJuego() {
+        System.out.println(valiente);
+        System.out.println("Objetos restantes: "+mapa.getObjetos());
+        System.out.println("Monstruos restantes: "+mapa.getMonstruos());
 
     }
 
@@ -81,23 +87,28 @@ public class Juego implements JuegoInterface, MapaInterface {
             System.out.println("2 - Equipar Objeto");
             System.out.println("3 - Mostrar mapa");
             System.out.println("4 - Moverse");
-            System.out.println("5 - Salir del juego");
+            System.out.println("5 - Mostrar estado del juego");
+            System.out.println("6 - Salir del juego");
             System.out.print("Elige una opcion:");
             opcion = teclado.nextInt();
             switch (opcion) {
-                case 1 ->
-                    mostrarValiente();
-                case 2 ->
-                    equiparObjeto();
+                case 1 ->{
+                    System.out.println(valiente.toString());
+                }
+                case 2 ->{
+                    System.out.println("equipando objeto");
+                }
                 case 3 ->
                     mostrarMapa();
                 case 4 ->
                     explorarMapa();
+                case 5 ->
+                    mostrarEstadoJuego();
                 default -> {
                     System.out.println("eso no es una opcion");
                 }
             }
-        } while (opcion != 5);
+        } while (opcion != 6 && !victoria && !derrota);
 
     }
 
@@ -107,9 +118,9 @@ public class Juego implements JuegoInterface, MapaInterface {
 
     private void equiparObjeto() {
         Scanner teclado = new Scanner(System.in);
-        Inventario.mostrarInventario();
+        System.out.println("mostrando inventario");
         String objeto = teclado.nextLine();
-        Inventario.usarObjeto(posicion, this.valiente);
+        System.out.println("usando inventario");
     }
 
     private void mostrarMapa() {
@@ -131,27 +142,26 @@ public class Juego implements JuegoInterface, MapaInterface {
         if (coordenada == 1) {
             //Y-1
             if (direccion == 1) {
-                validacion = posicionY - 1 >= 0;
+                validacion = posicionX - 1 >= 0;
             } //Y+1
             else {
-                validacion = posicionY < mapa.getAlto() - 1;
+                validacion = posicionX < mapa.getAlto() - 1;
             }
         } else {
             //X+1
             if (direccion == 1) {
-                validacion = posicionX < mapa.getAncho() - 1;
+                validacion = posicionY < mapa.getAncho() - 1;
 
             } //X-1
             else {
-                validacion = posicionX - 1 >= 0;
+                validacion = posicionY - 1 >= 0;
             }
         }
         return validacion;
     }
-
-    @Override
+    
     public boolean casillasAdyacentes(int fila, int columna) {
-        return posicionY + 1 == fila || posicionY - 1 == fila || posicionX + 1 == columna || posicionX - 1 == columna;
+        return mapa.esVisible(fila,columna) || posicionY + 1 == fila && columna==posicionX || posicionY - 1 == fila && columna==posicionX || fila==posicionY && posicionX + 1 == columna || fila==posicionY && posicionX - 1 == columna || fila==posicionY && columna==posicionX;
     }
 
     @Override
@@ -164,9 +174,9 @@ public class Juego implements JuegoInterface, MapaInterface {
         switch (opcion.toLowerCase()) {
             case "w" -> {
                 if (movimientoValido(1, 1)) {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    posicionY--;
-
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    this.posicionX--;
                 } else {
                     System.out.println("no se puede mover");
                 }
@@ -174,8 +184,10 @@ public class Juego implements JuegoInterface, MapaInterface {
             }
             case "a" -> {
                 if (movimientoValido(-1, -1)) {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    posicionX--;
+                    
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    this.posicionY--;
                 } else {
                     System.out.println("no se puede mover");
                 }
@@ -183,8 +195,9 @@ public class Juego implements JuegoInterface, MapaInterface {
             }
             case "s" -> {
                 if (movimientoValido(1, -1)) {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    posicionY++;
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    this.posicionX++;
                 } else {
                     System.out.println("no se puede mover");
                 }
@@ -192,8 +205,9 @@ public class Juego implements JuegoInterface, MapaInterface {
             }
             case "d" -> {
                 if (movimientoValido(-1, 1)) {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    posicionX++;
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    posicionY++;
                 } else {
                     System.out.println("no se puede mover");
                 }
@@ -204,21 +218,50 @@ public class Juego implements JuegoInterface, MapaInterface {
 
         }
         if (mapa.getCasillas()[posicionX][posicionY].equals("[?]")) {switch (r.nextInt(3)) {
-                case 0 ->
-                    i1.agregarObjeto(new Arma("Espada","Arma",15));
-                case 1 ->
-                    i1.agregarObjeto(new Escudo("Escudo","Escudo",15));
-                default ->
-                    i1.agregarObjeto(new Planta("Laurel","Planta",15));
-            };
+                case 0 ->{
+                    System.out.println("has encontrado una espada");
+                }
+                    
+                case 1 ->{
+                    System.out.println("has encontrado un esucudo");
+                }
+                default ->{
+                    System.out.println("has encontrado marihuana");
+                }
+            }
+        mapa.setObjetos(mapa.getObjetos()-1);
             
             
         }
         if (mapa.getCasillas()[posicionX][posicionY].equals("[!]")) {
-            g1.generarMonstruos(r.nextInt((valiente.getNivel() + 5) - Math.max(1, valiente.getNivel() - 5) + 1) + Math.max(1, valiente.getNivel() - 5));
+            System.out.println("Generando un monstruo de nivel: "+(r.nextInt((valiente.getNivel() + 5) - Math.max(1, valiente.getNivel() - 5) + 1) + Math.max(1, valiente.getNivel() - 5)));
+            System.out.println("iniciando pelea...");
+            System.out.println("has ganado");
+            mapa.setMonstruos(mapa.getMonstruos()-1);
+            
 
         }
+        if (mapa.getCasillas()[posicionX][posicionY].equals("[0]")) {
+            mapa=new Mapa(true);
+            this.posicionX=0;
+            this.posicionY=0;
+
+        }
+        if (mapa.getCasillas()[posicionX][posicionY].equals("[#]")) {
+            System.out.println("Generando al compilador oscuro");
+            System.out.println("iniciando pelea...");
+            System.out.println("has ganado");
+            this.victoria=true;
+            
+
+        }
+        mapa.setCasilla(posicionY, posicionX, "[*]");
+        
+        mostrarMapa();
+        
 
     }
+
+
 
 }

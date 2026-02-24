@@ -11,7 +11,6 @@ package javaland_equipo4;
 public class GestorMonstruos {
 
     private static int contadorMonstruos = 0;
-
     public Monstruo generarMonstruos(int nivel) {
         Monstruo m = null;
         if (contadorMonstruos > 10) {
