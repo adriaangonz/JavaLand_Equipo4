@@ -16,31 +16,99 @@ public class Valiente extends Personaje {
     private double experienciaNecesaria = 100;
     private int[][] posicion = {{1, 1}};
 
-    
-    public Valiente(){
-        System.out.println(
-        "===== CREACIÓN DE PERSONAJE =====\n" +
-        "Puntos totales: 40\n" +
-        "Vida: 100  Ataque: 1  Defensa: 1  Habilidad: 1  Velocidad: 1\n" +
-        "Puntos restantes: 40");
- 
-        System.out.println("Introduce un nombre para tu valiente: ");
+    public Valiente() {
+        System.out.println("===== CREACIÓN DE PERSONAJE =====");
+        int totalPuntos = 40;
+        int puntosRestantes = totalPuntos;
+
+        System.out.print("Introduce un nombre para tu valiente: ");
         String nombre = teclado.nextLine();
-        
-        System.out.println("Cuanta fuerza quieres bro? : ");
-        int fuerza = Integer.parseInt(teclado.nextLine());
-        System.out.println("Cuanta defensa quieres bro? : ");
-        int defensa = Integer.parseInt(teclado.nextLine());
-        System.out.println("Cuanta habilidad quieres bro?? : ");
-        int habilidad = Integer.parseInt(teclado.nextLine());
-        System.out.println("Cuanta Velocidad quieres bro? : ");
-        int velocidad = Integer.parseInt(teclado.nextLine());
-    
+
+        int vida = 100, ataque = 1, defensa = 1, habilidad = 1, velocidad = 1;
+
+        // ATAQUE
+        do {
+            try {
+                System.out.print("Cuánto ataque quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
+                ataque = Integer.parseInt(teclado.nextLine());
+
+                if (ataque < 0) {
+                    System.out.println("No puedes introducir números negativos.");
+                } else if (ataque > puntosRestantes) {
+                    System.out.println("No tienes suficientes puntos. Intenta un valor menor.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes introducir un número entero.");
+                ataque = -1;
+            }
+        } while (ataque < 0 || ataque > puntosRestantes);
+        puntosRestantes -= ataque;
+
+        // DEFENSA
+        do {
+            try {
+                System.out.print("Cuánta defensa quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
+                defensa = Integer.parseInt(teclado.nextLine());
+
+                if (defensa < 0) {
+                    System.out.println("No puedes introducir números negativos.");
+                } else if (defensa > puntosRestantes) {
+                    System.out.println("No tienes suficientes puntos. Intenta un valor menor.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes introducir un número entero.");
+                defensa = -1;
+            }
+        } while (defensa < 0 || defensa > puntosRestantes);
+        puntosRestantes -= defensa;
+
+        // HABILIDAD
+        do {
+            try {
+                System.out.print("Cuánta habilidad quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
+                habilidad = Integer.parseInt(teclado.nextLine());
+
+                if (habilidad < 0) {
+                    System.out.println("No puedes introducir números negativos.");
+                } else if (habilidad > puntosRestantes) {
+                    System.out.println("No tienes suficientes puntos. Intenta un valor menor.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes introducir un número entero.");
+                habilidad = -1;
+            }
+        } while (habilidad < 0 || habilidad > puntosRestantes);
+        puntosRestantes -= habilidad;
+
+        // VELOCIDAD
+        do {
+            try {
+                System.out.print("Cuánta velocidad quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
+                velocidad = Integer.parseInt(teclado.nextLine());
+
+                if (velocidad < 0) {
+                    System.out.println("No puedes introducir números negativos.");
+                } else if (velocidad > puntosRestantes) {
+                    System.out.println("No tienes suficientes puntos. Intenta un valor menor.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes introducir un número entero.");
+                velocidad = -1;
+            }
+        } while (velocidad < 0 || velocidad > puntosRestantes);
+        puntosRestantes -= velocidad;
+
+        // Resultao final
+        System.out.println("\n===== PERSONAJE CREADO =====");
+        System.out.printf("Valiente: %s%n", nombre);
+        System.out.printf("Vida: %d  Ataque: %d  Defensa: %d  Habilidad: %d  Velocidad: %d%n",
+                vida, ataque, defensa, habilidad, velocidad);
+        System.out.println("Puntos sin gastar: " + puntosRestantes);
     }
-    
+
     public Valiente(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
-        
+
     }
 
     //Getters y setters
@@ -163,4 +231,13 @@ public class Valiente extends Personaje {
             } while (!mejorado);
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Vida: %d  Ataque: %d  Defensa: %d  Habilidad: %d  Velocidad: %d",
+                getVida(), getFuerza(), getDefensa(), getHabilidad(), getVelocidad()
+        );
+    }
+
 }
