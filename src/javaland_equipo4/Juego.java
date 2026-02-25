@@ -5,6 +5,7 @@
 package javaland_equipo4;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 import javaland_interfaces.GestoresInterface;
@@ -18,10 +19,9 @@ import javaland_interfaces.MapaInterface;
 public class Juego implements JuegoInterface {
 
     private Mapa mapa;
-
+    private Scanner teclado;
     private static int enemigosAsesinados;
     private GestorMonstruos gm1;
-    private GestorValientes gv1;
     private Combate c1;
     private Valiente valiente;
     private static int posicionX;
@@ -32,6 +32,7 @@ public class Juego implements JuegoInterface {
 
     @Override
     public void iniciarJuego() {
+        teclado = new Scanner(System.in);
         System.out.println("EL COMPILADOR OSCURO");
         this.posicionX = 0;
         this.posicionY = 0;
@@ -54,7 +55,7 @@ public class Juego implements JuegoInterface {
 
     @Override
     public Valiente creacionOEleccionValiente() {
-        try (Scanner teclado = new Scanner(System.in);) {
+        try{
             this.valiente = null;
             int opcion = 0;
             System.out.println("1 - Crear Valiente");
@@ -65,13 +66,16 @@ public class Juego implements JuegoInterface {
             switch (opcion) {
                 case 1 ->
                     this.valiente = new Valiente();
-                case 2 -> this.valiente=gv1.crearValientesIniciales();
+                case 2 -> this.valiente=new GestorValientes().crearValientesIniciales();
                 default -> {
                     System.out.println("eso no es una opcion");
                 }
             }
         } catch (InputMismatchException e) {
             System.out.println("Eso no es un numero");
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Ese no es un Valiente");
         }
 
         return valiente;
@@ -89,7 +93,8 @@ public class Juego implements JuegoInterface {
     @Override
     public void mostrarMenuPrincipal() {
 
-        try (Scanner teclado = new Scanner(System.in);) {
+        try {
+            Scanner teclado = new Scanner(System.in);
 
             int opcion = 0;
             do {
@@ -101,6 +106,7 @@ public class Juego implements JuegoInterface {
                 System.out.println("6 - Salir del juego");
                 System.out.print("Elige una opcion:");
                 opcion = teclado.nextInt();
+                teclado.nextLine();
                 switch (opcion) {
                     case 1 -> {
                         System.out.println(valiente.toString());
@@ -121,6 +127,8 @@ public class Juego implements JuegoInterface {
             } while (opcion != 6 && !victoria && !muerto);
         } catch (InputMismatchException e) {
             System.out.println("Eso no es un numero");
+        }catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
         }
 
     }

@@ -6,6 +6,8 @@ package javaland_equipo4;
  * @author DAM106
  */
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import javaland_interfaces.GestoresInterface;
 
 public class GestorValientes implements GestoresInterface {
@@ -18,13 +20,22 @@ public class GestorValientes implements GestoresInterface {
 
 
     @Override
-    public Valiente crearValientesIniciales() {
-        
+    public Valiente crearValientesIniciales() throws ArrayIndexOutOfBoundsException {
+        Scanner teclado= new Scanner(System.in);
+        Valiente valiente=null;
+        int opcion = 0;
         valientes[0] = new Valiente("Guerrero", 100, 15, 8, 7, 10, 1);
         valientes[1] = new Valiente("Paladín", 100, 10, 14, 6, 10, 1);
         valientes[2] = new Valiente("Mago", 100, 8, 6, 16, 10, 1);
         valientes[3] = new Valiente("Pícaro", 100, 9, 7, 8, 16, 1);
-        return valientes[0];
+            
+            System.out.println("1 - "+new Valiente("Guerrero", 100, 15, 8, 7, 10, 1).toString());
+            System.out.println("2 - "+new Valiente("Paladín", 100, 10, 14, 6, 10, 1).toString());
+            System.out.println("3 - "+new Valiente("Mago", 100, 8, 6, 16, 10, 1).toString());
+            System.out.println("4 - "+new Valiente("Pícaro", 100, 9, 7, 8, 16, 1).toString());
+            opcion = teclado.nextInt();
+            
+        return valientes[opcion-1];
     }
 
     @Override
