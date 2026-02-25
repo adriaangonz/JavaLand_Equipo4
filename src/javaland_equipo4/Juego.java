@@ -20,7 +20,8 @@ public class Juego implements JuegoInterface {
     private Mapa mapa;
 
     private static int enemigosAsesinados;
-    private GestorMonstruos g1;
+    private GestorMonstruos gm1;
+    private GestorValientes gv1;
     private Combate c1;
     private Valiente valiente;
     private static int posicionX;
@@ -64,8 +65,7 @@ public class Juego implements JuegoInterface {
             switch (opcion) {
                 case 1 ->
                     this.valiente = new Valiente();
-                case 2 ->
-                    this.valiente = new Valiente();
+                case 2 -> this.valiente=gv1.crearValientesIniciales();
                 default -> {
                     System.out.println("eso no es una opcion");
                 }
@@ -172,57 +172,52 @@ public class Juego implements JuegoInterface {
 //        }
 //        return validacion;
 //    }
-
     public boolean casillasAdyacentes(int fila, int columna) {
         return mapa.esVisible(fila, columna) || posicionY + 1 == fila && columna == posicionX || posicionY - 1 == fila && columna == posicionX || fila == posicionY && posicionX + 1 == columna || fila == posicionY && posicionX - 1 == columna || fila == posicionY && columna == posicionX;
     }
 
     @Override
     public void explorarMapa() {
-           try(Scanner teclado = new Scanner(System.in);){
-               mostrarMapa();
-        String opcion = "";
-        System.out.println("¿Hacia que direccion quieres moverte?: W/A/S/D");
-        opcion = teclado.next().substring(0, 1);
-        switch (opcion.toLowerCase()) {
-            case "w" -> {
+        try (Scanner teclado = new Scanner(System.in);) {
+            mostrarMapa();
+            String opcion = "";
+            System.out.println("¿Hacia que direccion quieres moverte?: W/A/S/D");
+            opcion = teclado.next().substring(0, 1);
+            switch (opcion.toLowerCase()) {
+                case "w" -> {
                     mapa.setCasilla(posicionY, posicionX, "[ ]");
                     mapa.setVisible(posicionY, posicionX);
                     this.posicionX--;
                 }
 
-            
-            case "a" -> {
+                case "a" -> {
 
                     mapa.setCasilla(posicionY, posicionX, "[ ]");
                     mapa.setVisible(posicionY, posicionX);
                     this.posicionY--;
                 }
 
-            
-            case "s" ->  {
+                case "s" -> {
                     mapa.setCasilla(posicionY, posicionX, "[ ]");
                     mapa.setVisible(posicionY, posicionX);
                     this.posicionX++;
                 }
 
-            
-            case "d" -> {
+                case "d" -> {
                     mapa.setCasilla(posicionY, posicionX, "[ ]");
                     mapa.setVisible(posicionY, posicionX);
                     posicionY++;
                 }
-            
-            default -> {
-                System.out.println("eso no es una opcion");
-    }
 
-        }
-}
-catch(ArrayIndexOutOfBoundsException e){
+                default -> {
+                    System.out.println("eso no es una opcion");
+                }
+
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Eso se puede mover");
-        } 
-        
+        }
+
         if (mapa.getCasillas()[posicionX][posicionY].equals("[?]")) {
             switch (r.nextInt(3)) {
                 case 0 -> {

@@ -18,11 +18,13 @@ public class GestorValientes implements GestoresInterface {
 
 
     @Override
-    public void crearValientesIniciales() {
+    public Valiente crearValientesIniciales() {
+        
         valientes[0] = new Valiente("Guerrero", 100, 15, 8, 7, 10, 1);
         valientes[1] = new Valiente("Paladín", 100, 10, 14, 6, 10, 1);
         valientes[2] = new Valiente("Mago", 100, 8, 6, 16, 10, 1);
         valientes[3] = new Valiente("Pícaro", 100, 9, 7, 8, 16, 1);
+        return valientes[0];
     }
 
     @Override

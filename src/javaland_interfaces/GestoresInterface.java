@@ -13,7 +13,7 @@ import javaland_equipo4.Valiente;
  */
 public interface GestoresInterface {
 
-    public void crearValientesIniciales();
+    public Valiente crearValientesIniciales();
     
     public Monstruo generarMonstruos(int nivel);
     
