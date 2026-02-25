@@ -21,11 +21,11 @@ public class Monstruo extends Personaje {
     public Monstruo(int nivel) {
         super(
                 "Monstruo Lv." + nivel,
-                random.nextInt(101), // vida: 0 a 100
-                random.nextInt(20) + 1, // fuerza: 1 a 20
-                random.nextInt(20) + 1, // defensa: 1 a 20
-                random.nextInt(20) + 1, // habilidad: 1 a 20
-                random.nextInt(20) + 1, // velocidad: 1 a 20
+                random.nextInt(101),
+                random.nextInt(20) + 1,
+                random.nextInt(20) + 1,
+                random.nextInt(20) + 1, 
+                random.nextInt(20) + 1, 
                 nivel
         );
     }
