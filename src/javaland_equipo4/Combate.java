@@ -54,7 +54,8 @@ public class Combate implements CombateInterface {
     @Override
     public boolean combateTerminado(Valiente valiente, Monstruo monstruo) {
         if (valiente.getVida() > 0) { //si el valiente sobrevive aumenta estadisticas
-            valiente.setExperiencia(valiente.getExperiencia() + monstruo.getExperiencia());
+            GestorMonstruos gestor = new GestorMonstruos();
+            gestor.eliminarMonstruos(monstruo, valiente);
             System.out.println("El Valiente ha ganado, recibe " + monstruo.getExperiencia() + " exp");
             valiente.subirNivel();
             return false;

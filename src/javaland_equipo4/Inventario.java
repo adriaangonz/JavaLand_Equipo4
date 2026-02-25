@@ -21,24 +21,26 @@ public class Inventario implements InventarioInterface {
                 inventario[i] = obj;
                 System.out.println("Objeto agregado");
                 break;
+            } else {
+                System.out.println("El inventario esta lleno, selecciona el objeto que quieres cambiar");
+                
             }
         }
     }
 
     @Override
     public void usarObjeto(String nombre, Valiente valiente) {
+        mostrarInventario();
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null && inventario[i].getNombre().equals(nombre)) {
                 switch (inventario[i].getTipo()) {
                     case "Arma":
                         inventario[i].equipar(valiente);
                         inventario[i] = null;
-                        System.out.println(nombre + " se ha añadido en la pos " + i);
                         break;
                     case "Escudo":
                         inventario[i].equipar(valiente);
                         inventario[i] = null;
-                        System.out.println(nombre + " se ha añadido en la pos " + i);
                         break;
                     case "Planta":
                         inventario[i].equipar(valiente);
@@ -55,6 +57,8 @@ public class Inventario implements InventarioInterface {
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null) {
                 System.out.println(inventario[i].getNombre() + " - ");
+            } else {
+                System.out.println("Inventario vacio");
             }
         }
     }
