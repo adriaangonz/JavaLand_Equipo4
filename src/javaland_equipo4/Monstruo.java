@@ -21,7 +21,7 @@ public class Monstruo extends Personaje {
 
     public Monstruo(int nivel) {
         super(
-                "Monstruo Lv." + nivel,
+                "Monstruo Lv." + nivel, //Random para asignar los atributos al monstruo aleatorios
                 random.nextInt(101),
                 random.nextInt(20) + 1,
                 random.nextInt(20) + 1,
@@ -62,10 +62,13 @@ public class Monstruo extends Personaje {
     @Override
     public void recibirDaño(int cantidad) {
 
-        int vida = this.getDefensa();
+        int vidaActual = this.getVida();
 
-        int danio = vida - cantidad;
+        int vidaRestante = Math.max(0, vidaActual - cantidad); //Math.max para que no de ataque negativo. Hace 0 o la cantidad
 
-        this.setVida(danio);
+        this.setVida(vidaRestante);
+        
+        System.out.println(this.getNombre() + " recibe " + cantidad
+                + " puntos de daño. Vida actual: " + vidaRestante);
     }
 }
