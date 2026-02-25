@@ -13,7 +13,8 @@ import java.util.Random;
 public class Monstruo extends Personaje {
 
     private static final Random random = new Random();
-
+    private double experiencia;
+    
     public Monstruo(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
     }
@@ -30,6 +31,16 @@ public class Monstruo extends Personaje {
         );
     }
 
+    public double getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(double experiencia) {
+        this.experiencia = experiencia;
+    }
+
+
+    
     @Override
     public <T> double atacar(T Personaje) {
         int danio = this.getFuerza();
