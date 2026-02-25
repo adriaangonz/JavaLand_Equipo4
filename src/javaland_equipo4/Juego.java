@@ -14,14 +14,16 @@ import javaland_interfaces.MapaInterface;
  *
  * @author cococ
  */
-public class Juego implements JuegoInterface{
+public class Juego implements JuegoInterface{private Mapa mapa;
 
-    private Mapa mapa;
+    private static int enemigosAsesinados;
+    private GestorMonstruos g1;
+    private Combate c1;
     private Valiente valiente;
     private static int posicionX;
     private static int posicionY;
     private final Random r= new Random();
-    boolean derrota;
+    boolean muerto;
     boolean victoria;
 
     @Override
@@ -30,7 +32,7 @@ public class Juego implements JuegoInterface{
         this.posicionX = 0;
         this.posicionY = 0;
         this.victoria=false;
-        this.derrota=false;
+        this.muerto=false;
         this.valiente = creacionOEleccionValiente();
         if (valiente != null) {
             this.mapa = new Mapa(false);
@@ -38,7 +40,7 @@ public class Juego implements JuegoInterface{
             if(this.victoria){
                 System.out.println("Enhorabuena!");
             }
-            if(this.derrota){
+            if(this.muerto){
                 System.out.println("La proxima vez sera...");
             }
             
@@ -108,7 +110,7 @@ public class Juego implements JuegoInterface{
                     System.out.println("eso no es una opcion");
                 }
             }
-        } while (opcion != 6 && !victoria && !derrota);
+        } while (opcion != 6 && !victoria && !muerto);
 
     }
 
@@ -234,10 +236,10 @@ public class Juego implements JuegoInterface{
             
         }
         if (mapa.getCasillas()[posicionX][posicionY].equals("[!]")) {
-            System.out.println("Generando un monstruo de nivel: "+(r.nextInt((valiente.getNivel() + 5) - Math.max(1, valiente.getNivel() - 5) + 1) + Math.max(1, valiente.getNivel() - 5)));
-            System.out.println("iniciando pelea...");
-            System.out.println("has ganado");
+            int nivel = posicionY<posicionX?posicionY:posicionX;
+            this.c1.iniciarCombate(valiente,new Monstruo(nivel));
             mapa.setMonstruos(mapa.getMonstruos()-1);
+            enemigosAsesinados++;
             
 
         }
@@ -260,8 +262,5 @@ public class Juego implements JuegoInterface{
         mostrarMapa();
         
 
-    }
-
-
-
+}
 }
