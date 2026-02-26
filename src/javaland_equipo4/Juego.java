@@ -8,9 +8,7 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
-import javaland_interfaces.GestoresInterface;
 import javaland_interfaces.JuegoInterface;
-import javaland_interfaces.MapaInterface;
 
 /**
  *
@@ -63,6 +61,7 @@ public class Juego implements JuegoInterface {
             System.out.println("3 - Salir");
             System.out.print("Elige una opcion:");
             opcion = teclado.nextInt();
+            teclado.nextLine();
             switch (opcion) {
                 case 1 ->
                     this.valiente = new Valiente();
@@ -94,7 +93,6 @@ public class Juego implements JuegoInterface {
     public void mostrarMenuPrincipal() {
 
         try {
-            Scanner teclado = new Scanner(System.in);
 
             int opcion = 0;
             do {
@@ -138,7 +136,6 @@ public class Juego implements JuegoInterface {
     }
 
     private void equiparObjeto() {
-        Scanner teclado = new Scanner(System.in);
         System.out.println("mostrando inventario");
         String objeto = teclado.nextLine();
         System.out.println("usando inventario");
@@ -158,73 +155,87 @@ public class Juego implements JuegoInterface {
         }
     }
 
-//    public boolean movimientoValido(int coordenada, int direccion) {
-//        boolean validacion;
-//        if (coordenada == 1) {
-//            //Y-1
-//            if (direccion == 1) {
-//                validacion = posicionX - 1 >= 0;
-//            } //Y+1
-//            else {
-//                validacion = posicionX < mapa.getAlto() - 1;
-//            }
-//        } else {
-//            //X+1
-//            if (direccion == 1) {
-//                validacion = posicionY < mapa.getAncho() - 1;
-//
-//            } //X-1
-//            else {
-//                validacion = posicionY - 1 >= 0;
-//            }
-//        }
-//        return validacion;
-//    }
+    public boolean movimientoValido(int coordenada, int direccion) {
+        boolean validacion;
+        if (coordenada == 1) {
+            //Y-1
+            if (direccion == 1) {
+                validacion = posicionX - 1 >= 0;
+            } //Y+1
+            else {
+                validacion = posicionX < mapa.getAlto() - 1;
+            }
+        } else {
+            //X+1
+            if (direccion == 1) {
+                validacion = posicionY < mapa.getAncho() - 1;
+
+            } //X-1
+            else {
+                validacion = posicionY - 1 >= 0;
+            }
+        }
+        return validacion;
+    }
     public boolean casillasAdyacentes(int fila, int columna) {
         return mapa.esVisible(fila, columna) || posicionY + 1 == fila && columna == posicionX || posicionY - 1 == fila && columna == posicionX || fila == posicionY && posicionX + 1 == columna || fila == posicionY && posicionX - 1 == columna || fila == posicionY && columna == posicionX;
     }
 
     @Override
     public void explorarMapa() {
-        try (Scanner teclado = new Scanner(System.in);) {
+        try{
             mostrarMapa();
             String opcion = "";
             System.out.println("¿Hacia que direccion quieres moverte?: W/A/S/D");
             opcion = teclado.next().substring(0, 1);
+            teclado.nextLine();
             switch (opcion.toLowerCase()) {
-                case "w" -> {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
+              case "w" -> {
+                if (movimientoValido(1, 1)) {
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
                     mapa.setVisible(posicionY, posicionX);
                     this.posicionX--;
-                }
-
-                case "a" -> {
-
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    mapa.setVisible(posicionY, posicionX);
-                    this.posicionY--;
-                }
-
-                case "s" -> {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    mapa.setVisible(posicionY, posicionX);
-                    this.posicionX++;
-                }
-
-                case "d" -> {
-                    mapa.setCasilla(posicionY, posicionX, "[ ]");
-                    mapa.setVisible(posicionY, posicionX);
-                    posicionY++;
-                }
-
-                default -> {
-                    System.out.println("eso no es una opcion");
+                } else {
+                    System.out.println("no se puede mover");
                 }
 
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Eso se puede mover");
-        }
+            case "a" -> {
+                if (movimientoValido(-1, -1)) {
+                    
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    this.posicionY--;
+                } else {
+                    System.out.println("no se puede mover");
+                }
+
+            }
+            case "s" -> {
+                if (movimientoValido(1, -1)) {
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    this.posicionX++;
+                } else {
+                    System.out.println("no se puede mover");
+                }
+
+            }
+            case "d" -> {
+                if (movimientoValido(-1, 1)) {
+                    mapa.setCasilla(posicionY,posicionX , "[ ]");
+                    mapa.setVisible(posicionY, posicionX);
+                    posicionY++;
+                } else {
+                    System.out.println("no se puede mover");
+                }
+            }
+            default -> {
+                System.out.println("eso no es una opcion");
+            }
+
+            }
+         
 
         if (mapa.getCasillas()[posicionX][posicionY].equals("[?]")) {
             switch (r.nextInt(3)) {
@@ -244,7 +255,7 @@ public class Juego implements JuegoInterface {
         }
         if (mapa.getCasillas()[posicionX][posicionY].equals("[!]")) {
             int nivel = posicionY < posicionX ? posicionY : posicionX;
-            this.c1.iniciarCombate(valiente, new Monstruo(nivel));
+            this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel));
             mapa.setMonstruos(mapa.getMonstruos() - 1);
             enemigosAsesinados++;
 
@@ -265,6 +276,9 @@ public class Juego implements JuegoInterface {
         mapa.setCasilla(posicionY, posicionX, "[*]");
 
         mostrarMapa();
-
     }
+        catch (InputMismatchException e) {
+            System.out.println("eso no es un movimiento");
+    }
+}
 }
