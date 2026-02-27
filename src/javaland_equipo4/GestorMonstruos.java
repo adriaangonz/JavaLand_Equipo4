@@ -27,6 +27,11 @@ public class GestorMonstruos implements GestoresInterface {
         }
         return m;
     }
+    public Monstruo generarCompiladorOscuro(int nivel) {
+        Monstruo m = new CompiladorOscuro(nivel);
+        
+        return m;
+    }
 
     @Override
     public void eliminarMonstruos(Monstruo m, Valiente v) {

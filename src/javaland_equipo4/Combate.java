@@ -11,7 +11,7 @@ import javaland_interfaces.*;
  * @author DAM115
  */
 public class Combate implements CombateInterface {
-    
+    private final GestorMonstruos gestor = new GestorMonstruos();
     @Override
     public void iniciarCombate(Valiente valiente, Monstruo monstruo) {
         do {
@@ -35,7 +35,7 @@ public class Combate implements CombateInterface {
     
     @Override
     public <T> void turno(T atacante, T defensor) {
-        //convierto al atacante y al defensor en personakjes
+        //convierto al atacante y al defensor en personajes
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
         
@@ -53,15 +53,16 @@ public class Combate implements CombateInterface {
     
     @Override
     public boolean combateTerminado(Valiente valiente, Monstruo monstruo) {
+        boolean vivo=false;
         if (valiente.getVida() > 0) { //si el valiente sobrevive aumenta estadisticas
-            GestorMonstruos gestor = new GestorMonstruos();
+            
             gestor.eliminarMonstruos(monstruo, valiente);
             System.out.println("El Valiente ha ganado, recibe " + monstruo.getExperiencia() + " exp");
             valiente.subirNivel();
-            return false;
+            vivo = true;
         } else { //si el valiente muere gana el monstruo
             System.out.println("El monstruo ha ganado...");
-            return true;
         }
+        return vivo;
     }
 }

@@ -36,7 +36,9 @@ public class Juego implements JuegoInterface {
         this.posicionY = 0;
         this.victoria = false;
         this.muerto = false;
+        this.gm1= new GestorMonstruos();
         this.valiente = creacionOEleccionValiente();
+        this.c1= new Combate();
         if (valiente != null) {
             this.mapa = new Mapa(false);
             mostrarMenuPrincipal();
@@ -92,42 +94,46 @@ public class Juego implements JuegoInterface {
     @Override
     public void mostrarMenuPrincipal() {
 
-        try {
+        
 
-            int opcion = 0;
-            do {
-                System.out.println("1 - Mostrar Valiente");
-                System.out.println("2 - Equipar Objeto");
-                System.out.println("3 - Mostrar mapa");
-                System.out.println("4 - Moverse");
-                System.out.println("5 - Mostrar estado del juego");
-                System.out.println("6 - Salir del juego");
-                System.out.print("Elige una opcion:");
-                opcion = teclado.nextInt();
-                teclado.nextLine();
-                switch (opcion) {
-                    case 1 -> {
-                        System.out.println(valiente.toString());
-                    }
-                    case 2 -> {
-                        System.out.println("equipando objeto");
-                    }
-                    case 3 ->
-                        mostrarMapa();
-                    case 4 ->
-                        explorarMapa();
-                    case 5 ->
-                        mostrarEstadoJuego();
-                    default -> {
-                        System.out.println("eso no es una opcion");
-                    }
-                }
-            } while (opcion != 6 && !victoria && !muerto);
-        } catch (InputMismatchException e) {
-            System.out.println("Eso no es un numero");
-        }catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
+         int opcion = 0;
+
+do {
+    try {
+
+        System.out.println("1 - Mostrar Valiente");
+        System.out.println("2 - Equipar Objeto");
+        System.out.println("3 - Mostrar mapa");
+        System.out.println("4 - Moverse");
+        System.out.println("5 - Mostrar estado del juego");
+        System.out.println("6 - Salir del juego");
+        System.out.print("Elige una opcion: ");
+
+        opcion = teclado.nextInt();
+        teclado.nextLine(); 
+
+        switch (opcion) {
+            case 1 -> System.out.println(valiente);
+            case 2 -> System.out.println("equipando objeto");
+            case 3 -> mostrarMapa();
+            case 4 -> explorarMapa();
+            case 5 -> mostrarEstadoJuego();
+            case 6 -> System.out.println("Saliendo del juego...");
+            default -> System.out.println("Eso no es una opcion");
         }
+
+    } catch (InputMismatchException e) {
+
+        System.out.println("Eso no es un numero");
+        teclado.nextLine(); // 🔥 limpiar lo que escribió el usuario
+
+    } catch (NoSuchElementException e) {
+
+        System.out.println("Error inesperado: " + e.getMessage());
+
+    }
+
+} while (opcion != 6 && !victoria && !muerto);
 
     }
 
@@ -185,11 +191,12 @@ public class Juego implements JuegoInterface {
     public void explorarMapa() {
         try{
             mostrarMapa();
-            String opcion = "";
+            String opcion= "";
+            do{
             System.out.println("¿Hacia que direccion quieres moverte?: W/A/S/D");
             opcion = teclado.next().substring(0, 1);
             teclado.nextLine();
-            switch (opcion.toLowerCase()) {
+            switch (opcion.toLowerCase()){
               case "w" -> {
                 if (movimientoValido(1, 1)) {
                     mapa.setCasilla(posicionY,posicionX , "[ ]");
@@ -235,6 +242,7 @@ public class Juego implements JuegoInterface {
             }
 
             }
+            
          
 
         if (mapa.getCasillas()[posicionX][posicionY].equals("[?]")) {
@@ -254,7 +262,7 @@ public class Juego implements JuegoInterface {
 
         }
         if (mapa.getCasillas()[posicionX][posicionY].equals("[!]")) {
-            int nivel = posicionY < posicionX ? posicionY : posicionX;
+            int nivel = posicionY > posicionX ? posicionY : posicionX;
             this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel));
             mapa.setMonstruos(mapa.getMonstruos() - 1);
             enemigosAsesinados++;
@@ -269,14 +277,16 @@ public class Juego implements JuegoInterface {
         if (mapa.getCasillas()[posicionX][posicionY].equals("[#]")) {
             System.out.println("Generando al compilador oscuro");
             System.out.println("iniciando pelea...");
-            System.out.println("has ganado");
+            this.c1.iniciarCombate(valiente, gm1.generarCompiladorOscuro(enemigosAsesinados));
             this.victoria = true;
 
         }
         mapa.setCasilla(posicionY, posicionX, "[*]");
 
         mostrarMapa();
+        }while(!opcion.equals("q"));
     }
+            
         catch (InputMismatchException e) {
             System.out.println("eso no es un movimiento");
     }

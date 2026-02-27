@@ -33,6 +33,7 @@ public class GestorValientes implements GestoresInterface {
             System.out.println("2 - "+new Valiente("Paladín", 100, 10, 14, 6, 10, 1).toString());
             System.out.println("3 - "+new Valiente("Mago", 100, 8, 6, 16, 10, 1).toString());
             System.out.println("4 - "+new Valiente("Pícaro", 100, 9, 7, 8, 16, 1).toString());
+            System.out.print("Elige un Valiente: ");
             opcion = teclado.nextInt();
             
         return valientes[opcion-1];
