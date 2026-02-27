@@ -235,7 +235,7 @@ public class Valiente extends Personaje {
     @Override
     public String toString() {
         return String.format(
-                "Vida: %d  Ataque: %d  Defensa: %d  Habilidad: %d  Velocidad: %d",
+                getNombre() + "    " + "Vida: %d  Ataque: %d  Defensa: %d  Habilidad: %d  Velocidad: %d",
                 getVida(), getFuerza(), getDefensa(), getHabilidad(), getVelocidad()
         );
     }
