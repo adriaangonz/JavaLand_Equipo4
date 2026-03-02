@@ -68,8 +68,8 @@ public class Mapa{
         else{
         this.monstruos=5;
         this.objetos=5;
-        this.ancho = 5;
-        this.alto = 5;
+        this.ancho = 10;
+        this.alto = 10;
         this.casillas= new String[alto][ancho];
         this.visible= new boolean[alto][ancho];
         for (int i = 0; i < this.casillas.length;i++) {
