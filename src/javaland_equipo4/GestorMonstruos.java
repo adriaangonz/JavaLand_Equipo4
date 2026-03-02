@@ -10,7 +10,6 @@ package javaland_equipo4;
  */
 import javaland_interfaces.GestoresInterface;
 
-
 public class GestorMonstruos implements GestoresInterface {
 
     private static int contadorMonstruos = 0;
@@ -32,8 +31,8 @@ public class GestorMonstruos implements GestoresInterface {
     public void eliminarMonstruos(Monstruo m, Valiente v) {
 
         System.out.println("Monstruo eliminado");
-        double dropExperiencia = m.getNivel() * 1.5;
-
+        int dropExperiencia = m.getNivel() * 25;
+        System.out.println("El Valiente ha ganado, recibe " + dropExperiencia + " exp");
         v.setExperiencia(v.getExperiencia() + dropExperiencia);
     }
 
@@ -45,6 +44,5 @@ public class GestorMonstruos implements GestoresInterface {
     public Valiente crearValientesIniciales() {
         return null;
     }
-
 
 }

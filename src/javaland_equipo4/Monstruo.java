@@ -43,20 +43,7 @@ public class Monstruo extends Personaje {
     
     @Override
     public <T> double atacar(T Personaje) {
-        int danio = this.getFuerza();
-
-        Valiente valiente = (Valiente) Personaje;
-
-        if (valiente.getEscudo() != null) {
-            danio -= valiente.getEscudo().getDefensa();
-        }
-
-        // Restar la defensa del valiente 
-        danio -= valiente.getDefensa();
-
-        System.out.println(this.getNombre() + " causa " + danio + " puntos de daño a " + valiente.getNombre() + ".");
-
-        return danio;
+        return this.getFuerza();
     }
 
     @Override

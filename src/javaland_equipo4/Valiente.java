@@ -143,14 +143,6 @@ public class Valiente extends Personaje {
         if (this.getArma() != null) {
             danio += this.getArma().getAtaque();
         }
-
-        Monstruo enemigo = (Monstruo) personaje;
-
-        // Restar defensa del monstruo
-        danio -= enemigo.getDefensa();
-
-        System.out.println(this.getNombre() + " causa " + danio + " puntos de daño a " + enemigo.getNombre() + ".");
-
         return danio;
     }
 

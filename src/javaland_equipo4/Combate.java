@@ -11,13 +11,15 @@ import javaland_interfaces.*;
  * @author DAM115
  */
 public class Combate implements CombateInterface {
+
     private final GestorMonstruos gestor = new GestorMonstruos();
+
     @Override
-    public void iniciarCombate(Valiente valiente, Monstruo monstruo) {
+    public boolean iniciarCombate(Valiente valiente, Monstruo monstruo) {
         do {
             double Iniciativa_Valiente = valiente.getVelocidad() * (0.75 + Math.random() * 0.25);
             double Iniciativa_Monstruo = monstruo.getVelocidad() * (0.75 + Math.random() * 0.25);
-            
+
             if (Iniciativa_Valiente >= Iniciativa_Monstruo) { //si la iniciativa de valiente es mayor o igual a la del monstruo, valiente ataca
                 turno(valiente, monstruo);
                 if (monstruo.getVida() > 0) {
@@ -30,19 +32,25 @@ public class Combate implements CombateInterface {
                 }
             }
         } while (valiente.getVida() > 0 && monstruo.getVida() > 0);
-        combateTerminado(valiente, monstruo);//si sale del bucle, se acaba el combate
+        return combateTerminado(valiente, monstruo);//si sale del bucle, se acaba el combate
     }
-    
+
     @Override
     public <T> void turno(T atacante, T defensor) {
         //convierto al atacante y al defensor en personajes
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
+
+        //calculamos valor de escudo de valiente por si defiende
+        int valorEscudo = 0;
+        if (defensor instanceof Valiente && ((Valiente) defensor).getEscudo() != null) {
+            valorEscudo = ((Valiente) defensor).getEscudo().getDefensa();
+        }
         
         System.out.println(Atacante.getNombre() + "intenta el ataque: ");
         int Variable_aleatoria = (int) (Math.random() * 101);
-        
-        if (Variable_aleatoria < 4 * Atacante.getHabilidad() - Defensor.getDefensa()) {
+
+        if (Variable_aleatoria < 4 * Atacante.getHabilidad() - (Defensor.getDefensa()+ valorEscudo)) {
             System.out.println("ataque realizado con exito");
             int cantidad = (int) Atacante.atacar(Defensor);
             Defensor.recibirDaño(cantidad);
@@ -50,14 +58,12 @@ public class Combate implements CombateInterface {
             System.out.println("ataque fallido");
         }
     }
-    
+
     @Override
     public boolean combateTerminado(Valiente valiente, Monstruo monstruo) {
-        boolean vivo=false;
+        boolean vivo = false;
         if (valiente.getVida() > 0) { //si el valiente sobrevive aumenta estadisticas
-            
             gestor.eliminarMonstruos(monstruo, valiente);
-            System.out.println("El Valiente ha ganado, recibe " + monstruo.getExperiencia() + " exp");
             valiente.subirNivel();
             vivo = true;
         } else { //si el valiente muere gana el monstruo

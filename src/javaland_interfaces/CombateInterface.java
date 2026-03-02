@@ -12,7 +12,7 @@ import javaland_equipo4.*;
  */
 public interface CombateInterface {
 
-    public void iniciarCombate(Valiente valiente, Monstruo monstruo);
+    public boolean iniciarCombate(Valiente valiente, Monstruo monstruo);
 
     public<T> void turno(T atacante, T defensor);
 
