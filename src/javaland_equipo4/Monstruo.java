@@ -51,7 +51,7 @@ public class Monstruo extends Personaje {
 
         int vidaActual = this.getVida();
 
-        int vidaRestante = Math.max(0, vidaActual - cantidad); //Math.max para que no de ataque negativo. Hace 0 o la cantidad
+        int vidaRestante = vidaActual - cantidad;
 
         this.setVida(vidaRestante);
         

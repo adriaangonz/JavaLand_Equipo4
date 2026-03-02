@@ -149,7 +149,7 @@ public class Valiente extends Personaje {
     @Override
     public void recibirDaño(int cantidad) {
         int vidaActual = this.getVida();
-        int vidaRestante = Math.max(0, vidaActual - cantidad); // he puesto el math.max para que si baja de 0 pilla el 0 en vez de la vida negativa
+        int vidaRestante = vidaActual - cantidad;
         this.setVida(vidaRestante);
         System.out.println(this.getNombre() + " recibe " + cantidad
                 + " puntos de daño. Vida actual: " + vidaRestante);
