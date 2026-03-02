@@ -277,7 +277,7 @@ do {
         if (mapa.getCasillas()[posicionX][posicionY].equals("[#]")) {
             System.out.println("Generando al compilador oscuro");
             System.out.println("iniciando pelea...");
-            this.c1.iniciarCombate(valiente, gm1.generarCompiladorOscuro(enemigosAsesinados));
+            this.c1.iniciarCombate(valiente, new CompiladorOscuro(enemigosAsesinados));
             this.victoria = true;
 
         }
