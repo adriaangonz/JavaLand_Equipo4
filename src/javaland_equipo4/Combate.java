@@ -9,7 +9,7 @@ import javaland_interfaces.*;
 
 /**
  *
- * @author DAM115
+ * @author Adrian, Saul(pasivas)
  */
 public class Combate implements CombateInterface {
 
@@ -96,8 +96,32 @@ public class Combate implements CombateInterface {
                         }
                     }
                     case "3" -> {
-                        v.usarHabilidadEspecial(m);
-                        turnoFinalizado = true;
+                        String valiente = v.getNombre().toLowerCase();
+                        boolean puedeUsarHabilidad = true;
+
+                        //comprobacion para que no muera al usar la habilidad
+                        if (valiente.contains("guerrero") && v.getArma() == null) {
+                            System.out.println(RED + "No tienes un arma equipada para realizar este sacrificio." + RESET);
+                            puedeUsarHabilidad = false;
+                        } else if (valiente.contains("paladin") && v.getVida() <= 20) {
+                            System.out.println(RED + "¡VIDA INSUFICIENTE! El sacrificio te mataría." + RESET);
+                            puedeUsarHabilidad = false;
+                        } else if (valiente.contains("mago") && v.getVida() <= 25) {
+                            System.out.println(RED + "¡VIDA INSUFICIENTE! Necesitas al menos 26 HP." + RESET);
+                            puedeUsarHabilidad = false;
+                        } else if (valiente.contains("picaro") && v.getVida() <= 15) {
+                            System.out.println(RED + "¡VIDA INSUFICIENTE! Necesitas al menos 16 HP." + RESET);
+                            puedeUsarHabilidad = false;
+                        } else if (!valiente.contains("guerrero") && !valiente.contains("paladin") && !valiente.contains("mago") && !valiente.contains("picaro") && v.getVida() <= 10) {
+                            System.out.println(RED + "¡VIDA INSUFICIENTE! Estás demasiado débil." + RESET);
+                            puedeUsarHabilidad = false;
+                        }
+
+                        //si puede lo hace
+                        if (puedeUsarHabilidad) {
+                            v.usarHabilidadEspecial(m);
+                            turnoFinalizado = true;
+                        }
                     }
                     default ->
                         System.out.println(RED + "Opcion no valida." + RESET);
@@ -109,10 +133,10 @@ public class Combate implements CombateInterface {
         }
     }
 
-private <T> void ejecutarAtaque(T atacante, T defensor) {
+    private <T> void ejecutarAtaque(T atacante, T defensor) {
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
-        
+
         int valorEscudo = 0;
         boolean escudoAdminActivo = false;
 
@@ -132,7 +156,7 @@ private <T> void ejecutarAtaque(T atacante, T defensor) {
 
         String color = (Atacante instanceof Valiente) ? GREEN : RED;
         System.out.println("\n" + color + ">>> " + Atacante.getNombre().toUpperCase() + " INICIA EL ATAQUE" + RESET);
-        
+
         int Variable_aleatoria = (int) (Math.random() * 101);
 
         if (Variable_aleatoria < 4 * Atacante.getHabilidad() - (Defensor.getDefensa() + valorEscudo)) {
@@ -153,7 +177,7 @@ private <T> void ejecutarAtaque(T atacante, T defensor) {
             }
 
             // PASIVA 6
-            if (escudoAdminActivo) { 
+            if (escudoAdminActivo) {
                 cantidad /= 2;
                 System.out.println(PURPLE + " [PASIVA: ADMIN] Daño reducido a la mitad por cortafuegos." + RESET);
             }
@@ -167,7 +191,7 @@ private <T> void ejecutarAtaque(T atacante, T defensor) {
                 v.setVida(v.getVida() + vidaRecuperada);
                 System.out.println(GREEN + " [PASIVA: VAMPIRISMO] Has recuperado " + vidaRecuperada + " HP." + RESET);
             }
-            
+
             // PASIVA 4: ESPINAS
             if (Defensor instanceof Valiente d && d.getEscudo() != null && d.getEscudo().getIdPasiva() == 4) {
                 int reflejo = (int) (cantidad * 0.15);

@@ -16,7 +16,7 @@ public class Valiente extends Personaje {
     private double experienciaNecesaria = 100;
     private int[][] posicion = {{1, 1}};
     private Inventario inventario;
-    
+
     String RESET = "\u001B[0m";
     String CYAN = "\u001B[36m";
     String PURPLE = "\u001B[35m";
@@ -24,12 +24,11 @@ public class Valiente extends Personaje {
     String GREEN = "\u001B[32m";
     String RED = "\u001B[31m";
     String BOLD = "\u001B[1m";
-    
-    
+
     public Valiente() {
         System.out.println(PURPLE + "===== CREACIÓN DE PERSONAJE =====" + RESET);
         this.inventario = new Inventario();
-        
+
         int totalPuntos = 40;
         int puntosRestantes = totalPuntos;
 
@@ -158,8 +157,6 @@ public class Valiente extends Personaje {
     public Inventario getInventario() {
         return inventario;
     }
-    
-    
 
     @Override
     public <T> double atacar(T personaje) {
@@ -182,7 +179,75 @@ public class Valiente extends Personaje {
 
     @Override
     public void usarHabilidadEspecial(Monstruo m) {
+        String valiente = this.getNombre().toLowerCase();
+        int dañoFinal = 0;
+        int costeVida = 0;
 
+        // Colores para el feedback del sacrificio
+        String RED = "\u001B[31m";
+        String GREEN = "\u001B[32m";
+        String YELLOW = "\u001B[33m";
+        String RESET = "\u001B[0m";
+
+        if (valiente.contains("guerrero")) {
+            //cambias arma por ataque multiplicando el daño por 2,5
+            if (this.getArma() != null) {
+                String nombreArma = getArma().getNombre(); // Guardamos el nombre antes de que sea null
+                System.out.println(RED + "¡HOSTIA MONUMENTAL! Rompes tu " + nombreArma + " para un impacto devastador." + RESET);
+                dañoFinal = (int) (this.atacar(m) * 2.5); //se multiplica el daño
+                this.setArma(null); //se elimina el arma
+            } else {
+                System.out.println("No tienes un arma equipada para realizar este sacrificio.");
+                return;
+            }
+
+        } else if (valiente.contains("paladin")) {
+            costeVida = 20;
+        } else if (valiente.contains("mago")) {
+            costeVida = 25;
+        } else if (valiente.contains("picaro")) {
+            costeVida = 15;
+        } else {
+            costeVida = 10;
+        }
+
+        //comprobamos que no se quede sin vida
+        if (!valiente.contains("guerrero") && this.getVida() <= costeVida) {
+            System.out.println(RED + "¡VIDA INSUFICIENTE!" + RESET);
+            System.out.println(YELLOW + "No tienes suficiente vida para realizar este esfuerzo. Te quedarían 0 HP." + RESET);
+            return;
+        }
+
+        // Ejecución de habilidades de vida (Solo si no es guerrero, que ya atacó arriba)
+        if (!valiente.contains("guerrero")) {
+            if (valiente.contains("paladin")) {
+                // Cambia vida por defensa
+                System.out.println(RED + "¡VOTO DE SANGRE! Sacrificas 20 de vida para fortalecer tu defensa." + RESET);
+                this.setVida(this.getVida() - 20);
+                this.setDefensa(this.getDefensa() + 3);
+                dañoFinal = this.getFuerza() + this.getDefensa();
+
+            } else if (valiente.contains("mago")) {
+                // Pierdes vida para usar tu habilidad como fuerza x4
+                System.out.println(RED + "¡TRANSFERENCIA OSCURA! Usas tu fuerza vital como combustible mágico." + RESET);
+                this.setVida(this.getVida() - 25);
+                dañoFinal = this.getHabilidad() * 4;
+
+            } else if (valiente.contains("picaro")) {
+                // Pierdes vida y tu golpe hace el doble de daño
+                System.out.println(RED + "¡FRENESÍ ASESINO! Te hieres al moverte a velocidades estrepitosas." + RESET);
+                this.setVida(this.getVida() - 15);
+                dañoFinal = (int) (this.atacar(m) * 2);
+
+            } else {
+                // Personaje personalizado
+                System.out.println(RED + "¡ESFUERZO LÍMITE! Fuerzas tus músculos más allá de su capacidad." + RESET);
+                this.setVida(this.getVida() - 10);
+                dañoFinal = this.getFuerza() + 15;
+            }
+        }
+
+        m.recibirDaño(dañoFinal);
     }
 
     @Override
