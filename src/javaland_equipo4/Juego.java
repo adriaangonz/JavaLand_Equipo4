@@ -30,13 +30,13 @@ public class Juego implements JuegoInterface {
     private Inventario i1;
 
     // Colores 
-    private static final String RESET = "\u001B[0m";
-    private static final String CYAN = "\u001B[36m";
-    private static final String PURPLE = "\u001B[35m";
-    private static final String YELLOW = "\u001B[33m";
-    private static final String GREEN = "\u001B[32m";
-    private static final String RED = "\u001B[31m";
-    private static final String BOLD = "\u001B[1m";
+    String RESET = "\u001B[0m";
+    String CYAN = "\u001B[36m";
+    String PURPLE = "\u001B[35m";
+    String YELLOW = "\u001B[33m";
+    String GREEN = "\u001B[32m";
+    String RED = "\u001B[31m";
+    String BOLD = "\u001B[1m";
 
     @Override
     public void iniciarJuego() {
@@ -319,7 +319,7 @@ public class Juego implements JuegoInterface {
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
         inventario.mostrarInventario();
-        System.out.println(CYAN + "Introduce el número del SLOT (0-3) para equipar/usar, o 'n' para volver:" + RESET); 
+        System.out.println(CYAN + "Introduce el número del SLOT (0-3) para equipar/usar, o n para volver:" + RESET); 
         String opcion = teclado.nextLine();
         if (!opcion.equalsIgnoreCase("n")) {
         inventario.usarObjeto(opcion, valiente);
