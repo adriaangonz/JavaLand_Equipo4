@@ -60,7 +60,7 @@ public class Juego implements JuegoInterface {
             this.mapa = new Mapa(false);
             mostrarMenuPrincipal();
             if (this.victoria) {
-                System.out.println(GREEN + "¡Enhorabuena, héroe de Javaland!" + RESET);
+                mostrarCreditosFinales();
             }
             if (this.muerto) {
                 System.out.println(RED + "Has caído en la batalla... pero el código vive en ti." + RESET);
@@ -71,7 +71,7 @@ public class Juego implements JuegoInterface {
     private void mostrarIntro() {
         String intro = """
                 
-                \u001B[36m\u001B[1mLa Tierra de los Códigos Olvidados\u001B[0m
+                \u001B[36m\u001B[1mLa Tierra de los Códigos Olvidados\u001B[0m      [Presiona ENTER para saltar]             
                 
                 En los remotos confines del Reino Digital, donde los algoritmos susurran antiguos
                 secretos y los bucles se entrelazan como místicas serpientes, se extiende un mundo
@@ -90,17 +90,167 @@ public class Juego implements JuegoInterface {
                 El Compilador Oscuro te espera. ¡Que comience la compilación!
                 """;
 
+        boolean saltar = false;
+
         for (char c : intro.toCharArray()) {
             System.out.print(c);
+
             try {
-                Thread.sleep(18); // velocidad del texto
-            } catch (InterruptedException e) {
-                System.out.println("Error inesperado :( ");
+                // Si el usuario pulsó una tecla, System.in.available() será > 0
+                if (!saltar && System.in.available() > 0) {
+                    saltar = true;
+                    System.in.read(); // Limpiar el buffer manin
+                }
+
+                if (!saltar) {
+                    Thread.sleep(18);
+                }
+            } catch (Exception e) {
+
             }
         }
+        System.out.println(); // Salto de línea al terminar
 
         System.out.println("\n\n" + PURPLE + "Presiona ENTER para comenzar tu aventura..." + RESET);
         new Scanner(System.in).nextLine();
+    }
+
+    private void mostrarTransicionPortal() {
+        String tituloAscii = """
+        
+        \u001B[35m      _____  ____  _____  _______  _       _      
+             |  __ \\|  _ \\|  __ \\|__   __|/\\     | |     
+             | |__) | | | | |__) |  | |  /  \\    | |     
+             |  ___/| | | |  _  /   | | / /\\ \\   | |     
+             | |    | |_| | | \\ \\   | |/ ____ \\  | |____ 
+             |_|    |____/|_|  \\_\\  |_/_/    \\_\\ |______|
+        \u001B[0m
+        """;
+
+        String historiaPortal = """
+            
+            \u001B[36m\u001B[1m¡HAS CRUZADO EL UMBRAL!\u001B[0m
+            
+            De repente, el suelo bajo tus pies se convierte en puro flujo de datos. 
+            El portal [0] brilla con una intensidad cegadora, absorbiendo cada 
+            segmento de tu código fuente.
+            
+            Sientes cómo tus variables se reasignan y tu stack de memoria se expande.
+            Has superado las pruebas básicas de la terminal, pero el Compilador 
+            Oscuro ha detectado tu intrusión y está reforzando los firewalls.
+            
+            \u001B[33mEntrando en el SECTOR 2: El Núcleo de la CPU...\u001B[0m
+            """;
+
+        for (String linea : tituloAscii.split("\n")) {
+            System.out.println(linea);
+            try {
+                Thread.sleep(150);
+            } catch (Exception e) {
+            }
+        }
+
+        boolean saltar = false;
+        for (char c : historiaPortal.toCharArray()) {
+            System.out.print(c);
+            try {
+                if (!saltar && System.in.available() > 0) {
+                    saltar = true;
+                    System.in.read();
+                }
+                if (!saltar) {
+                    Thread.sleep(20);
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        System.out.println("\n\n" + PURPLE + "Recompilando realidad... Presiona ENTER" + RESET);
+        teclado.nextLine();
+    }
+
+    private void mostrarCreditosFinales() {
+        String historiaFinal = """
+        
+        \u001B[32m\u001B[1m[ SISTEMA RECOMPILADO CON ÉXITO ]\u001B[0m
+        
+        El Compilador Oscuro se disuelve en un mar de excepciones no controladas.
+        La fragmentación digital se detiene y los bytes vuelven a su estado original.
+        Javaland vuelve a ser un lugar de sintaxis limpia y lógica perfecta.
+        
+        Gracias a tu valentía, el código fuente de la realidad ha sido salvado.
+        Tu nombre será recordado en cada comentario de cada programa futuro.
+        
+        """;
+
+        // 1. Mostrar historia final (Máquina de escribir)
+        for (char c : historiaFinal.toCharArray()) {
+            System.out.print(c);
+            try {
+                Thread.sleep(30);
+            } catch (Exception e) {
+            }
+        }
+
+        System.out.println("\n" + YELLOW + "Presiona ENTER para ver a los arquitectos de este mundo..." + RESET);
+        teclado.nextLine();
+
+        // 2. Créditos finales (Animación de scroll)
+        String[] creditos = {
+            "", "", "", // Espacios para el efecto de subida
+            PURPLE + "╔════════════════════════════════════╗" + RESET,
+            PURPLE + "║           EQUIPO 4 PRESENTA        ║" + RESET,
+            PURPLE + "╚════════════════════════════════════╝" + RESET,
+            "",
+            CYAN + "      SAUL - Master of Logic" + RESET,
+            CYAN + "     ADRIAN - Byte Commander" + RESET,
+            CYAN + "     MARCOS - Syntax Guardian" + RESET,
+            CYAN + "      CIRO - Bug Destroyer" + RESET,
+            "",
+            YELLOW + "      GRACIAS POR JUGAR JAVALAND" + RESET,
+            "", "", ""
+
+        };
+
+        String arteVictoria = """
+        
+        \u001B[31m           [ LA CAÍDA DEL COMPILADOR OSCURO ]\u001B[0m
+            
+            \u001B[31m          .      .          .      .          .      .\u001B[0m
+            \u001B[31m       .      .      /\\[ ]/\\      .      .      .      .\u001B[0m
+            \u001B[31m     .      .      /  ---  \\      .      .      .      .\u001B[0m
+            \u001B[31m           .      < <( X )> >    .      .      .      .\u001B[0m
+            \u001B[31m       .      .    \\  ---  /      .      .      .      .\u001B[0m
+            \u001B[31m     .      .       \\[___]/       .      .      .      .\u001B[0m
+            \u001B[31m           .        /     \\        .      .      .      .\u001B[0m
+            \u001B[31m       .           /       \\           .      .      .\u001B[0m
+            \u001B[31m                  V V V V V V           .      .\u001B[0m
+            \u001B[31m          .      .           .      .          .\u001B[0m
+        
+        \u001B[32m       [ SAUL ]    [ ADRIAN ]    [ MARCOS ]    [ CIRO ]\u001B[0m
+        \u001B[32m          O           O             O            O\u001B[0m
+        \u001B[32m         /|\\         /|\\           /|\\          /|\\\u001B[0m
+        \u001B[32m         / \\         / \\           / \\          / \\\u001B[0m
+        
+        \u001B[36m    [ LOGIC ]   [ BYTES ]     [ SYNTAX ]   [ BUGS ]\u001B[0m
+        \u001B[36m    [ MASTER ]  [ COMMANDER ] [ GUARDIAN ] [ DESTROYER ]\u001B[0m
+        
+        """;
+
+        for (String linea : creditos) {
+            System.out.println("\t\t" + linea);
+            try {
+                Thread.sleep(400);
+            } catch (Exception e) {
+            }
+        }
+        for (String linea : arteVictoria.split("\n")) {
+            System.out.println(linea);
+            try {
+                Thread.sleep(200);
+            } catch (Exception e) {
+            } // Delay para la animación
+        }
     }
 
     @Override
@@ -150,7 +300,7 @@ public class Juego implements JuegoInterface {
 
     @Override
     public void mostrarEstadoJuego() {
-        System.out.println(BOLD + CYAN + "\n ESTADO DEL JUEGO" + RESET);
+        System.out.println(BOLD + YELLOW + "\n ESTADO DEL JUEGO" + RESET);
         System.out.println(valiente);
         System.out.println("Objetos restantes: " + mapa.getObjetos());
         System.out.println("Monstruos restantes: " + mapa.getMonstruos());
@@ -212,7 +362,7 @@ public class Juego implements JuegoInterface {
                 || fila == posicionY && columna == posicionX;
     }
 
-@Override
+    @Override
     public void explorarMapa() {
         String opcion = "";
         do {
@@ -232,7 +382,7 @@ public class Juego implements JuegoInterface {
                 switch (opcion) {
                     case "w" -> {
                         if (movimientoValido(1, 1)) {
-                            mapa.setCasilla(posicionY, posicionX, "[ ]");
+                            mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionX--;
                         } else {
@@ -241,7 +391,7 @@ public class Juego implements JuegoInterface {
                     }
                     case "a" -> {
                         if (movimientoValido(-1, -1)) {
-                            mapa.setCasilla(posicionY, posicionX, "[ ]");
+                            mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionY--;
                         } else {
@@ -250,7 +400,7 @@ public class Juego implements JuegoInterface {
                     }
                     case "s" -> {
                         if (movimientoValido(1, -1)) {
-                            mapa.setCasilla(posicionY, posicionX, "[ ]");
+                            mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionX++;
                         } else {
@@ -259,7 +409,7 @@ public class Juego implements JuegoInterface {
                     }
                     case "d" -> {
                         if (movimientoValido(-1, 1)) {
-                            mapa.setCasilla(posicionY, posicionX, "[ ]");
+                            mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             posicionY++;
                         } else {
@@ -277,7 +427,7 @@ public class Juego implements JuegoInterface {
                 }
 
                 if ("wasd".contains(opcion)) {
-                    if (mapa.getCasillas()[posicionX][posicionY].equals("[?]")) {
+                    if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[?]" + RESET)) {
                         switch (r.nextInt(3)) {
                             case 0 ->
                                 System.out.println(GREEN + "Has encontrado una espada." + RESET);
@@ -288,23 +438,24 @@ public class Juego implements JuegoInterface {
                         }
                         mapa.setObjetos(mapa.getObjetos() - 1);
                     }
-                    if (mapa.getCasillas()[posicionX][posicionY].equals("[!]")) {
+                    if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[!]" + RESET)) {
                         int nivel = posicionY > posicionX ? posicionY : posicionX;
                         this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel));
                         mapa.setMonstruos(mapa.getMonstruos() - 1);
                         enemigosAsesinados++;
                     }
-                    if (mapa.getCasillas()[posicionX][posicionY].equals("[0]")) {
+                    if (mapa.getCasillas()[posicionX][posicionY].equals(CYAN + "[0]" + RESET)) {
+                        mostrarTransicionPortal();
                         mapa = new Mapa(true);
                         this.posicionX = 0;
                         this.posicionY = 0;
                     }
-                    if (mapa.getCasillas()[posicionX][posicionY].equals("[#]")) {
+                    if (mapa.getCasillas()[posicionX][posicionY].equals(PURPLE + "[#]" + RESET)) {
                         System.out.println(RED + "El aire se torna oscuro... El Compilador Oscuro aparece." + RESET);
                         this.c1.iniciarCombate(valiente, new CompiladorOscuro(enemigosAsesinados));
                         this.victoria = true;
                     }
-                    mapa.setCasilla(posicionY, posicionX, "[*]");
+                    mapa.setCasilla(posicionY, posicionX, YELLOW + "[*]" + RESET);
                 }
             } catch (InputMismatchException e) {
                 System.out.println(RED + "Eso no es un movimiento válido." + RESET);
