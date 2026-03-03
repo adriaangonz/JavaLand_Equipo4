@@ -13,11 +13,21 @@ import javaland_interfaces.*;
  */
 public class Combate implements CombateInterface {
 
+    // Colores para los mensajes de pasivas
+    String RESET = "\u001B[0m";
+    String YELLOW = "\u001B[33m";
+    String GREEN = "\u001B[32m";
+    String RED = "\u001B[31m";
+    String PURPLE = "\u001B[35m";
+    String CYAN = "\u001B[36m";
+
     private final GestorMonstruos gestor = new GestorMonstruos();
 
     @Override
     public boolean iniciarCombate(Valiente valiente, Monstruo monstruo) {
         do {
+
+            aplicarPasivasInicioTurno(valiente, monstruo);
             double Iniciativa_Valiente = valiente.getVelocidad() * (0.75 + Math.random() * 0.25);
             double Iniciativa_Monstruo = monstruo.getVelocidad() * (0.75 + Math.random() * 0.25);
 
@@ -36,83 +46,139 @@ public class Combate implements CombateInterface {
         return combateTerminado(valiente, monstruo);//si sale del bucle, se acaba el combate
     }
 
+    private void aplicarPasivasInicioTurno(Valiente v, Monstruo m) {
+        if (v.getEscudo() != null && v.getEscudo().getIdPasiva() == 5) {
+            int cura = 5 + (v.getNivel() * 2);
+            v.setVida(v.getVida() + cura);
+            System.out.println(GREEN + "✦ [PASIVA: RESTOS] La armadura repara tus circuitos. +" + cura + " HP" + RESET);
+        }
+    }
+
     @Override
     public <T> void turno(T atacante, T defensor) {
-        
-        Inventario inv = new Inventario();
         Scanner teclado = new Scanner(System.in);
-        //convierto al atacante y al defensor en personajes
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
 
-        if (Atacante instanceof Valiente) {
-            Valiente v = (Valiente) Atacante;
+        if (Atacante instanceof Valiente v) {
             Monstruo m = (Monstruo) Defensor;
             boolean turnoFinalizado = false;
 
             while (!turnoFinalizado) {
-                System.out.println("\n--- turno de " + v.getNombre() + " ---");
-                System.out.println("1 atacar");
-                System.out.println("2 cambiar equipo");
-                System.out.println("3 usar habilidad especial");
-                System.out.print("elige una opcion: ");
+                // PANEL DE ESTADO VISUAL
+                System.out.println("\n" + PURPLE + "----------------------------------------------------------" + RESET);
+                System.out.println(String.format("  " + GREEN + "%-20s" + RESET + " vs " + RED + "%25s",
+                        v.getNombre() + " (LVL " + v.getNivel() + ")", m.getNombre()));
+                System.out.println(String.format("  HP: " + GREEN + "%-18d" + RESET + " | HP: " + RED + "%22d",
+                        v.getVida(), m.getVida()));
+                System.out.println(PURPLE + "----------------------------------------------------------" + RESET);
+
+                System.out.println(CYAN + " ACCIONES DE COMBATE:" + RESET);
+                System.out.println("  1. ATACAR");
+                System.out.println("  2. USAR OBJETO");
+                System.out.println("  3. HABILIDAD ESPECIAL");
+                System.out.print(CYAN + " Seleccion: " + RESET);
 
                 String opcion = teclado.nextLine();
 
                 switch (opcion) {
-                    case "1":
+                    case "1" -> {
                         ejecutarAtaque(v, m);
                         turnoFinalizado = true;
-                        break;
-                    case "2":
-                        System.out.println("--- inventario de combate ---");
-                        // llamamos al metodo mostrar para que el usuario vea sus indices 0 a 3
-                        inv.mostrarInventario();
-
-                        System.out.print("elige el numero de hueco del objeto a usar (0-3) o n para volver: ");
+                    }
+                    case "2" -> {
+                        v.getInventario().mostrarInventario();
+                        System.out.print("Elige hueco (0-3) o 'n' para volver: ");
                         String indice = teclado.nextLine();
-
                         if (!indice.equalsIgnoreCase("n")) {
-                            // usamos el metodo usarObjeto que ya convierte el String a int y gestiona el equipo
-                            inv.usarObjeto(indice, v);
-                            System.out.println("equipo actualizado");
+                            v.getInventario().usarObjeto(indice, v);
+                            System.out.println(YELLOW + "Equipo actualizado." + RESET);
                         }
-                        break;
-                    case "3":
+                    }
+                    case "3" -> {
                         v.usarHabilidadEspecial(m);
                         turnoFinalizado = true;
-                        break;
-                    default:
-                        System.out.println("opcion no valida");
-                        break;
+                    }
+                    default ->
+                        System.out.println(RED + "Opcion no valida." + RESET);
                 }
             }
         } else {
-            // si el atacante es el monstruo ataca
+            // TURNO DEL MONSTRUO
             ejecutarAtaque(Atacante, Defensor);
         }
-
     }
 
-    private <T> void ejecutarAtaque(T atacante, T defensor) { //metodo auxiliar para no escribirlo varias veces en turno
+private <T> void ejecutarAtaque(T atacante, T defensor) {
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
-        //calculamos valor de escudo de valiente por si defiende
+        
         int valorEscudo = 0;
+        boolean escudoAdminActivo = false;
+
+        if (Defensor instanceof Valiente Def) {
+            if (Def.getEscudo() != null) {
+                valorEscudo = Def.getEscudo().getValor();
+                if (Def.getEscudo().getIdPasiva() == 6) {
+                    escudoAdminActivo = true;
+                }
+            }
+        }
+
+        // Corrección de seguridad para valorEscudo (manteniendo tu lógica)
         if (defensor instanceof Valiente && ((Valiente) defensor).getEscudo() != null) {
             valorEscudo = ((Valiente) defensor).getEscudo().getDefensa();
         }
 
-        System.out.println(Atacante.getNombre() + "intenta el ataque: ");
+        String color = (Atacante instanceof Valiente) ? GREEN : RED;
+        System.out.println("\n" + color + ">>> " + Atacante.getNombre().toUpperCase() + " INICIA EL ATAQUE" + RESET);
+        
         int Variable_aleatoria = (int) (Math.random() * 101);
 
         if (Variable_aleatoria < 4 * Atacante.getHabilidad() - (Defensor.getDefensa() + valorEscudo)) {
-            System.out.println("ataque realizado con exito");
+            System.out.println(YELLOW + " IMPACTO CONFIRMADO" + RESET);
             int cantidad = (int) Atacante.atacar(Defensor);
+
+            // PASIVAS DE ARMA
+            if (Atacante instanceof Valiente v && v.getArma() != null) {
+                int id = v.getArma().getIdPasiva();
+                if (id == 2 && (Math.random() * 100) < 30) {
+                    System.out.println(RED + " [PASIVA: CRITICO] Dano duplicado!" + RESET);
+                    cantidad *= 2;
+                }
+                if (id == 3) {
+                    v.setFuerza(v.getFuerza() + 1);
+                    System.out.println(CYAN + " [PASIVA: ESCALADO] Fuerza aumentada permanentemente." + RESET);
+                }
+            }
+
+            // PASIVA 6
+            if (escudoAdminActivo) { 
+                cantidad /= 2;
+                System.out.println(PURPLE + " [PASIVA: ADMIN] Daño reducido a la mitad por cortafuegos." + RESET);
+            }
+
+            System.out.println(" Resultado: " + RED + "-" + cantidad + " HP" + RESET);
             Defensor.recibirDaño(cantidad);
+
+            // PASIVA 1: VAMPIRISMO
+            if (Atacante instanceof Valiente v && v.getArma() != null && v.getArma().getIdPasiva() == 1) {
+                int vidaRecuperada = (int) (cantidad * 0.20);
+                v.setVida(v.getVida() + vidaRecuperada);
+                System.out.println(GREEN + " [PASIVA: VAMPIRISMO] Has recuperado " + vidaRecuperada + " HP." + RESET);
+            }
+            
+            // PASIVA 4: ESPINAS
+            if (Defensor instanceof Valiente d && d.getEscudo() != null && d.getEscudo().getIdPasiva() == 4) {
+                int reflejo = (int) (cantidad * 0.15);
+                Atacante.recibirDaño(reflejo);
+                System.out.println(YELLOW + " [PASIVA: ESPINAS] El atacante recibe " + reflejo + " de daño por contacto." + RESET);
+            }
+
         } else {
-            System.out.println("ataque fallido");
+            System.out.println(YELLOW + " ATAQUE FALLIDO: El objetivo ha esquivado el proceso." + RESET);
         }
+        System.out.println("----------------------------------------------------------");
     }
 
     @Override

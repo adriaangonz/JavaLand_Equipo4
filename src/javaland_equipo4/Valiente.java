@@ -15,7 +15,7 @@ public class Valiente extends Personaje {
     private double experiencia;
     private double experienciaNecesaria = 100;
     private int[][] posicion = {{1, 1}};
-
+    private Inventario inventario;
     
     String RESET = "\u001B[0m";
     String CYAN = "\u001B[36m";
@@ -28,6 +28,8 @@ public class Valiente extends Personaje {
     
     public Valiente() {
         System.out.println(PURPLE + "===== CREACIÓN DE PERSONAJE =====" + RESET);
+        this.inventario = new Inventario();
+        
         int totalPuntos = 40;
         int puntosRestantes = totalPuntos;
 
@@ -125,7 +127,7 @@ public class Valiente extends Personaje {
 
     public Valiente(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
-
+        this.inventario = new Inventario();
     }
 
     //Getters y setters
@@ -152,6 +154,12 @@ public class Valiente extends Personaje {
     public double getExperiencia() {
         return experiencia;
     }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+    
+    
 
     @Override
     public <T> double atacar(T personaje) {

@@ -21,13 +21,12 @@ public class Juego implements JuegoInterface {
     private GestorMonstruos gm1;
     private Combate c1;
     private Valiente valiente;
-    private Inventario inventario;
     private static int posicionX;
     private static int posicionY;
     private final Random r = new Random();
     private boolean muerto;
     private boolean victoria;
-    private Inventario i1;
+    
 
     // Colores 
     String RESET = "\u001B[0m";
@@ -51,9 +50,7 @@ public class Juego implements JuegoInterface {
         this.muerto = false;
         this.gm1 = new GestorMonstruos();
         this.valiente = null;
-        this.inventario = null;
         this.c1 = new Combate();
-        this.i1 = new Inventario();
 
         // Introduccion
         mostrarIntro();
@@ -277,12 +274,12 @@ public class Juego implements JuegoInterface {
                 case 1 -> {
                     System.out.println(GREEN + "Creando Valiente personalizado..." + RESET);
                     this.valiente = new Valiente();
-                    this.inventario = new Inventario();
+                    
                 }
                 case 2 -> {
 
                     this.valiente = new GestorValientes().crearValientesIniciales();
-                    this.inventario = new Inventario();
+                    
                 }
                 default -> {
                     System.out.println(RED + "Esa no es una opción válida." + RESET);
@@ -318,11 +315,11 @@ public class Juego implements JuegoInterface {
 
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
-        inventario.mostrarInventario();
+        valiente.getInventario().mostrarInventario();
         System.out.println(CYAN + "Introduce el número del SLOT (0-3) para equipar/usar, o n para volver:" + RESET); 
         String opcion = teclado.nextLine();
         if (!opcion.equalsIgnoreCase("n")) {
-        inventario.usarObjeto(opcion, valiente);
+        valiente.getInventario().usarObjeto(opcion, valiente);
     }
     }
 
@@ -461,7 +458,7 @@ public class Juego implements JuegoInterface {
                         System.out.println("Tipo: " + objetoEncontrado.getTipo() + " | Poder: " + objetoEncontrado.getValor());
 
                         // Meter el obj al inv
-                        this.inventario.agregarObjeto(objetoEncontrado);
+                        this.valiente.getInventario().agregarObjeto(objetoEncontrado);
 
                         // resatr objeto del contador
 
