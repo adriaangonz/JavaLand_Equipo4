@@ -68,7 +68,18 @@ public class Mapa {
                     } else if (random == 2 && monstruos > 0) {
                         this.casillas[i][j] = RED + "[!]" + RESET;
                         monstruosRestantes--;
-                    } else {
+                    }else if (random == 3) {
+                        this.casillas[i][j] = RED + "[/]" + RESET;
+                        monstruosRestantes--;
+                    }
+                    else if (random == 4) {
+                        this.casillas[i][j] = RED + "[♣]" + RESET;
+                        monstruosRestantes--;
+                    }else if (random == 5) {
+                        this.casillas[i][j] = RED + "[●]" + RESET;
+                        monstruosRestantes--;
+                    }
+                    else {
                         this.casillas[i][j] = "[ ]";
                     }
                 }
@@ -78,6 +89,8 @@ public class Mapa {
         } else {
             this.monstruos = 5;
             this.objetos = 5;
+            int monstruosRestantes = this.monstruos;
+            int objetosRestantes = this.objetos;
             this.ancho = 10;
             this.alto = 10;
             this.casillas = new String[alto][ancho];
@@ -87,12 +100,23 @@ public class Mapa {
                     int random = r.nextInt(20) + 1;
                     if (random == 1 && objetos > 0) {
                         this.casillas[i][j] = GREEN + "[?]" + RESET;
-                        objetos--;
+                        objetosRestantes--;
 
                     } else if (random == 2 && monstruos > 0) {
                         this.casillas[i][j] = RED + "[!]" + RESET;
                         monstruos--;
-                    } else {
+                    }else if (random == 3) {
+                        this.casillas[i][j] = RED + "[/]" + RESET;
+                        monstruosRestantes--;
+                    }
+                    else if (random == 4) {
+                        this.casillas[i][j] = RED + "[♣]" + RESET;
+                        monstruosRestantes--;
+                    }else if (random == 5) {
+                        this.casillas[i][j] = RED + "[●]" + RESET;
+                        monstruosRestantes--;
+                    } 
+                    else {
                         this.casillas[i][j] =RED +  "[ ]" +  RESET;
                     }
                 }
