@@ -435,25 +435,7 @@ public class Juego implements JuegoInterface {
 
                 if ("wasd".contains(opcion)) {
                     if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[?]" + RESET)) {
-<<<<<<< HEAD
-                         Objeto o1;
-                        switch (r.nextInt(3)) {
-                            case 0 ->{
-                               System.out.println(GREEN + "Has encontrado un Arma" + RESET); 
-                                o1=new Arma("Espada","Daga",15);
-                            }  
-                            case 1 ->{
-                                System.out.println(GREEN + "Has encontrado un escudo." + RESET);
-                                  o1=new Escudo("Escudo","Grande",15);
-                            }
-                                
-                            default ->{
-                                System.out.println(GREEN + "Has encontrado un objeto misterioso..." + RESET);
-                                  o1=new Planta("Planta","Verde",15);
-                            }
-                        }
-                        i1.agregarObjeto(o1);
-=======
+
                         // Llamo a GeneradorObjetos que tiene 5 armas y 5 escudos y de manera aleatoria te da uno
                         Objeto objetoEncontrado = GeneradorObjetos.generarLootAleatorio();
 
@@ -468,7 +450,7 @@ public class Juego implements JuegoInterface {
                         this.inventario.agregarObjeto(objetoEncontrado);
 
                         // resatr objeto del contador
->>>>>>> 92252bf424aa6b31b7d5fcf1470e18d3f571d57b
+
                         mapa.setObjetos(mapa.getObjetos() - 1);
                         // Casilla a una vacía [ ] para que no pueda cogerlo infinitas veces xd
                         mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
