@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package javaland_equipo4;
 
 import java.util.Scanner;
@@ -12,6 +8,19 @@ import javaland_interfaces.InventarioInterface;
  * @author diego
  */
 public class Inventario implements InventarioInterface {
+
+    public Inventario() {
+
+    }
+
+    // Colores
+    String CYAN = "\u001B[36m";
+    String GREEN = "\u001B[32m";
+    String YELLOW = "\u001B[33m";
+    String RED = "\u001B[31m";
+    String RESET = "\u001B[0m";
+    String BOLD = "\u001B[1m";
+    String PURPLE = "\u001B[35m";
 
     Objeto[] inventario = new Objeto[4];
 
@@ -127,12 +136,74 @@ public class Inventario implements InventarioInterface {
 
     @Override
     public void mostrarInventario() {
+        System.out.println("\n" + CYAN + BOLD + "╔══════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                       RECURSOS DEL SISTEMA (INVENTARIO)                              ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════╝" + RESET);
+
+        boolean vacio = true;
+
+        System.out.printf(YELLOW + "%-7s %-22s %-12s %-10s %-20s\n" + RESET, "SLOT", "NOMBRE", "TIPO", "VALOR", "PASIVA");
+        System.out.println(CYAN + "--------------------------------------------------------------------------------------" + RESET);
+
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null) {
-                System.out.println("[" + i + "] " + inventario[i].getNombre() + " (" + inventario[i].getTipo() + ")");
+                vacio = false;
+                Objeto obj = inventario[i];
+                String statInfo = "";
+                String pasivaInfo = "Ninguna";
+                String colorFila = GREEN;
+
+                if (obj instanceof Arma) {
+                    statInfo = "ATK: " + ((Arma) obj).getAtaque();
+                    pasivaInfo = traducirPasiva(obj.getIdPasiva());
+                    colorFila = RED; // Las armas en rojo
+                } else if (obj instanceof Escudo) {
+                    statInfo = "DEF: " + ((Escudo) obj).getDefensa();
+                    pasivaInfo = traducirPasiva(obj.getIdPasiva());
+                    colorFila = CYAN; // Escudos en cyan
+                } else if (obj instanceof Planta) {
+                    statInfo = "HP: +" + ((Planta) obj).getRecupera();
+                    colorFila = GREEN; // Plantas en verde
+                }
+
+                // 2. Imprimir la fila con la información detallada
+                System.out.printf(colorFila + "[%02d]" + RESET + " %-22s %-12s %-10s " + PURPLE + "%-20s\n" + RESET,
+                        i,
+                        obj.getNombre(),
+                        obj.getTipo(),
+                        statInfo,
+                        pasivaInfo);
             } else {
-                System.out.println("Inventario vacio");
+                System.out.printf(RESET + "[%02d]" + " %-22s %-12s %-10s %-20s\n",
+                        i, "--- NULL_POINTER ---", "---", "---", "---");
             }
         }
+
+        if (vacio) {
+            System.out.println(RED + "\n[!] Advertencia: Stack de memoria vacío." + RESET);
+        }
+        System.out.println(CYAN + "--------------------------------------------------------------------------------------" + RESET);
+    }
+
+    /**
+     * Método auxiliar para que el usuario entienda qué hace cada ID de pasiva
+     */
+    private String traducirPasiva(int id) {
+        return switch (id) {
+            case 1 ->
+                "Vampirismo";
+            case 2 ->
+                "Crítico (30%)";
+            case 3 ->
+                "Atk. Progresivo";
+            case 4 ->
+                "Espinas";
+            case 5 ->
+                "Restos (Cura)";
+            case 6 ->
+                "Mitigación (1/2)";
+            default ->
+                "Ninguna";
+        };
     }
 }

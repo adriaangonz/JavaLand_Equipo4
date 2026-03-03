@@ -6,25 +6,24 @@ package javaland_equipo4;
  */
 public class Planta extends Objeto {
 
-    private int recupera;
-
-    public Planta(String nombre, String tipo, int recupera) {
-        super(nombre, tipo);
-        this.recupera = recupera;
+    public Planta(String nombre, String tipo, int valor, int idPasiva) {
+        super(nombre, tipo, valor, idPasiva);
     }
+
+
 
     //getters y setters
     public int getRecupera() {
-        return recupera;
+        return valor;
     }
 
     public void setRecupera(int recupera) {
-        this.recupera = recupera;
+        this.valor = valor;
     }
 
     @Override
     public void equipar(Valiente valiente) {
-        valiente.setVida(valiente.getVida() + recupera);
+        valiente.setVida(valiente.getVida() + valor);
     }
 
 }

@@ -40,7 +40,9 @@ public class Mapa {
         this.casillas = new String[alto][ancho];
         for (int i = 0; i < this.casillas.length; i++) {
             for (int j = 0; j < this.casillas[i].length; j++) {
+                
                 System.out.println("[ ]");
+                
             }
         }
         this.casillas[0][0] = YELLOW + "[*]" + RESET;
@@ -91,7 +93,7 @@ public class Mapa {
                         this.casillas[i][j] = RED + "[!]" + RESET;
                         monstruos--;
                     } else {
-                        this.casillas[i][j] = "[ ]";
+                        this.casillas[i][j] =RED +  "[ ]" +  RESET;
                     }
                 }
             }

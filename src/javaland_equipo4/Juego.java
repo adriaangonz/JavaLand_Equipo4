@@ -22,6 +22,7 @@ public class Juego implements JuegoInterface {
     private GestorMonstruos gm1;
     private Combate c1;
     private Valiente valiente;
+    private Inventario inventario;
     private static int posicionX;
     private static int posicionY;
     private final Random r = new Random();
@@ -50,6 +51,7 @@ public class Juego implements JuegoInterface {
         this.muerto = false;
         this.gm1 = new GestorMonstruos();
         this.valiente = null;
+        this.inventario = null;
         this.c1 = new Combate();
 
         // Introduccion
@@ -216,14 +218,14 @@ public class Juego implements JuegoInterface {
         
         \u001B[31m           [ LA CAÍDA DEL COMPILADOR OSCURO ]\u001B[0m
             
-            \u001B[31m          .      .          .      .          .      .\u001B[0m
-            \u001B[31m       .      .      /\\[ ]/\\      .      .      .      .\u001B[0m
-            \u001B[31m     .      .      /  ---  \\      .      .      .      .\u001B[0m
-            \u001B[31m           .      < <( X )> >    .      .      .      .\u001B[0m
-            \u001B[31m       .      .    \\  ---  /      .      .      .      .\u001B[0m
-            \u001B[31m     .      .       \\[___]/       .      .      .      .\u001B[0m
-            \u001B[31m           .        /     \\        .      .      .      .\u001B[0m
-            \u001B[31m       .           /       \\           .      .      .\u001B[0m
+            \u001B[31m          .      .          .      .          \u001B[0m
+            \u001B[31m       .      .     /\\[ ]/\\      .      .    \u001B[0m
+            \u001B[31m     .      .      /  ---  \\      .      .    \u001B[0m
+            \u001B[31m           .      < <( X )> >    .      .      \u001B[0m
+            \u001B[31m       .      .    \\  ---  /      .      .      \u001B[0m
+            \u001B[31m     .      .       \\[___]/       .      .      \u001B[0m
+            \u001B[31m           .        /     \\        .      .      \u001B[0m
+            \u001B[31m       .           /       \\           .     \u001B[0m
             \u001B[31m                  V V V V V V           .      .\u001B[0m
             \u001B[31m          .      .           .      .          .\u001B[0m
         
@@ -274,14 +276,12 @@ public class Juego implements JuegoInterface {
                 case 1 -> {
                     System.out.println(GREEN + "Creando Valiente personalizado..." + RESET);
                     this.valiente = new Valiente();
+                    this.inventario = new Inventario();
                 }
-                case 2, 3, 4, 5 -> {
-                    // Llama a tu método que ya gestiona los 4 valientes y devuelve el elegido
+                case 2 -> {
+
                     this.valiente = new GestorValientes().crearValientesIniciales();
-                }
-                case 6 -> {
-                    System.out.println(RED + "Saliendo del juego..." + RESET);
-                    return null;
+                    this.inventario = new Inventario();
                 }
                 default -> {
                     System.out.println(RED + "Esa no es una opción válida." + RESET);
@@ -302,6 +302,7 @@ public class Juego implements JuegoInterface {
     public void mostrarEstadoJuego() {
         System.out.println(BOLD + YELLOW + "\n ESTADO DEL JUEGO" + RESET);
         System.out.println(valiente);
+        inventario.mostrarInventario();
         System.out.println("Objetos restantes: " + mapa.getObjetos());
         System.out.println("Monstruos restantes: " + mapa.getMonstruos());
     }
@@ -428,15 +429,23 @@ public class Juego implements JuegoInterface {
 
                 if ("wasd".contains(opcion)) {
                     if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[?]" + RESET)) {
-                        switch (r.nextInt(3)) {
-                            case 0 ->
-                                System.out.println(GREEN + "Has encontrado una espada." + RESET);
-                            case 1 ->
-                                System.out.println(GREEN + "Has encontrado un escudo." + RESET);
-                            default ->
-                                System.out.println(GREEN + "Has encontrado un objeto misterioso..." + RESET);
-                        }
+                        // Llamo a GeneradorObjetos que tiene 5 armas y 5 escudos y de manera aleatoria te da uno
+                        Objeto objetoEncontrado = GeneradorObjetos.generarLootAleatorio();
+
+                        
+                        System.out.println("\n" + YELLOW + "╔════════════════════════════════════╗" + RESET);
+                        System.out.println(YELLOW + "║         ¡OBJETO ENCONTRADO!        ║" + RESET);
+                        System.out.println(YELLOW + "╚════════════════════════════════════╝" + RESET);
+                        System.out.println("Has encontrado: " + BOLD + objetoEncontrado.getNombre() + RESET);
+                        System.out.println("Tipo: " + objetoEncontrado.getTipo() + " | Poder: " + objetoEncontrado.getValor());
+
+                        // Meter el obj al inv
+                        this.inventario.agregarObjeto(objetoEncontrado);
+
+                        // resatr objeto del contador
                         mapa.setObjetos(mapa.getObjetos() - 1);
+                        // Casilla a una vacía [ ] para que no pueda cogerlo infinitas veces xd
+                        mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                     }
                     if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[!]" + RESET)) {
                         int nivel = posicionY > posicionX ? posicionY : posicionX;
