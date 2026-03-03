@@ -39,6 +39,7 @@ public class Combate implements CombateInterface {
     @Override
     public <T> void turno(T atacante, T defensor) {
         
+        Inventario inv = new Inventario();
         Scanner teclado = new Scanner(System.in);
         //convierto al atacante y al defensor en personajes
         Personaje Atacante = (Personaje) atacante;
@@ -66,14 +67,14 @@ public class Combate implements CombateInterface {
                     case "2":
                         System.out.println("--- inventario de combate ---");
                         // llamamos al metodo mostrar para que el usuario vea sus indices 0 a 3
-                        inventario.mostrarInventario();
+                        inv.mostrarInventario();
 
                         System.out.print("elige el numero de hueco del objeto a usar (0-3) o n para volver: ");
                         String indice = teclado.nextLine();
 
                         if (!indice.equalsIgnoreCase("n")) {
                             // usamos el metodo usarObjeto que ya convierte el String a int y gestiona el equipo
-                            inventario.usarObjeto(indice, v);
+                            inv.usarObjeto(indice, v);
                             System.out.println("equipo actualizado");
                         }
                         break;
