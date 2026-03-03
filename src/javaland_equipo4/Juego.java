@@ -355,6 +355,18 @@ public class Juego implements JuegoInterface {
                 validacion = posicionY - 1 >= 0;
             }
         }
+        if(mapa.getCasillas()[posicionY][posicionX].equals("[/]")){
+            System.out.println("Has encontrado un tronco");
+            validacion=false;
+        }
+        if(mapa.getCasillas()[posicionY][posicionX].equals("[♣]")){
+            System.out.println("Has encontrado un arbol");
+            validacion=false;
+        }
+        if(mapa.getCasillas()[posicionY][posicionX].equals("[●]")){
+            System.out.println("Has encontrado una roca gigante");
+            validacion=false;
+        }
         return validacion;
     }
 
