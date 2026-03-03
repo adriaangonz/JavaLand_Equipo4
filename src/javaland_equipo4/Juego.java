@@ -5,7 +5,6 @@
 package javaland_equipo4;
 
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 import javaland_interfaces.JuegoInterface;
@@ -25,8 +24,9 @@ public class Juego implements JuegoInterface {
     private static int posicionX;
     private static int posicionY;
     private final Random r = new Random();
-    boolean muerto;
-    boolean victoria;
+    private boolean muerto;
+    private boolean victoria;
+    private Inventario i1;
 
     // Colores 
     private static final String RESET = "\u001B[0m";
@@ -51,6 +51,7 @@ public class Juego implements JuegoInterface {
         this.gm1 = new GestorMonstruos();
         this.valiente = null;
         this.c1 = new Combate();
+        this.i1 = new Inventario();
 
         // Introduccion
         mostrarIntro();
@@ -317,8 +318,10 @@ public class Juego implements JuegoInterface {
 
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
+        i1.mostrarInventario();
+        System.out.println("¿Que objeto quieres equiparte?");
         String objeto = teclado.nextLine();
-        System.out.println(GREEN + "Usando inventario..." + RESET);
+        i1.usarObjeto(objeto, valiente);
     }
 
     private void mostrarMapa() {
@@ -366,6 +369,9 @@ public class Juego implements JuegoInterface {
     public void explorarMapa() {
         String opcion = "";
         do {
+            
+            
+            
             try {
                 mostrarMapa();
 
@@ -428,21 +434,36 @@ public class Juego implements JuegoInterface {
 
                 if ("wasd".contains(opcion)) {
                     if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[?]" + RESET)) {
+                         Objeto o1;
                         switch (r.nextInt(3)) {
-                            case 0 ->
-                                System.out.println(GREEN + "Has encontrado una espada." + RESET);
-                            case 1 ->
+                            case 0 ->{
+                               System.out.println(GREEN + "Has encontrado un Arma" + RESET); 
+                                o1=new Arma("Espada","Daga",15);
+                            }  
+                            case 1 ->{
                                 System.out.println(GREEN + "Has encontrado un escudo." + RESET);
-                            default ->
+                                  o1=new Escudo("Escudo","Grande",15);
+                            }
+                                
+                            default ->{
                                 System.out.println(GREEN + "Has encontrado un objeto misterioso..." + RESET);
+                                  o1=new Planta("Planta","Verde",15);
+                            }
                         }
+                        i1.agregarObjeto(o1);
                         mapa.setObjetos(mapa.getObjetos() - 1);
                     }
                     if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[!]" + RESET)) {
                         int nivel = posicionY > posicionX ? posicionY : posicionX;
-                        this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel));
-                        mapa.setMonstruos(mapa.getMonstruos() - 1);
+                        if(this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel))){
+                            mapa.setMonstruos(mapa.getMonstruos() - 1);
                         enemigosAsesinados++;
+                        }
+                        else{
+                            this.muerto=true;
+                        }
+                        
+                        
                     }
                     if (mapa.getCasillas()[posicionX][posicionY].equals(CYAN + "[0]" + RESET)) {
                         mostrarTransicionPortal();
@@ -452,8 +473,13 @@ public class Juego implements JuegoInterface {
                     }
                     if (mapa.getCasillas()[posicionX][posicionY].equals(PURPLE + "[#]" + RESET)) {
                         System.out.println(RED + "El aire se torna oscuro... El Compilador Oscuro aparece." + RESET);
-                        this.c1.iniciarCombate(valiente, new CompiladorOscuro(enemigosAsesinados));
-                        this.victoria = true;
+                        if(this.c1.iniciarCombate(valiente, new CompiladorOscuro(enemigosAsesinados))){
+                            this.victoria = true;
+                        }
+                        else{
+                            this.muerto=true;
+                        }
+                        
                     }
                     mapa.setCasilla(posicionY, posicionX, YELLOW + "[*]" + RESET);
                 }
