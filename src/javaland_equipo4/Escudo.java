@@ -6,20 +6,18 @@ package javaland_equipo4;
  */
 public class Escudo extends Objeto {
 
-    private int defensa;
-
-    public Escudo(String nombre, String tipo, int defensa) {
-        super(nombre, tipo);
-        this.defensa = defensa;
+    public Escudo(String nombre, String tipo, int valor, int idPasiva) {
+        super(nombre, tipo, valor, idPasiva);
     }
+
 
     //Getters y setters
     public int getDefensa() {
-        return defensa;
+        return valor;
     }
 
     public void setDefensa(int defensa) {
-        this.defensa = defensa;
+        this.valor = valor;
     }
 
     @Override

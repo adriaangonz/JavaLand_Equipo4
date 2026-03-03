@@ -7,20 +7,20 @@ package javaland_equipo4;
  */
 public class Arma extends Objeto {
 
-    private int ataque;
-
-    public Arma(String nombre, String tipo, int ataque) {
-        super(nombre, tipo);
-        this.ataque = ataque;
+    public Arma(String nombre, String tipo, int valor, int idPasiva) {
+        super(nombre, tipo, valor, idPasiva);
     }
+
+
+    
 
     //Getters y setters
     public int getAtaque() {
-        return ataque;
+        return valor;
     }
 
     public void setAtaque(int ataque) {
-        this.ataque = ataque;
+        this.valor = valor;
     }
 
     @Override
