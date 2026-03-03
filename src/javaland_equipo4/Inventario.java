@@ -79,58 +79,71 @@ public class Inventario implements InventarioInterface {
     }
 
     @Override
-    public void usarObjeto(String nombre, Valiente valiente) {
+    public void usarObjeto(String opcion, Valiente valiente) {
         try {
             Scanner teclado = new Scanner(System.in);
-            //convertimos el "nombre" a un entero
-            int indice = Integer.parseInt(nombre);
+            int indice = Integer.parseInt(opcion);
 
-            //validamos que el indice es correcto y no este vacio
+            // Validaciones
             if (indice < 0 || indice >= inventario.length || inventario[indice] == null) {
-                System.out.println("Ese hueco esta vacio o no es valido");
+                System.out.println(RED + "Ese hueco está vacío o no es válido." + RESET);
                 return;
             }
 
             Objeto nuevo = inventario[indice];
+            String pasivaNombre = traducirPasiva(nuevo.getIdPasiva());
 
-            if (nuevo instanceof Arma) {
-                Arma nuevaArma = (Arma) nuevo;
+            // --- LÓGICA PARA ARMAS ---
+            if (nuevo instanceof Arma armaNueva) {
                 Arma actual = valiente.getArma();
-
-                //calculamos el daño total para comparar
                 int dañoActual = valiente.getFuerza() + (actual != null ? actual.getAtaque() : 0);
-                int dañoNuevo = valiente.getFuerza() + nuevaArma.getAtaque();
+                int dañoNuevo = valiente.getFuerza() + armaNueva.getAtaque();
 
-                System.out.println("\n--- COMPARACION DE DAÑO ---");
-                System.out.println("Actual: " + dañoActual + " | Con " + nuevaArma.getNombre() + ": " + dañoNuevo);
-                System.out.print("Equipar? (s/n): ");
+                System.out.println("\n--- COMPARACIÓN DE DAÑO ---");
+                System.out.println("Actual: " + dañoActual + " | Con " + armaNueva.getNombre() + ": " + dañoNuevo);
+                System.out.println("Pasiva: " + PURPLE + pasivaNombre + RESET);
+                System.out.print("¿Equipar? (s/n): ");
 
                 if (teclado.nextLine().equalsIgnoreCase("s")) {
-                    inventario[indice] = actual; //la vieja vuelve al inventario
-                    nuevaArma.equipar(valiente); //el valiente equipa la nueva
-                    System.out.println("Arma equipada!");
+                    inventario[indice] = actual; // La vieja (o null) vuelve al inventario
+                    armaNueva.equipar(valiente); // El valiente se pone la nueva
+                    System.out.println(GREEN + "¡Arma equipada!" + RESET);
                 }
-            } else if (nuevo instanceof Escudo) {
-                Escudo nuevoEscudo = (Escudo) nuevo;
+                
+                valiente.setFuerza(dañoNuevo);
+
+                // --- LÓGICA PARA ESCUDOS ---
+            } else if (nuevo instanceof Escudo escudoNuevo) {
                 Escudo actual = valiente.getEscudo();
+                int defActual = valiente.getDefensa() + (actual != null ? actual.getDefensa() : 0);
+                int defNueva = valiente.getDefensa() + escudoNuevo.getDefensa();
 
-                //calculamos el daño total para comparar
-                int escudoActual = valiente.getDefensa() + (actual != null ? actual.getDefensa() : 0);
-                int escudoNuevo = valiente.getDefensa() + nuevoEscudo.getDefensa();
-
-                System.out.println("\n--- COMPARACION DE DEFENSA ---");
-                System.out.println("Actual: " + escudoActual + " | Con " + nuevoEscudo.getNombre() + ": " + escudoNuevo);
-                System.out.print("Equipar? (s/n): ");
+                System.out.println("\n--- COMPARACIÓN DE DEFENSA ---");
+                System.out.println("Actual: " + defActual + " | Con " + escudoNuevo.getNombre() + ": " + defNueva);
+                System.out.println("Pasiva: " + PURPLE + pasivaNombre + RESET);
+                System.out.print("¿Equipar? (s/n): ");
 
                 if (teclado.nextLine().equalsIgnoreCase("s")) {
-                    inventario[indice] = actual; // Intercambio: la vieja vuelve al inventario
-                    nuevoEscudo.equipar(valiente); // La nueva se la pone el valiente
-                    System.out.println("Escudo equipado!");
+                    inventario[indice] = actual; // Intercambio
+                    escudoNuevo.equipar(valiente);
+                    System.out.println(GREEN + "¡Escudo equipado!" + RESET);
+                }
+
+                // --- LÓGICA PARA PLANTAS (Curación y Borrado) ---
+            } else if (nuevo instanceof Planta planta) {
+                System.out.println("\nHas encontrado una " + planta.getNombre());
+                System.out.println("Efecto: Recupera " + planta.getRecupera() + " HP");
+                System.out.print("¿Usar ahora? (s/n): ");
+
+                if (teclado.nextLine().equalsIgnoreCase("s")) {
+                    planta.equipar(valiente); // Sube la vida
+                    inventario[indice] = null; // SE BORRA del inventario
+                    System.out.println(GREEN + "¡HP recuperada! La planta se ha consumido." + RESET);
                 }
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Debes introducir el NUMERO del hueco (0, 1, 2 o 3)");
+            System.out.println(RED + "Debes introducir el NÚMERO del hueco (0, 1, 2 o 3)" + RESET);
         }
     }
 

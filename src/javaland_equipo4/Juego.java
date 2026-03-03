@@ -303,7 +303,6 @@ public class Juego implements JuegoInterface {
     public void mostrarEstadoJuego() {
         System.out.println(BOLD + YELLOW + "\n ESTADO DEL JUEGO" + RESET);
         System.out.println(valiente);
-        inventario.mostrarInventario();
         System.out.println("Objetos restantes: " + mapa.getObjetos());
         System.out.println("Monstruos restantes: " + mapa.getMonstruos());
     }
@@ -319,10 +318,12 @@ public class Juego implements JuegoInterface {
 
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
-        i1.mostrarInventario();
-        System.out.println("¿Que objeto quieres equiparte?");
-        String objeto = teclado.nextLine();
-        i1.usarObjeto(objeto, valiente);
+        inventario.mostrarInventario();
+        System.out.println(CYAN + "Introduce el número del SLOT (0-3) para equipar/usar, o 'n' para volver:" + RESET); 
+        String opcion = teclado.nextLine();
+        if (!opcion.equalsIgnoreCase("n")) {
+        inventario.usarObjeto(opcion, valiente);
+    }
     }
 
     private void mostrarMapa() {
