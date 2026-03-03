@@ -73,10 +73,10 @@ public class Mapa {
                         monstruosRestantes--;
                     }
                     else if (random == 4) {
-                        this.casillas[i][j] = RED + "[♣]" + RESET;
+                        this.casillas[i][j] = GREEN + "[♣]" + RESET;
                         monstruosRestantes--;
                     }else if (random == 5) {
-                        this.casillas[i][j] = RED + "[●]" + RESET;
+                        this.casillas[i][j] = BOLD + "[●]" + RESET;
                         monstruosRestantes--;
                     }
                     else {
@@ -110,10 +110,10 @@ public class Mapa {
                         monstruosRestantes--;
                     }
                     else if (random == 4) {
-                        this.casillas[i][j] = RED + "[♣]" + RESET;
+                        this.casillas[i][j] = GREEN + "[♣]" + RESET;
                         monstruosRestantes--;
                     }else if (random == 5) {
-                        this.casillas[i][j] = RED + "[●]" + RESET;
+                        this.casillas[i][j] = BOLD + "[●]" + RESET;
                         monstruosRestantes--;
                     } 
                     else {

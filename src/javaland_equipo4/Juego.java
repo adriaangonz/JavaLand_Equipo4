@@ -401,39 +401,40 @@ public class Juego implements JuegoInterface {
 
                 switch (opcion) {
                     case "w" -> {
-                        if (movimientoValido(1, 1)) {
+                        if (movimientoValido(1, 1)&&hayObstaculo(posicionX-1,posicionY)) {
                             mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionX--;
                         } else {
-                            System.out.println(RED + "Muro detectado arriba." + RESET);
+                            System.out.println(RED + "No puedes atravesarlo" + RESET);
                         }
                     }
                     case "a" -> {
-                        if (movimientoValido(-1, -1)) {
+                        if (movimientoValido(-1, -1)&&hayObstaculo(posicionX,posicionY-1)) {
                             mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionY--;
                         } else {
-                            System.out.println(RED + "Muro detectado a la izquierda." + RESET);
+                            System.out.println(RED + "No puedes atravesarlo" + RESET);
                         }
                     }
                     case "s" -> {
-                        if (movimientoValido(1, -1)) {
+                        if (movimientoValido(1, -1)&&hayObstaculo(posicionX+1,posicionY)) {
                             mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             this.posicionX++;
                         } else {
-                            System.out.println(RED + "Muro detectado abajo." + RESET);
+                            System.out.println(RED + "No puedes atravesarlo" + RESET);
                         }
                     }
                     case "d" -> {
-                        if (movimientoValido(-1, 1)) {
+                        if (movimientoValido(-1, 1)&&hayObstaculo(posicionX,posicionY+1)) {
                             mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                             mapa.setVisible(posicionY, posicionX);
                             posicionY++;
                         } else {
-                            System.out.println(RED + "Muro detectado a la derecha." + RESET);
+                            System.out.println(RED + "No puedes atravesarlo"
+                                    + "" + RESET);
                         }
                     }
                     case "e" ->
@@ -505,5 +506,25 @@ public class Juego implements JuegoInterface {
                 System.out.println(RED + "Error: " + e.getMessage() + RESET);
             }
         } while (!opcion.equals("q") && !victoria && !muerto);
+    }
+    public boolean hayObstaculo(int posicionX,int posicionY){
+        boolean superado=true;
+        if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[/]" + RESET) && valiente.getFuerza()<15){
+            System.out.println("No puedes pasar el muro");
+            superado=false;
+        }
+        if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[♣]" + RESET)&& valiente.getHabilidad()<16){
+            System.out.println("No puedes pasar el arbol");
+            superado=false;
+        }
+        if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD + "[●]" + RESET)&& valiente.getDefensa()<14){
+            System.out.println("No puedes pasar la roca");
+            superado=false;
+        }
+        if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD+ "[≈]" + RESET)&& valiente.getVelocidad()<16){
+            System.out.println("No puedes pasar el rio");
+            superado=false;
+        }
+        return superado;
     }
 }
