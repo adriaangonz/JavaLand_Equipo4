@@ -78,6 +78,9 @@ public class Mapa {
                     }else if (random == 5) {
                         this.casillas[i][j] = BOLD + "[●]" + RESET;
                         monstruosRestantes--;
+                    }else if (random == 6) {
+                        this.casillas[i][j] = CYAN + "[≈]" + RESET;
+                        monstruosRestantes--;
                     }
                     else {
                         this.casillas[i][j] = "[ ]";
