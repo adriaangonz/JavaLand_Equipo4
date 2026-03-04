@@ -12,17 +12,20 @@ public class CompiladorOscuro extends Monstruo {
      * Constructor del compilador oscuro
      */
     public CompiladorOscuro(int nivel) {
+        
+        int estadisticaBase = 10 + (3 * nivel);
+        
         super(
                 "COMPILADOR OSCURO" + nivel,
                 150,
-                3 * nivel,
-                3 * nivel,
-                3 * nivel,
-                3 * nivel,
+                estadisticaBase,
+                estadisticaBase,
+                estadisticaBase,
+                estadisticaBase,
                 nivel
         );
 
-        System.out.println("EL COMPILADOR OSCURO HA APARECIDO PEGATE DE OSTIAS CON EL Y TEN COJONES A DERROTARLE");
+        System.out.println("EL COMPILADOR OSCURO HA APARECIDO PEGATE DE HOSTIAS CON EL Y TEN COJONES A DERROTARLE");
         System.out.println("Estadisticas: Fuerza-" + this.getFuerza() + " Defensa-" + this.getDefensa() + " Habilidad-" + this.getHabilidad() + " Velocidad-" + this.getVelocidad());
     }
 }
