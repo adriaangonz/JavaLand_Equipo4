@@ -5,7 +5,12 @@ public class CompiladorOscuro extends Monstruo {
     public CompiladorOscuro(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
     }
-
+    
+    /**
+     * 
+     * @param nivel nivel del compilador
+     * Constructor del compilador oscuro
+     */
     public CompiladorOscuro(int nivel) {
         super(
                 "COMPILADOR OSCURO" + nivel,

@@ -19,7 +19,17 @@ public class Personaje implements PersonajesInterface { //Clase padre de ella he
 
     public Personaje() {
     }
-
+    /**
+     * 
+     * @param nombre nombre del personaje
+     * @param vida vida del personaje
+     * @param fuerza fuerza del personaje
+     * @param defensa defensa del personaje
+     * @param habilidad habilidad del personaje
+     * @param velocidad velocidad del personaje
+     * @param nivel nivel del personaje
+     * Constructor de personaje por parametros
+     */
     public Personaje(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
 
         this.nombre = nombre;

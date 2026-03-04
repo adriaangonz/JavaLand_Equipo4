@@ -48,7 +48,11 @@ public class Mapa {
         }
         this.casillas[0][0] = YELLOW + "[*]" + RESET;
     }
-
+    /**
+     * 
+     * @param nether es el nether
+     * Constructor de mapa
+     */
     public Mapa(boolean nether) {
         this.nether=nether;
         if (!nether) {

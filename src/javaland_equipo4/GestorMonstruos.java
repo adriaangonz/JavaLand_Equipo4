@@ -13,7 +13,13 @@ import javaland_interfaces.GestoresInterface;
 public class GestorMonstruos implements GestoresInterface {
 
     private static int contadorMonstruos = 0;
-
+    
+    /**
+     * 
+     * @param nivel nivel del monstruo
+     * @return monstuo creado si no supera el limite
+     * Metodo que genera un monstruo
+     */
     @Override
     public Monstruo generarMonstruos(int nivel) {
         Monstruo m = null;
@@ -26,7 +32,13 @@ public class GestorMonstruos implements GestoresInterface {
         }
         return m;
     }
-
+    
+    /**
+     * 
+     * @param m monstruo eliminado
+     * @param v valiente que recibe experiencia
+     * Metodo que devuelve exp en funcion del nivel del monstruo
+     */
     @Override
     public void eliminarMonstruos(Monstruo m, Valiente v) {
 

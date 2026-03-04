@@ -13,16 +13,23 @@ import javaland_interfaces.GestoresInterface;
 public class GestorValientes implements GestoresInterface {
 
     private Valiente[] valientes; // Array de valientes
-
+    
+    /**
+     * Constructor que inicia el array a 4
+     */
     public GestorValientes() {
         valientes = new Valiente[4]; // Espacio para los 4 valientes iniciales
     }
-
-
+    
+    /**
+     * 
+     * @return el valiente a utilizar
+     * @throws ArrayIndexOutOfBoundsException
+     * Meotodo que devuelve el valiente a utilizar
+     */
     @Override
     public Valiente crearValientesIniciales() throws ArrayIndexOutOfBoundsException {
         Scanner teclado= new Scanner(System.in);
-        Valiente valiente=null;
         int opcion = 0;
         valientes[0] = new Valiente("Guerrero", 100, 15, 8, 7, 10, 1);
         valientes[1] = new Valiente("Paladín", 100, 10, 14, 6, 10, 1);
@@ -38,7 +45,7 @@ public class GestorValientes implements GestoresInterface {
             
         return valientes[opcion-1];
     }
-
+    
     @Override
     public Monstruo generarMonstruos(int nivel) {
         return null;
@@ -48,8 +55,10 @@ public class GestorValientes implements GestoresInterface {
     public void eliminarMonstruos(Monstruo m , Valiente v) {
         
     }
-
-
+    
+    /**
+     * Metodo que muestra los valientes disponibles
+     */
     public void mostrarValientes() {
         System.out.println("\nValientes disponibles");
         for (int i = 0; i < valientes.length; i++) {
