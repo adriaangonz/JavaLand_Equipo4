@@ -15,10 +15,10 @@ public class CompiladorOscuro extends Monstruo {
         super(
                 "COMPILADOR OSCURO" + nivel,
                 150,
-                3 * GestorMonstruos.getContadorMonstruos(),
-                3 * GestorMonstruos.getContadorMonstruos(),
-                3 * GestorMonstruos.getContadorMonstruos(),
-                3 * GestorMonstruos.getContadorMonstruos(),
+                3 * nivel,
+                3 * nivel,
+                3 * nivel,
+                3 * nivel,
                 nivel
         );
 
