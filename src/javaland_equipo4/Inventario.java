@@ -128,6 +128,7 @@ public class Inventario implements InventarioInterface {
                     escudoNuevo.equipar(valiente);
                     System.out.println(GREEN + "¡Escudo equipado!" + RESET);
                 }
+                valiente.setDefensa(defNueva);
 
                 // --- LÓGICA PARA PLANTAS (Curación y Borrado) ---
             } else if (nuevo instanceof Planta planta) {
