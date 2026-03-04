@@ -23,7 +23,12 @@ public class Inventario implements InventarioInterface {
     String PURPLE = "\u001B[35m";
 
     Objeto[] inventario = new Objeto[4];
-
+    
+    /**
+     * 
+     * @param obj
+     * Metodo que agrega objetos
+     */
     @Override
     public void agregarObjeto(Objeto obj) {
         boolean guardado = false;
@@ -63,7 +68,12 @@ public class Inventario implements InventarioInterface {
         }
     }
 
-    //mtodo para obtener el objeto sin borrarlo
+    /**
+     * 
+     * @param indice
+     * @return Objeto del indice si esta vacio
+     * Metodo que devuelve el objeto del inventario por id
+     */
     public Objeto getObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
             return inventario[indice];
@@ -71,13 +81,23 @@ public class Inventario implements InventarioInterface {
         return null;
     }
 
-    //metodo para eliminar el objeto tras equiparlo
+    /**
+     * 
+     * @param indice
+     * Metodo que elimina un objeto por id
+     */
     public void eliminarObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
             inventario[indice] = null;
         }
     }
-
+    
+    /**
+     * 
+     * @param opcion
+     * @param valiente
+     * Metodo que permite usar un objeto en el valiente actual
+     */
     @Override
     public void usarObjeto(String opcion, Valiente valiente) {
         try {
@@ -147,7 +167,10 @@ public class Inventario implements InventarioInterface {
             System.out.println(RED + "Debes introducir el NÚMERO del hueco (0, 1, 2 o 3)" + RESET);
         }
     }
-
+    
+    /**
+     * Metodo que muestra el inventario
+     */
     @Override
     public void mostrarInventario() {
         System.out.println("\n" + CYAN + BOLD + "╔══════════════════════════════════════════════════════════════════════════════════════╗");

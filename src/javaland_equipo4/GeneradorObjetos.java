@@ -7,7 +7,6 @@ import java.util.Random;
  */
 public class GeneradorObjetos {
     private static final Random r = new Random();
-
     // --- CATÁLOGO DE ARMAS ---
     private static final Arma[] poolArmas = {
         new Arma("Rama de Árbol", "Arma", 5, 0),        

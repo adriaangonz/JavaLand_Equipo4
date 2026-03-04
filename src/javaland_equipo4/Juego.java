@@ -36,7 +36,10 @@ public class Juego implements JuegoInterface {
     String GREEN = "\u001B[32m";
     String RED = "\u001B[31m";
     String BOLD = "\u001B[1m";
-
+    
+    /**
+     * Metodo que inica el juego
+     */
     @Override
     public void iniciarJuego() {
         teclado = new Scanner(System.in);
@@ -67,7 +70,10 @@ public class Juego implements JuegoInterface {
             }
         }
     }
-
+    
+    /**
+     * Metodo que muestra la introduccion del juego
+     */
     private void mostrarIntro() {
         String intro = """
                 
@@ -114,7 +120,10 @@ public class Juego implements JuegoInterface {
         System.out.println("\n\n" + PURPLE + "Presiona ENTER para comenzar tu aventura..." + RESET);
         new Scanner(System.in).nextLine();
     }
-
+    
+    /**
+     * Metodo que muestra una animacion cuando atraviesas el portal
+     */
     private void mostrarTransicionPortal() {
         String tituloAscii = """
         
@@ -168,7 +177,10 @@ public class Juego implements JuegoInterface {
         System.out.println("\n\n" + PURPLE + "Recompilando realidad... Presiona ENTER" + RESET);
         teclado.nextLine();
     }
-
+    
+    /**
+     * Metodo que muestra los metodos al final del juego
+     */
     private void mostrarCreditosFinales() {
         String historiaFinal = """
         
@@ -252,7 +264,11 @@ public class Juego implements JuegoInterface {
             } // Delay para la animación
         }
     }
-
+    
+    /**
+     * Meotodo que elige la manera de crear al valiente
+     * @return el valiente con el que jugaras
+     */
     @Override
     public Valiente creacionOEleccionValiente() {
         try {
@@ -295,7 +311,10 @@ public class Juego implements JuegoInterface {
 
         return valiente;
     }
-
+    
+    /**
+     * Metodo que muestra las estadisticas del valiente y los monstruos y enemigos restantes
+     */
     @Override
     public void mostrarEstadoJuego() {
         System.out.println(BOLD + YELLOW + "\n ESTADO DEL JUEGO" + RESET);
@@ -303,16 +322,25 @@ public class Juego implements JuegoInterface {
         System.out.println("Objetos restantes: " + mapa.getObjetos());
         System.out.println("Monstruos restantes: " + mapa.getMonstruos());
     }
-
+    
+    /**
+     * Metodo que muestra el menu principal
+     */
     @Override
     public void mostrarMenuPrincipal() {
         explorarMapa();
     }
-
+    
+    /**
+     * Metodo que muestra las estadisticas del valiente
+     */
     private void mostrarValiente() {
         System.out.println(this.valiente.toString());
     }
-
+    
+    /**
+     * Metodo que muestra el inventario y equipa un objeto
+     */
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
         valiente.getInventario().mostrarInventario();
@@ -322,7 +350,10 @@ public class Juego implements JuegoInterface {
         valiente.getInventario().usarObjeto(opcion, valiente);
     }
     }
-
+    
+    /**
+     * Meotodo que muestra el mapa
+     */
     private void mostrarMapa() {
         for (int i = 0; i < this.mapa.getAlto(); i++) {
             for (int j = 0; j < this.mapa.getAncho(); j++) {
@@ -342,7 +373,14 @@ public class Juego implements JuegoInterface {
             System.out.println();
         }
     }
-
+    
+    /**
+     * 
+     * @param coordenada
+     * @param direccion
+     * @return Si te estas moviendo dentro del mapa
+     * Meotodo que devuelve si el movimiento es valido
+     */
     public boolean movimientoValido(int coordenada, int direccion) {
         boolean validacion;
         if (coordenada == 1) {
@@ -358,21 +396,16 @@ public class Juego implements JuegoInterface {
                 validacion = posicionY - 1 >= 0;
             }
         }
-        if(mapa.getCasillas()[posicionY][posicionX].equals("[/]")){
-            System.out.println("Has encontrado un tronco");
-            validacion=false;
-        }
-        if(mapa.getCasillas()[posicionY][posicionX].equals("[♣]")){
-            System.out.println("Has encontrado un arbol");
-            validacion=false;
-        }
-        if(mapa.getCasillas()[posicionY][posicionX].equals("[●]")){
-            System.out.println("Has encontrado una roca gigante");
-            validacion=false;
-        }
         return validacion;
     }
-
+    
+    /**
+     * 
+     * @param fila
+     * @param columna
+     * @return Si la casilla es adyacente
+     * Metodo que devuelve si la casilla es adyacente
+     */
     public boolean casillasAdyacentes(int fila, int columna) {
         return mapa.esVisible(fila, columna)
                 || posicionY + 1 == fila && columna == posicionX
@@ -381,7 +414,10 @@ public class Juego implements JuegoInterface {
                 || fila == posicionY && posicionX - 1 == columna
                 || fila == posicionY && columna == posicionX;
     }
-
+    
+    /**
+     * Meotodo que controla el flujo del mapa y del menu principal
+     */
     @Override
     public void explorarMapa() {
         String opcion = "";
@@ -510,6 +546,14 @@ public class Juego implements JuegoInterface {
             }
         } while (!opcion.equals("q") && !victoria && !muerto);
     }
+    
+    /**
+     * 
+     * @param posicionX
+     * @param posicionY
+     * @return Si hay un Obstaculo y si ha sido superado
+     * Metodo que valida la superacion de un obstaculo
+     */
     public boolean hayObstaculo(int posicionX,int posicionY){
         boolean superado=true;
         if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[/]" + RESET)){

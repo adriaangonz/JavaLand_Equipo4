@@ -32,7 +32,7 @@ public class Mapa {
     private static final String GREEN = "\u001B[32m";
     private static final String RED = "\u001B[31m";
     private static final String BOLD = "\u001B[1m";
-
+    
     public Mapa() {
         System.out.println("Introduce el alto del mapa");
         int alto = teclado.nextInt();
@@ -158,20 +158,43 @@ public class Mapa {
     public String[][] getCasillas() {
         return casillas;
     }
-
+    /**
+     * 
+     * @param fila fila del array
+     * @param columna columna del array
+     * @param casilla la casilla importada
+     * Meotodo que cambia una casilla
+     */
     public void setCasilla(int fila, int columna, String casilla) {
 
         this.casillas[columna][fila] = casilla;
     }
-
+    
+    /**
+     * 
+     * @param fila fila del array
+     * @param columna columna del array
+     * Meotodo que hace visible una casilla
+     */
     public void setVisible(int fila, int columna) {
         this.visible[columna][fila] = true;
     }
-
+    
+    /**
+     * 
+     * @param columna columna del array
+     * @param fila fila del array
+     * @return Si es visible
+     * Meotodo que devuelve si la casilla es visible
+     */
     public boolean esVisible(int columna, int fila) {
         return this.visible[fila][columna];
     }
-
+    /**
+     * 
+     * @return Si estas en el nether
+     * Metodo que devuelve si estas en el nether
+     */
     public boolean isNether() {
         return nether;
     }

@@ -40,12 +40,23 @@ public class Monstruo extends Personaje {
     }
 
 
-    
+    /**
+     * 
+     * @param <T>
+     * @param personaje
+     * @return Fuerza del monstruo
+     * Meotodo generico que devuelve la fuerza del monstruo
+     */
     @Override
-    public <T> double atacar(T Personaje) {
+    public <T> double atacar(T personaje) {
         return this.getFuerza();
     }
-
+    
+    /**
+     * 
+     * @param cantidad daño recibido
+     * Metodo generico que permite que el monstruo reciba daño
+     */
     @Override
     public void recibirDaño(int cantidad) {
 

@@ -22,7 +22,14 @@ public class Combate implements CombateInterface {
     String CYAN = "\u001B[36m";
 
     private final GestorMonstruos gestor = new GestorMonstruos();
-
+    
+    /**
+     * 
+     * @param valiente
+     * @param monstruo
+     * @return resultado del combate
+     * Metodo que inicia el combate contra un monstruo
+     */
     @Override
     public boolean iniciarCombate(Valiente valiente, Monstruo monstruo) {
         do {
@@ -45,7 +52,13 @@ public class Combate implements CombateInterface {
         } while (valiente.getVida() > 0 && monstruo.getVida() > 0);
         return combateTerminado(valiente, monstruo);//si sale del bucle, se acaba el combate
     }
-
+    
+    /**
+     * 
+     * @param v
+     * @param m
+     * Metodo para aplicar pasivas
+     */
     private void aplicarPasivasInicioTurno(Valiente v, Monstruo m) {
         if (v.getEscudo() != null && v.getEscudo().getIdPasiva() == 5) {
             int cura = 5 + (v.getNivel() * 2);
@@ -53,7 +66,13 @@ public class Combate implements CombateInterface {
             System.out.println(GREEN + "✦ [PASIVA: RESTOS] La armadura repara tus circuitos. +" + cura + " HP" + RESET);
         }
     }
-
+    /**
+     * 
+     * @param <T>
+     * @param atacante
+     * @param defensor
+     * Metodo generico para que pasen los turnos entre monstruo y valiente
+     */
     @Override
     public <T> void turno(T atacante, T defensor) {
         Scanner teclado = new Scanner(System.in);
@@ -132,7 +151,13 @@ public class Combate implements CombateInterface {
             ejecutarAtaque(Atacante, Defensor);
         }
     }
-
+    /**
+     * 
+     * @param <T>
+     * @param atacante
+     * @param defensor
+     * Metodo generico que calcula y ejecuta un ataque
+     */
     private <T> void ejecutarAtaque(T atacante, T defensor) {
         Personaje Atacante = (Personaje) atacante;
         Personaje Defensor = (Personaje) defensor;
@@ -204,7 +229,13 @@ public class Combate implements CombateInterface {
         }
         System.out.println("----------------------------------------------------------");
     }
-
+    
+    /**
+     * 
+     * @param valiente
+     * @param monstruo
+     * @return Si esta vivo el valiente
+     */
     @Override
     public boolean combateTerminado(Valiente valiente, Monstruo monstruo) {
         boolean vivo = false;

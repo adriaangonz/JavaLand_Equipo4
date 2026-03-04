@@ -157,7 +157,14 @@ public class Valiente extends Personaje {
     public Inventario getInventario() {
         return inventario;
     }
-
+    
+    /**
+     * 
+     * @param <T>
+     * @param personaje
+     * @return Fuerza del valiente
+     * Meotodo generico que devuelve la fuerza del valiente
+     */
     @Override
     public <T> double atacar(T personaje) {
 
@@ -167,7 +174,12 @@ public class Valiente extends Personaje {
         }
         return danio;
     }
-
+    
+    /**
+     * 
+     * @param cantidad daño recibido
+     * Metodo generico que permite que el valiente reciba daño
+     */
     @Override
     public void recibirDaño(int cantidad) {
         int vidaActual = this.getVida();
@@ -176,7 +188,12 @@ public class Valiente extends Personaje {
         System.out.println(this.getNombre() + " recibe " + cantidad
                 + " puntos de daño. Vida actual: " + vidaRestante);
     }
-
+    
+    /**
+     * 
+     * @param m Monstruo que recibe el efecto
+     * Metodo que permite al valiente usar sus habilidades especiales contra los monstruos
+     */
     @Override
     public void usarHabilidadEspecial(Monstruo m) {
         String valiente = this.getNombre().toLowerCase();
@@ -249,7 +266,10 @@ public class Valiente extends Personaje {
 
         m.recibirDaño(dañoFinal);
     }
-
+    
+    /**
+     * Metodo que controla el nivel de los personajes y otorga un punto de estadistica a elegir cada nivel subido
+     */
     @Override
     public void subirNivel() {
         boolean mejorado = false;
@@ -313,7 +333,12 @@ public class Valiente extends Personaje {
             } while (!mejorado);
         }
     }
-
+    
+    /**
+     * 
+     * @return Estadisiticas del valiente
+     * Metodo que muestra las estadisticas del valiente
+     */
     @Override
     public String toString() {
         return String.format(
