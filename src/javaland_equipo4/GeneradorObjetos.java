@@ -32,7 +32,7 @@ public class GeneradorObjetos {
         int suerte = r.nextInt(100);
 
         if (suerte < 40) { // 40% probabilidad de encontrar Marihuana
-            return new Planta("Marihuana", "Curativo", 25, 0);
+            return new Planta("Cogollo Curativo", "Curativo", 25, 0);
         } else if (suerte < 70) { // 30% probabilidad de Escudo
             return poolEscudos[r.nextInt(poolEscudos.length)];
         } else { // 30% probabilidad de Arma

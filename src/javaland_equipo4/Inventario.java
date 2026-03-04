@@ -23,11 +23,10 @@ public class Inventario implements InventarioInterface {
     String PURPLE = "\u001B[35m";
 
     Objeto[] inventario = new Objeto[4];
-    
+
     /**
-     * 
-     * @param obj
-     * Metodo que agrega objetos
+     *
+     * @param obj Metodo que agrega objetos
      */
     @Override
     public void agregarObjeto(Objeto obj) {
@@ -69,10 +68,10 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     * 
+     *
      * @param indice
-     * @return Objeto del indice si esta vacio
-     * Metodo que devuelve el objeto del inventario por id
+     * @return Objeto del indice si esta vacio Metodo que devuelve el objeto del
+     * inventario por id
      */
     public Objeto getObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
@@ -82,21 +81,19 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     * 
-     * @param indice
-     * Metodo que elimina un objeto por id
+     *
+     * @param indice Metodo que elimina un objeto por id
      */
     public void eliminarObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
             inventario[indice] = null;
         }
     }
-    
+
     /**
-     * 
+     *
      * @param opcion
-     * @param valiente
-     * Metodo que permite usar un objeto en el valiente actual
+     * @param valiente Metodo que permite usar un objeto en el valiente actual
      */
     @Override
     public void usarObjeto(String opcion, Valiente valiente) {
@@ -116,8 +113,12 @@ public class Inventario implements InventarioInterface {
             // --- LÓGICA PARA ARMAS ---
             if (nuevo instanceof Arma armaNueva) {
                 Arma actual = valiente.getArma();
-                int dañoActual = valiente.getFuerza() + (actual != null ? actual.getAtaque() : 0);
-                int dañoNuevo = valiente.getFuerza() + armaNueva.getAtaque();
+
+                // Comparación corregida para mostrar el daño real sin acumular
+                int dañoActual = valiente.getFuerza();
+                int dañoNuevo = (actual != null)
+                        ? (valiente.getFuerza() - actual.getAtaque()) + armaNueva.getAtaque()
+                        : valiente.getFuerza() + armaNueva.getAtaque();
 
                 System.out.println("\n--- COMPARACIÓN DE DAÑO ---");
                 System.out.println("Actual: " + dañoActual + " | Con " + armaNueva.getNombre() + ": " + dañoNuevo);
@@ -125,18 +126,25 @@ public class Inventario implements InventarioInterface {
                 System.out.print("¿Equipar? (s/n): ");
 
                 if (teclado.nextLine().equalsIgnoreCase("s")) {
-                    inventario[indice] = actual; // La vieja (o null) vuelve al inventario
+                    // La vieja (o null) vuelve al inventario
+                    if (valiente.getArma() != null) {
+                        valiente.setFuerza(valiente.getFuerza() - valiente.getArma().getAtaque());
+                    }
+                    inventario[indice] = actual;
                     armaNueva.equipar(valiente); // El valiente se pone la nueva
+                    valiente.setFuerza(valiente.getFuerza() + armaNueva.getAtaque());
                     System.out.println(GREEN + "¡Arma equipada!" + RESET);
                 }
-                
-                valiente.setFuerza(dañoNuevo);
 
-                // --- LÓGICA PARA ESCUDOS ---
+                // LÓGICA PARA ESCUDOS
             } else if (nuevo instanceof Escudo escudoNuevo) {
                 Escudo actual = valiente.getEscudo();
-                int defActual = valiente.getDefensa() + (actual != null ? actual.getDefensa() : 0);
-                int defNueva = valiente.getDefensa() + escudoNuevo.getDefensa();
+
+                // Comparación corregida para mostrar la defensa real
+                int defActual = valiente.getDefensa();
+                int defNueva = (actual != null)
+                        ? (valiente.getDefensa() - actual.getDefensa()) + escudoNuevo.getDefensa()
+                        : valiente.getDefensa() + escudoNuevo.getDefensa();
 
                 System.out.println("\n--- COMPARACIÓN DE DEFENSA ---");
                 System.out.println("Actual: " + defActual + " | Con " + escudoNuevo.getNombre() + ": " + defNueva);
@@ -144,11 +152,14 @@ public class Inventario implements InventarioInterface {
                 System.out.print("¿Equipar? (s/n): ");
 
                 if (teclado.nextLine().equalsIgnoreCase("s")) {
+                    if (actual != null) {
+                        valiente.setDefensa(valiente.getDefensa() - actual.getDefensa());
+                    }
                     inventario[indice] = actual; // Intercambio
                     escudoNuevo.equipar(valiente);
+                    valiente.setDefensa(valiente.getDefensa() + escudoNuevo.getDefensa());
                     System.out.println(GREEN + "¡Escudo equipado!" + RESET);
                 }
-                valiente.setDefensa(defNueva);
 
                 // --- LÓGICA PARA PLANTAS (Curación y Borrado) ---
             } else if (nuevo instanceof Planta planta) {
@@ -167,7 +178,7 @@ public class Inventario implements InventarioInterface {
             System.out.println(RED + "Debes introducir el NÚMERO del hueco (0, 1, 2 o 3)" + RESET);
         }
     }
-    
+
     /**
      * Metodo que muestra el inventario
      */
