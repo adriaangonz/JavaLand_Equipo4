@@ -22,6 +22,7 @@ public class Mapa {
     private boolean[][] visible;
     private int monstruos;
     private int objetos;
+    private boolean nether;
 
     // Colores 
     private static final String RESET = "\u001B[0m";
@@ -49,6 +50,7 @@ public class Mapa {
     }
 
     public Mapa(boolean nether) {
+        this.nether=nether;
         if (!nether) {
             this.monstruos = 5;
             this.objetos = 5;
@@ -169,5 +171,10 @@ public class Mapa {
     public boolean esVisible(int columna, int fila) {
         return this.visible[fila][columna];
     }
+
+    public boolean isNether() {
+        return nether;
+    }
+    
 
 }

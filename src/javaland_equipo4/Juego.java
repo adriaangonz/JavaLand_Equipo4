@@ -329,7 +329,13 @@ public class Juego implements JuegoInterface {
                 if (casillasAdyacentes(j, i)) {
                     System.out.print(this.mapa.getCasillas()[i][j]);
                 } else {
-                    System.out.print("[x]");
+                    if(mapa.isNether()){
+                        System.out.print(RED +"[x]"+ RESET);
+                    }
+                    else{
+                        System.out.print("[x]");
+                    }
+                    
                 }
 
             }
@@ -506,21 +512,41 @@ public class Juego implements JuegoInterface {
     }
     public boolean hayObstaculo(int posicionX,int posicionY){
         boolean superado=true;
-        if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[/]" + RESET) && valiente.getFuerza()<15){
-            System.out.println("No puedes pasar el muro");
+        if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[/]" + RESET)){
+            if(valiente.getFuerza()<15){
+            System.out.println("No puedes romper el muro");
             superado=false;
+            }
+            else{
+                System.out.println("Has partido el muro");
+            }
         }
-        if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[♣]" + RESET)&& valiente.getHabilidad()<16){
-            System.out.println("No puedes pasar el arbol");
+        if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[♣]" + RESET)){
+            if(valiente.getHabilidad()<16){
+            System.out.println("No puedes escalar el arbol");
             superado=false;
+            }
+            else{
+                System.out.println("Has escalado el arbol");
+            }
         }
-        if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD + "[●]" + RESET)&& valiente.getDefensa()<14){
+        if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD + "[●]" + RESET)){
+            if(valiente.getDefensa()<14){
             System.out.println("No puedes pasar la roca");
             superado=false;
+            }
+            else{
+                System.out.println("Has partido la roca");
+            }
         }
-        if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD+ "[≈]" + RESET)&& valiente.getVelocidad()<16){
-            System.out.println("No puedes pasar el rio");
+        if (mapa.getCasillas()[posicionX][posicionY].equals(CYAN+ "[≈]" + RESET)){
+            if(valiente.getVelocidad()<16){
+            System.out.println("No puedes cruzar el rio");
             superado=false;
+            }
+            else{
+                System.out.println("Has cruzado el rio");
+            }
         }
         return superado;
     }
