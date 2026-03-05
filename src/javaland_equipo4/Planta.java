@@ -1,37 +1,51 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package javaland_equipo4;
 
 /**
- *
- * @author saul1
+ * Clase que representa un objeto de tipo Planta.
+ * Se utiliza principalmente para recuperar puntos de vida del Valiente.
+ * @author saul
  */
 public class Planta extends Objeto {
     
     /**
-     * 
-     * @param nombre nombre de la planta
-     * @param tipo tipo de planta
-     * @param valor valor de la planta
-     * @param idPasiva pasiva de la planta
-     * Constructor de la planta por parametros
+     * Constructor de la planta por parámetros.
+     * @author saul
+     * @param nombre El nombre identificativo de la planta.
+     * @param tipo El tipo de categoría al que pertenece.
+     * @param valor La cantidad de vida que recupera al ser usada.
+     * @param idPasiva El identificador de su efecto pasivo.
      */
     public Planta(String nombre, String tipo, int valor, int idPasiva) {
         super(nombre, tipo, valor, idPasiva);
     }
 
-
-
-    //getters y setters
+    /**
+     * Obtiene la cantidad de vida que recupera la planta.
+     * @author saul
+     * @return int con el valor de recuperación.
+     */
     public int getRecupera() {
         return valor;
     }
 
-    public void setRecupera(int recupera) {
-        this.valor = valor;
-    }
     /**
-     * 
-     * @param valiente valiente que usa la planta
-     * Metodo que usa la planta
+     * Establece la cantidad de vida que recupera la planta.
+     * @author saul
+     * @param recupera El nuevo valor de recuperación.
+     */
+    public void setRecupera(int recupera) {
+        this.valor = recupera;
+    }
+
+    /**
+     * Implementación del método equipar que, en el caso de la planta, 
+     * actúa como un consumible aumentando la vida del Valiente.
+     * @author saul
+     * @param valiente El personaje que utiliza la planta para sanarse.
      */
     @Override
     public void equipar(Valiente valiente) {

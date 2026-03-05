@@ -10,8 +10,10 @@ import java.util.Scanner;
 import javaland_interfaces.JuegoInterface;
 
 /**
- *
- * @author cococ
+ * Clase principal que gestiona el flujo del juego Javaland.
+ * Controla la navegación por el mapa, el inventario, los obstáculos y el combate.
+ * * @author Ciro
+ * 
  */
 public class Juego implements JuegoInterface {
 
@@ -28,7 +30,7 @@ public class Juego implements JuegoInterface {
     private boolean victoria;
     
 
-    // Colores 
+    // Colores para la interfaz de consola
     String RESET = "\u001B[0m";
     String CYAN = "\u001B[36m";
     String PURPLE = "\u001B[35m";
@@ -38,13 +40,14 @@ public class Juego implements JuegoInterface {
     String BOLD = "\u001B[1m";
     
     /**
-     * Metodo que inica el juego
+     * Inicia el ciclo de vida del juego: inicialización, introducción, 
+     * selección de personaje y bucle principal.
      */
     @Override
     public void iniciarJuego() {
         teclado = new Scanner(System.in);
         System.out.println(PURPLE + BOLD + "\n╔════════════════════════════════════════════╗" + RESET);
-        System.out.println(PURPLE + BOLD + "       JAVALAND: EL COMPILADOR OSCURO         " + RESET);
+        System.out.println(PURPLE + BOLD + "        JAVALAND: EL COMPILADOR OSCURO          " + RESET);
         System.out.println(PURPLE + BOLD + "╚════════════════════════════════════════════╝" + RESET);
 
         this.posicionX = 0;
@@ -55,7 +58,7 @@ public class Juego implements JuegoInterface {
         this.valiente = null;
         this.c1 = new Combate();
 
-        // Introduccion
+        // Introducción narrativa
         mostrarIntro();
 
         this.valiente = creacionOEleccionValiente();
@@ -72,12 +75,12 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * Metodo que muestra la introduccion del juego
+     * Muestra la introducción narrativa con un efecto de escritura.
      */
     private void mostrarIntro() {
         String intro = """
                 
-                \u001B[36m\u001B[1mLa Tierra de los Códigos Olvidados\u001B[0m      [Presiona ENTER para saltar]             
+                \u001B[36m\u001B[1mLa Tierra de los Códigos Olvidados\u001B[0m      [Presiona ENTER para saltar]               
                 
                 En los remotos confines del Reino Digital, donde los algoritmos susurran antiguos
                 secretos y los bucles se entrelazan como místicas serpientes, se extiende un mundo
@@ -100,29 +103,24 @@ public class Juego implements JuegoInterface {
 
         for (char c : intro.toCharArray()) {
             System.out.print(c);
-
             try {
-                // Si el usuario pulsó una tecla, System.in.available() será > 0
                 if (!saltar && System.in.available() > 0) {
                     saltar = true;
-                    System.in.read(); // Limpiar el buffer manin
+                    System.in.read(); 
                 }
-
                 if (!saltar) {
                     Thread.sleep(18);
                 }
-            } catch (Exception e) {
-
-            }
+            } catch (Exception e) {}
         }
-        System.out.println(); // Salto de línea al terminar
-
+        System.out.println(); 
         System.out.println("\n\n" + PURPLE + "Presiona ENTER para comenzar tu aventura..." + RESET);
         new Scanner(System.in).nextLine();
     }
     
     /**
-     * Metodo que muestra una animacion cuando atraviesas el portal
+     * Muestra una animación ASCII y texto al cambiar de sector a través de un portal.
+     * @author saul
      */
     private void mostrarTransicionPortal() {
         String tituloAscii = """
@@ -153,10 +151,7 @@ public class Juego implements JuegoInterface {
 
         for (String linea : tituloAscii.split("\n")) {
             System.out.println(linea);
-            try {
-                Thread.sleep(150);
-            } catch (Exception e) {
-            }
+            try { Thread.sleep(150); } catch (Exception e) {}
         }
 
         boolean saltar = false;
@@ -167,19 +162,16 @@ public class Juego implements JuegoInterface {
                     saltar = true;
                     System.in.read();
                 }
-                if (!saltar) {
-                    Thread.sleep(20);
-                }
-            } catch (Exception e) {
-            }
+                if (!saltar) { Thread.sleep(20); }
+            } catch (Exception e) {}
         }
-
         System.out.println("\n\n" + PURPLE + "Recompilando realidad... Presiona ENTER" + RESET);
         teclado.nextLine();
     }
     
     /**
-     * Metodo que muestra los metodos al final del juego
+     * Muestra la historia final y los créditos con los nombres de los desarrolladores.
+     * @author saul
      */
     private void mostrarCreditosFinales() {
         String historiaFinal = """
@@ -195,33 +187,27 @@ public class Juego implements JuegoInterface {
         
         """;
 
-        // 1. Mostrar historia final (Máquina de escribir)
         for (char c : historiaFinal.toCharArray()) {
             System.out.print(c);
-            try {
-                Thread.sleep(30);
-            } catch (Exception e) {
-            }
+            try { Thread.sleep(30); } catch (Exception e) {}
         }
 
         System.out.println("\n" + YELLOW + "Presiona ENTER para ver a los arquitectos de este mundo..." + RESET);
         teclado.nextLine();
 
-        // 2. Créditos finales (Animación de scroll)
         String[] creditos = {
-            "", "", "", // Espacios para el efecto de subida
+            "", "", "",
             PURPLE + "╔════════════════════════════════════╗" + RESET,
             PURPLE + "║           EQUIPO 4 PRESENTA        ║" + RESET,
             PURPLE + "╚════════════════════════════════════╝" + RESET,
             "",
             CYAN + "      SAUL - Master of Logic" + RESET,
-            CYAN + "     ADRIAN - Byte Commander" + RESET,
-            CYAN + "     MARCOS - Syntax Guardian" + RESET,
-            CYAN + "      CIRO - Bug Destroyer" + RESET,
+            CYAN + "      ADRIAN - Byte Commander" + RESET,
+            CYAN + "      MARCOS - Syntax Guardian" + RESET,
+            CYAN + "       CIRO - Bug Destroyer" + RESET,
             "",
             YELLOW + "      GRACIAS POR JUGAR JAVALAND" + RESET,
             "", "", ""
-
         };
 
         String arteVictoria = """
@@ -234,9 +220,9 @@ public class Juego implements JuegoInterface {
             \u001B[31m           .      < <( X )> >    .      .      \u001B[0m
             \u001B[31m       .      .    \\  ---  /      .      .      \u001B[0m
             \u001B[31m     .      .       \\[___]/       .      .      \u001B[0m
-            \u001B[31m           .        /     \\        .      .      \u001B[0m
-            \u001B[31m       .           /       \\           .     \u001B[0m
-            \u001B[31m                  V V V V V V           .      .\u001B[0m
+            \u001B[31m           .         /     \\         .      .      \u001B[0m
+            \u001B[31m       .            /       \\            .     \u001B[0m
+            \u001B[31m                  V V V V V V            .      .\u001B[0m
             \u001B[31m          .      .           .      .          .\u001B[0m
         
         \u001B[32m       [ SAUL ]    [ ADRIAN ]    [ MARCOS ]    [ CIRO ]\u001B[0m
@@ -246,28 +232,22 @@ public class Juego implements JuegoInterface {
         
         \u001B[36m    [ LOGIC ]   [ BYTES ]     [ SYNTAX ]   [ BUGS ]\u001B[0m
         \u001B[36m    [ MASTER ]  [ COMMANDER ] [ GUARDIAN ] [ DESTROYER ]\u001B[0m
-        
         """;
 
         for (String linea : creditos) {
             System.out.println("\t\t" + linea);
-            try {
-                Thread.sleep(400);
-            } catch (Exception e) {
-            }
+            try { Thread.sleep(400); } catch (Exception e) {}
         }
         for (String linea : arteVictoria.split("\n")) {
             System.out.println(linea);
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-            } // Delay para la animación
+            try { Thread.sleep(200); } catch (Exception e) {}
         }
     }
     
     /**
-     * Meotodo que elige la manera de crear al valiente
-     * @return el valiente con el que jugaras
+     * Gestiona el menú de creación o elección del personaje Valiente.
+     * * @return El objeto {@link Valiente} con el que se jugará la partida.
+     * @author saul
      */
     @Override
     public Valiente creacionOEleccionValiente() {
@@ -282,7 +262,7 @@ public class Juego implements JuegoInterface {
             System.out.println(YELLOW + "1 - Valiente Personalizado" + RESET);
             System.out.println(YELLOW + "2 - Valientes Iniciales" + RESET);
 
-            System.out.print(CYAN + "\nElige un Valiente: " + RESET);
+            System.out.print(CYAN + "\nElige una opción: " + RESET);
             opcion = teclado.nextInt();
             teclado.nextLine();
 
@@ -290,30 +270,26 @@ public class Juego implements JuegoInterface {
                 case 1 -> {
                     System.out.println(GREEN + "Creando Valiente personalizado..." + RESET);
                     this.valiente = new Valiente();
-                    
                 }
                 case 2 -> {
-
                     this.valiente = new GestorValientes().crearValientesIniciales();
-                    
                 }
                 default -> {
                     System.out.println(RED + "Esa no es una opción válida." + RESET);
                 }
             }
-
         } catch (InputMismatchException e) {
             System.out.println(RED + "Eso no es un número válido." + RESET);
             teclado.nextLine();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(RED + "Ese no es un Valiente." + RESET);
         }
-
         return valiente;
     }
     
     /**
-     * Metodo que muestra las estadisticas del valiente y los monstruos y enemigos restantes
+     * Muestra las estadísticas actuales del personaje y el progreso en el mapa.
+     * @author saul
      */
     @Override
     public void mostrarEstadoJuego() {
@@ -324,7 +300,8 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * Metodo que muestra el menu principal
+     * Inicia el proceso de exploración del mapa.
+     * @author saul
      */
     @Override
     public void mostrarMenuPrincipal() {
@@ -332,14 +309,15 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * Metodo que muestra las estadisticas del valiente
+     * Muestra por consola los datos del valiente actual.
      */
     private void mostrarValiente() {
         System.out.println(this.valiente.toString());
     }
     
     /**
-     * Metodo que muestra el inventario y equipa un objeto
+     * Abre el inventario y permite al usuario equipar o usar un objeto mediante su índice.
+     * @author ciro
      */
     private void equiparObjeto() {
         System.out.println(GREEN + "Mostrando inventario..." + RESET);
@@ -347,12 +325,13 @@ public class Juego implements JuegoInterface {
         System.out.println(CYAN + "Introduce el número del SLOT (0-3) para equipar/usar, o n para volver:" + RESET); 
         String opcion = teclado.nextLine();
         if (!opcion.equalsIgnoreCase("n")) {
-        valiente.getInventario().usarObjeto(opcion, valiente);
-    }
+            valiente.getInventario().usarObjeto(opcion, valiente);
+        }
     }
     
     /**
-     * Meotodo que muestra el mapa
+     * Renderiza el mapa en consola, mostrando solo las casillas visibles o adyacentes.
+     * @author ciro
      */
     private void mostrarMapa() {
         for (int i = 0; i < this.mapa.getAlto(); i++) {
@@ -366,20 +345,18 @@ public class Juego implements JuegoInterface {
                     else{
                         System.out.print("[x]");
                     }
-                    
                 }
-
             }
             System.out.println();
         }
     }
     
     /**
-     * 
-     * @param coordenada
-     * @param direccion
-     * @return Si te estas moviendo dentro del mapa
-     * Meotodo que devuelve si el movimiento es valido
+     * Valida si el movimiento solicitado está dentro de los límites del mapa.
+     * * @param coordenada 1 para eje X, diferente para eje Y.
+     * @param direccion 1 para positivo (abajo/derecha), diferente para negativo (arriba/izquierda).
+     * @return true si el movimiento es válido, false en caso contrario.
+     * @author ciro
      */
     public boolean movimientoValido(int coordenada, int direccion) {
         boolean validacion;
@@ -400,11 +377,11 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * 
-     * @param fila
-     * @param columna
-     * @return Si la casilla es adyacente
-     * Metodo que devuelve si la casilla es adyacente
+     * Determina si una casilla es visible para el jugador (si ya fue visitada o es adyacente).
+     * * @param fila Coordenada Y de la casilla.
+     * @param columna Coordenada X de la casilla.
+     * @return true si la casilla es visible, false de lo contrario.
+     * @author ciro
      */
     public boolean casillasAdyacentes(int fila, int columna) {
         return mapa.esVisible(fila, columna)
@@ -416,18 +393,15 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * Meotodo que controla el flujo del mapa y del menu principal
+     * Bucle principal de exploración. Gestiona el input de movimiento y eventos del mapa.
+     * @author ciro
      */
     @Override
     public void explorarMapa() {
         String opcion = "";
         do {
-            
-            
-            
             try {
                 mostrarMapa();
-
                 System.out.println(BOLD + "───────────────────────────────" + RESET);
                 System.out.println(CYAN + "[W/A/S/D] " + RESET + "Moverse | "
                         + YELLOW + "[E] " + RESET + "Estado | "
@@ -472,69 +446,54 @@ public class Juego implements JuegoInterface {
                             mapa.setVisible(posicionY, posicionX);
                             posicionY++;
                         } else {
-                            System.out.println(RED + "No puedes atravesarlo"
-                                    + "" + RESET);
+                            System.out.println(RED + "No puedes atravesarlo" + RESET);
                         }
                     }
-                    case "e" ->
-                        mostrarEstadoJuego();
-                    case "i" ->
-                        equiparObjeto();
-                    case "q" ->
-                        System.out.println(RED + "Saliendo..." + RESET);
-                    default ->
-                        System.out.println(RED + "Acción no reconocida." + RESET);
+                    case "e" -> mostrarEstadoJuego();
+                    case "i" -> equiparObjeto();
+                    case "q" -> System.out.println(RED + "Saliendo..." + RESET);
+                    default -> System.out.println(RED + "Acción no reconocida." + RESET);
                 }
 
                 if ("wasd".contains(opcion)) {
+                    // Evento Objeto [?]
                     if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[?]" + RESET)) {
-
-                        // Llamo a GeneradorObjetos que tiene 5 armas y 5 escudos y de manera aleatoria te da uno
                         Objeto objetoEncontrado = GeneradorObjetos.generarLootAleatorio();
-
-                        
                         System.out.println("\n" + YELLOW + "╔════════════════════════════════════╗" + RESET);
                         System.out.println(YELLOW + "║         ¡OBJETO ENCONTRADO!        ║" + RESET);
                         System.out.println(YELLOW + "╚════════════════════════════════════╝" + RESET);
                         System.out.println("Has encontrado: " + BOLD + objetoEncontrado.getNombre() + RESET);
                         System.out.println("Tipo: " + objetoEncontrado.getTipo() + " | Poder: " + objetoEncontrado.getValor());
 
-                        // Meter el obj al inv
                         this.valiente.getInventario().agregarObjeto(objetoEncontrado);
-
-                        // resatr objeto del contador
-
                         mapa.setObjetos(mapa.getObjetos() - 1);
-                        // Casilla a una vacía [ ] para que no pueda cogerlo infinitas veces xd
                         mapa.setCasilla(posicionY, posicionX, BOLD + "[ ]" + RESET);
                     }
+                    // Evento Monstruo [!]
                     if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[!]" + RESET)) {
                         int nivel = posicionY > posicionX ? posicionY : posicionX;
                         if(this.c1.iniciarCombate(valiente, gm1.generarMonstruos(nivel))){
                             mapa.setMonstruos(mapa.getMonstruos() - 1);
-                        enemigosAsesinados++;
-                        }
-                        else{
+                            enemigosAsesinados++;
+                        } else {
                             this.muerto=true;
                         }
-                        
-                        
                     }
+                    // Evento Portal [0]
                     if (mapa.getCasillas()[posicionX][posicionY].equals(CYAN + "[0]" + RESET)) {
                         mostrarTransicionPortal();
                         mapa = new Mapa(true);
                         this.posicionX = 0;
                         this.posicionY = 0;
                     }
+                    // Evento Boss [#]
                     if (mapa.getCasillas()[posicionX][posicionY].equals(PURPLE + "[#]" + RESET)) {
                         System.out.println(RED + "El aire se torna oscuro... El Compilador Oscuro aparece." + RESET);
                         if(this.c1.iniciarCombate(valiente, new CompiladorOscuro(enemigosAsesinados))){
                             this.victoria = true;
-                        }
-                        else{
+                        } else {
                             this.muerto=true;
                         }
-                        
                     }
                     mapa.setCasilla(posicionY, posicionX, YELLOW + "[*]" + RESET);
                 }
@@ -548,47 +507,47 @@ public class Juego implements JuegoInterface {
     }
     
     /**
-     * 
-     * @param posicionX
-     * @param posicionY
-     * @return Si hay un Obstaculo y si ha sido superado
-     * Metodo que valida la superacion de un obstaculo
+     * Verifica si hay un obstáculo en la posición y si el Valiente tiene las estadísticas necesarias para superarlo.
+     * * @param posicionX Coordenada X a comprobar.
+     * @param posicionY Coordenada Y a comprobar.
+     * @return true si no hay obstáculo o si el obstáculo ha sido superado; false si el paso está bloqueado.
+     * @author ciro
      */
     public boolean hayObstaculo(int posicionX,int posicionY){
         boolean superado=true;
+        // Obstáculo Muro
         if (mapa.getCasillas()[posicionX][posicionY].equals(RED + "[/]" + RESET)){
             if(valiente.getFuerza()<15){
-            System.out.println("No puedes romper el muro");
-            superado=false;
-            }
-            else{
+                System.out.println("No puedes romper el muro");
+                superado=false;
+            } else {
                 System.out.println("Has partido el muro");
             }
         }
+        // Obstáculo Árbol
         if (mapa.getCasillas()[posicionX][posicionY].equals(GREEN + "[♣]" + RESET)){
             if(valiente.getHabilidad()<16){
-            System.out.println("No puedes escalar el arbol");
-            superado=false;
-            }
-            else{
+                System.out.println("No puedes escalar el arbol");
+                superado=false;
+            } else {
                 System.out.println("Has escalado el arbol");
             }
         }
+        // Obstáculo Roca
         if (mapa.getCasillas()[posicionX][posicionY].equals(BOLD + "[●]" + RESET)){
             if(valiente.getDefensa()<14){
-            System.out.println("No puedes pasar la roca");
-            superado=false;
-            }
-            else{
+                System.out.println("No puedes pasar la roca");
+                superado=false;
+            } else {
                 System.out.println("Has partido la roca");
             }
         }
+        // Obstáculo Río
         if (mapa.getCasillas()[posicionX][posicionY].equals(CYAN+ "[≈]" + RESET)){
             if(valiente.getVelocidad()<16){
-            System.out.println("No puedes cruzar el rio");
-            superado=false;
-            }
-            else{
+                System.out.println("No puedes cruzar el rio");
+                superado=false;
+            } else {
                 System.out.println("Has cruzado el rio");
             }
         }

@@ -4,11 +4,16 @@ import java.util.Scanner;
 import javaland_interfaces.InventarioInterface;
 
 /**
- *
- * @author diego
+ * Clase que gestiona el almacenamiento de objetos del Valiente.
+ * Permite añadir, eliminar, mostrar y usar objetos (Armas, Escudos y Plantas).
+ * @author Diego
  */
 public class Inventario implements InventarioInterface {
 
+    /**
+     * Constructor por defecto del inventario.
+     * @author Diego
+     */
     public Inventario() {
 
     }
@@ -25,8 +30,10 @@ public class Inventario implements InventarioInterface {
     Objeto[] inventario = new Objeto[4];
 
     /**
-     *
-     * @param obj Metodo que agrega objetos
+     * Agrega un objeto al inventario en el primer hueco libre.
+     * Si el inventario está lleno, permite al usuario elegir qué objeto descartar para hacer sitio.
+     * @author Diego
+     * @param obj El objeto que se intenta agregar al sistema.
      */
     @Override
     public void agregarObjeto(Objeto obj) {
@@ -68,10 +75,10 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     *
-     * @param indice
-     * @return Objeto del indice si esta vacio Metodo que devuelve el objeto del
-     * inventario por id
+     * Devuelve el objeto almacenado en un índice específico del inventario.
+     * @author Diego
+     * @param indice El índice del hueco (0 a 3).
+     * @return El objeto en dicha posición o null si está vacío o fuera de rango.
      */
     public Objeto getObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
@@ -81,8 +88,9 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     *
-     * @param indice Metodo que elimina un objeto por id
+     * Elimina un objeto del inventario vaciando el hueco correspondiente.
+     * @author Diego
+     * @param indice El índice del objeto a eliminar.
      */
     public void eliminarObjeto(int indice) {
         if (indice >= 0 && indice < inventario.length) {
@@ -91,9 +99,11 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     *
-     * @param opcion
-     * @param valiente Metodo que permite usar un objeto en el valiente actual
+     * Permite al usuario usar o equipar un objeto del inventario.
+     * Maneja la lógica de comparación de estadísticas y el intercambio de equipo.
+     * @author Diego
+     * @param opcion El índice del objeto en formato String.
+     * @param valiente El personaje que recibirá los efectos o el equipo.
      */
     @Override
     public void usarObjeto(String opcion, Valiente valiente) {
@@ -180,7 +190,9 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     * Metodo que muestra el inventario
+     * Muestra visualmente el estado del inventario en la interfaz de consola.
+     * Utiliza colores y formato de tabla para detallar cada objeto y su estadística.
+     * @author Diego
      */
     @Override
     public void mostrarInventario() {
@@ -234,7 +246,10 @@ public class Inventario implements InventarioInterface {
     }
 
     /**
-     * Método auxiliar para que el usuario entienda qué hace cada ID de pasiva
+     * Traduce el identificador numérico de una pasiva a su nombre legible.
+     * @author Diego
+     * @param id El identificador de la pasiva.
+     * @return El nombre descriptivo de la habilidad pasiva.
      */
     private String traducirPasiva(int id) {
         return switch (id) {

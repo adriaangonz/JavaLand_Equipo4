@@ -1,12 +1,14 @@
-
 package javaland_equipo4;
+
 import java.util.Random;
+
 /**
- *
- * @author DAM106
+ * Clase encargada de la generación de loot aleatorio (Armas, Escudos y Plantas).
+ * @author Saul
  */
 public class GeneradorObjetos {
     private static final Random r = new Random();
+    
     // --- CATÁLOGO DE ARMAS ---
     private static final Arma[] poolArmas = {
         new Arma("Rama de Árbol", "Arma", 5, 0),        
@@ -26,7 +28,9 @@ public class GeneradorObjetos {
     };
 
     /**
-     * Devuelve un objeto totalmente aleatorio entre armas, escudos y plantas.
+     * Devuelve un objeto totalmente aleatorio entre armas, escudos y plantas basándose en probabilidades.
+     * @author Saul
+     * @return Un objeto de tipo Planta (40%), Escudo (30%) o Arma (30%) seleccionado al azar.
      */
     public static Objeto generarLootAleatorio() {
         int suerte = r.nextInt(100);

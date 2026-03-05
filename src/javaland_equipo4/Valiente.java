@@ -1,10 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package javaland_equipo4;
 
 import java.util.Scanner;
 
 /**
- *
- * @author DAM106
+ * Clase que representa al protagonista del juego. Gestiona la asignación de puntos iniciales,
+ * el inventario, el equipamiento y las habilidades especiales según la clase del héroe.
+ * @author saul
  */
 public class Valiente extends Personaje {
 
@@ -17,6 +22,7 @@ public class Valiente extends Personaje {
     private int[][] posicion = {{1, 1}};
     private Inventario inventario;
 
+    // Colores para la interfaz de consola
     String RESET = "\u001B[0m";
     String CYAN = "\u001B[36m";
     String PURPLE = "\u001B[35m";
@@ -25,6 +31,11 @@ public class Valiente extends Personaje {
     String RED = "\u001B[31m";
     String BOLD = "\u001B[1m";
 
+    /**
+     * Constructor por defecto que inicia el proceso interactivo de creación de personaje.
+     * Permite al usuario repartir puntos entre ataque, defensa, habilidad y velocidad.
+     * @author saul
+     */
     public Valiente() {
         System.out.println(PURPLE + "===== CREACIÓN DE PERSONAJE =====" + RESET);
         this.inventario = new Inventario();
@@ -33,14 +44,15 @@ public class Valiente extends Personaje {
         int puntosRestantes = totalPuntos;
 
         System.out.print(CYAN + "Introduce un nombre para tu valiente: " + RESET);
-        String nombre = teclado.nextLine();
-        this.setNombre(nombre); // Guardamos el nombre
+        String nombreInput = teclado.nextLine();
+        this.setNombre(nombreInput); 
 
-        int vida = 100, ataque = 1, defensa = 1, habilidad = 1, velocidad = 1;
-        this.setVida(vida);   // Guardamos vida base
-        this.setNivel(1);     // Nivel inicial
+        int vidaBase = 100;
+        this.setVida(vidaBase);  
+        this.setNivel(1);     
 
-        // ATAQUE
+        // Distribución de puntos de ATAQUE
+        int ataque;
         do {
             try {
                 System.out.print("¿Cuánto ataque quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
@@ -56,10 +68,11 @@ public class Valiente extends Personaje {
                 ataque = -1;
             }
         } while (ataque < 0 || ataque > puntosRestantes);
-        this.setFuerza(ataque); // Guardamos ataque
+        this.setFuerza(ataque); 
         puntosRestantes -= ataque;
 
-        // DEFENSA
+        // Distribución de puntos de DEFENSA
+        int defensa;
         do {
             try {
                 System.out.print("¿Cuánta defensa quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
@@ -75,10 +88,11 @@ public class Valiente extends Personaje {
                 defensa = -1;
             }
         } while (defensa < 0 || defensa > puntosRestantes);
-        this.setDefensa(defensa); // Guardamos defensa
+        this.setDefensa(defensa); 
         puntosRestantes -= defensa;
 
-        // HABILIDAD
+        // Distribución de puntos de HABILIDAD
+        int habilidad;
         do {
             try {
                 System.out.print("¿Cuánta habilidad quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
@@ -94,10 +108,11 @@ public class Valiente extends Personaje {
                 habilidad = -1;
             }
         } while (habilidad < 0 || habilidad > puntosRestantes);
-        this.setHabilidad(habilidad); // Guardamos habilidad
+        this.setHabilidad(habilidad); 
         puntosRestantes -= habilidad;
 
-        // VELOCIDAD
+        // Distribución de puntos de VELOCIDAD
+        int velocidad;
         do {
             try {
                 System.out.print("¿Cuánta velocidad quieres añadir? (Puntos restantes: " + puntosRestantes + "): ");
@@ -113,10 +128,9 @@ public class Valiente extends Personaje {
                 velocidad = -1;
             }
         } while (velocidad < 0 || velocidad > puntosRestantes);
-        this.setVelocidad(velocidad); // Guardamos velocidad
+        this.setVelocidad(velocidad); 
         puntosRestantes -= velocidad;
 
-        // Resultado final
         System.out.println("\n" + GREEN + "===== PERSONAJE CREADO =====" + RESET);
         System.out.printf("Valiente: " + BOLD + "%s" + RESET + "%n", this.getNombre());
         System.out.printf("Vida: %d  Ataque: %d  Defensa: %d  Habilidad: %d  Velocidad: %d%n",
@@ -124,50 +138,52 @@ public class Valiente extends Personaje {
         System.out.println(YELLOW + "Puntos sin gastar: " + puntosRestantes + RESET);
     }
 
+    /**
+     * Constructor parametrizado para instanciar un Valiente con valores predefinidos.
+     * @author saul
+     * @param nombre Nombre del héroe.
+     * @param vida Puntos de salud iniciales.
+     * @param fuerza Puntos de ataque físico.
+     * @param defensa Puntos de resistencia.
+     * @param habilidad Puntos de destreza técnica.
+     * @param velocidad Puntos de agilidad.
+     * @param nivel Nivel actual del personaje.
+     */
     public Valiente(String nombre, int vida, int fuerza, int defensa, int habilidad, int velocidad, int nivel) {
         super(nombre, vida, fuerza, defensa, habilidad, velocidad, nivel);
         this.inventario = new Inventario();
     }
 
-    //Getters y setters
-    public Arma getArma() {
-        return arma;
-    }
+    /** @author saul @return El arma actualmente equipada. */
+    public Arma getArma() { return arma; }
 
-    public Escudo getEscudo() {
-        return escudo;
-    }
+    /** @author saul @return El escudo actualmente equipado. */
+    public Escudo getEscudo() { return escudo; }
 
-    public void setArma(Arma arma) {
-        this.arma = arma;
-    }
+    /** @author saul @param arma Arma a equipar al Valiente. */
+    public void setArma(Arma arma) { this.arma = arma; }
 
-    public void setEscudo(Escudo escudo) {
-        this.escudo = escudo;
-    }
+    /** @author saul @param escudo Escudo a equipar al Valiente. */
+    public void setEscudo(Escudo escudo) { this.escudo = escudo; }
 
-    public void setExperiencia(double experiencia) {
-        this.experiencia = experiencia;
-    }
+    /** @author saul @param experiencia Cantidad de experiencia a establecer. */
+    public void setExperiencia(double experiencia) { this.experiencia = experiencia; }
 
-    public double getExperiencia() {
-        return experiencia;
-    }
+    /** @author saul @return Valor decimal de la experiencia actual. */
+    public double getExperiencia() { return experiencia; }
 
-    public Inventario getInventario() {
-        return inventario;
-    }
+    /** @author saul @return El objeto Inventario del personaje. */
+    public Inventario getInventario() { return inventario; }
     
     /**
-     * 
-     * @param <T>
-     * @param personaje
-     * @return Fuerza del valiente
-     * Meotodo generico que devuelve la fuerza del valiente
+     * Calcula el daño total combinando la fuerza base y el ataque del arma equipada.
+     * @author saul
+     * @param <T> Tipo genérico del objetivo.
+     * @param personaje El objetivo del ataque.
+     * @return double con el daño total infligido.
      */
     @Override
     public <T> double atacar(T personaje) {
-
         int danio = this.getFuerza();
         if (this.getArma() != null) {
             danio += this.getArma().getAtaque();
@@ -176,9 +192,9 @@ public class Valiente extends Personaje {
     }
     
     /**
-     * 
-     * @param cantidad daño recibido
-     * Metodo generico que permite que el valiente reciba daño
+     * Aplica daño a la vida del valiente y muestra el resultado en consola.
+     * @author saul
+     * @param cantidad Entero que representa el daño a recibir.
      */
     @Override
     public void recibirDaño(int cantidad) {
@@ -190,85 +206,69 @@ public class Valiente extends Personaje {
     }
     
     /**
-     * 
-     * @param m Monstruo que recibe el efecto
-     * Metodo que permite al valiente usar sus habilidades especiales contra los monstruos
+     * Ejecuta una técnica especial sacrificando recursos (vida o equipo) según la clase.
+     * Soporta Guerrero (sacrifica arma), Paladín, Mago y Pícaro.
+     * @author saul
+     * @param m El monstruo que recibirá el impacto de la habilidad.
      */
     @Override
     public void usarHabilidadEspecial(Monstruo m) {
-        String valiente = this.getNombre().toLowerCase();
+        String clase = this.getNombre().toLowerCase();
         int dañoFinal = 0;
         int costeVida = 0;
 
-        // Colores para el feedback del sacrificio
-        String RED = "\u001B[31m";
-        String GREEN = "\u001B[32m";
-        String YELLOW = "\u001B[33m";
-        String RESET = "\u001B[0m";
-
-        if (valiente.contains("guerrero")) {
-            //cambias arma por ataque multiplicando el daño por 2,5
+        if (clase.contains("guerrero")) {
             if (this.getArma() != null) {
-                String nombreArma = getArma().getNombre(); // Guardamos el nombre antes de que sea null
+                String nombreArma = getArma().getNombre();
                 System.out.println(RED + "¡HOSTIA MONUMENTAL! Rompes tu " + nombreArma + " para un impacto devastador." + RESET);
-                dañoFinal = (int) (this.atacar(m) * 2.5); //se multiplica el daño
-                this.setArma(null); //se elimina el arma
+                dañoFinal = (int) (this.atacar(m) * 2.5);
+                this.setArma(null);
             } else {
                 System.out.println("No tienes un arma equipada para realizar este sacrificio.");
                 return;
             }
-
-        } else if (valiente.contains("paladin")) {
+        } else if (clase.contains("paladin")) {
             costeVida = 20;
-        } else if (valiente.contains("mago")) {
+        } else if (clase.contains("mago")) {
             costeVida = 25;
-        } else if (valiente.contains("picaro")) {
+        } else if (clase.contains("picaro")) {
             costeVida = 15;
         } else {
             costeVida = 10;
         }
 
-        //comprobamos que no se quede sin vida
-        if (!valiente.contains("guerrero") && this.getVida() <= costeVida) {
+        if (!clase.contains("guerrero") && this.getVida() <= costeVida) {
             System.out.println(RED + "¡VIDA INSUFICIENTE!" + RESET);
-            System.out.println(YELLOW + "No tienes suficiente vida para realizar este esfuerzo. Te quedarían 0 HP." + RESET);
             return;
         }
 
-        // Ejecución de habilidades de vida (Solo si no es guerrero, que ya atacó arriba)
-        if (!valiente.contains("guerrero")) {
-            if (valiente.contains("paladin")) {
-                // Cambia vida por defensa
+        if (!clase.contains("guerrero")) {
+            if (clase.contains("paladin")) {
                 System.out.println(RED + "¡VOTO DE SANGRE! Sacrificas 20 de vida para fortalecer tu defensa." + RESET);
                 this.setVida(this.getVida() - 20);
                 this.setDefensa(this.getDefensa() + 3);
                 dañoFinal = this.getFuerza() + this.getDefensa();
-
-            } else if (valiente.contains("mago")) {
-                // Pierdes vida para usar tu habilidad como fuerza x4
+            } else if (clase.contains("mago")) {
                 System.out.println(RED + "¡TRANSFERENCIA OSCURA! Usas tu fuerza vital como combustible mágico." + RESET);
                 this.setVida(this.getVida() - 25);
                 dañoFinal = this.getHabilidad() * 4;
-
-            } else if (valiente.contains("picaro")) {
-                // Pierdes vida y tu golpe hace el doble de daño
+            } else if (clase.contains("picaro")) {
                 System.out.println(RED + "¡FRENESÍ ASESINO! Te hieres al moverte a velocidades estrepitosas." + RESET);
                 this.setVida(this.getVida() - 15);
                 dañoFinal = (int) (this.atacar(m) * 2);
-
             } else {
-                // Personaje personalizado
                 System.out.println(RED + "¡ESFUERZO LÍMITE! Fuerzas tus músculos más allá de su capacidad." + RESET);
                 this.setVida(this.getVida() - 10);
                 dañoFinal = this.getFuerza() + 15;
             }
         }
-
         m.recibirDaño(dañoFinal);
     }
     
     /**
-     * Metodo que controla el nivel de los personajes y otorga un punto de estadistica a elegir cada nivel subido
+     * Gestiona el incremento de nivel, mejora de estadísticas base y 
+     * permite al usuario elegir una estadística adicional para subir.
+     * @author saul
      */
     @Override
     public void subirNivel() {
@@ -284,60 +284,30 @@ public class Valiente extends Personaje {
             this.setVelocidad(this.getVelocidad() + 1);
 
             System.out.println("\n ¡Has subido al nivel " + this.getNivel() + "! Tus atributos han mejorado.");
-            System.out.println("Ahora puedes mejorar una estadística adicional.");
 
             do {
-                System.out.println("""
-                ¿Qué estadística quieres subir?
-                1. Fuerza
-                2. Defensa
-                3. Vida
-                4. Velocidad
-                5. Habilidad
-                """);
+                System.out.println("¿Qué estadística adicional quieres subir? (1: Fuerza, 2: Defensa, 3: Vida, 4: Velocidad, 5: Habilidad)");
                 try {
                     int opcion = Integer.parseInt(teclado.nextLine());
-
                     switch (opcion) {
-                        case 1 -> {
-                            this.setFuerza(this.getFuerza() + 1);
-                            System.out.println("Has mejorado la Fuerza");
-                            mejorado = true;
-                        }
-                        case 2 -> {
-                            this.setDefensa(this.getDefensa() + 1);
-                            System.out.println("Has mejorado la Defensa");
-                            mejorado = true;
-                        }
-                        case 3 -> {
-                            this.setVida(this.getVida() + 10);
-                            System.out.println("Has mejorado la Vida");
-                            mejorado = true;
-                        }
-                        case 4 -> {
-                            this.setVelocidad(this.getVelocidad() + 1);
-                            System.out.println("Has mejorado la Velocidad");
-                            mejorado = true;
-                        }
-                        case 5 -> {
-                            this.setHabilidad(this.getHabilidad() + 1);
-                            System.out.println("Has mejorado la Habilidad");
-                            mejorado = true;
-                        }
-                        default ->
-                            System.out.println("Opción no válida, intenta de nuevo.");
+                        case 1 -> { this.setFuerza(this.getFuerza() + 1); mejorado = true; }
+                        case 2 -> { this.setDefensa(this.getDefensa() + 1); mejorado = true; }
+                        case 3 -> { this.setVida(this.getVida() + 10); mejorado = true; }
+                        case 4 -> { this.setVelocidad(this.getVelocidad() + 1); mejorado = true; }
+                        case 5 -> { this.setHabilidad(this.getHabilidad() + 1); mejorado = true; }
+                        default -> System.out.println("Opción no válida.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Por favor, introduce un número válido.");
+                    System.out.println("Introduce un número válido.");
                 }
             } while (!mejorado);
         }
     }
     
     /**
-     * 
-     * @return Estadisiticas del valiente
-     * Metodo que muestra las estadisticas del valiente
+     * Genera una cadena con el resumen de las estadísticas actuales del Valiente.
+     * @author saul
+     * @return String formateado con nombre, vida, ataque, defensa, habilidad y velocidad.
      */
     @Override
     public String toString() {
@@ -346,5 +316,4 @@ public class Valiente extends Personaje {
                 getVida(), getFuerza(), getDefensa(), getHabilidad(), getVelocidad()
         );
     }
-
 }

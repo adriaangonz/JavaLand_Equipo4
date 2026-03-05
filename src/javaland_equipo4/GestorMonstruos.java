@@ -5,8 +5,8 @@
 package javaland_equipo4;
 
 /**
- *
- * @author DAM124
+ * Clase encargada de la gestión, creación y eliminación de los monstruos en el juego.
+ * @author Marcos
  */
 import javaland_interfaces.GestoresInterface;
 
@@ -15,10 +15,10 @@ public class GestorMonstruos implements GestoresInterface {
     private static int contadorMonstruos = 0;
     
     /**
-     * 
-     * @param nivel nivel del monstruo
-     * @return monstuo creado si no supera el limite
-     * Metodo que genera un monstruo
+     * Genera un nuevo monstruo basado en el nivel proporcionado, siempre que no se supere el límite de 10.
+     * @author Marcos
+     * @param nivel Nivel estadístico que tendrá el monstruo generado.
+     * @return Una instancia de Monstruo o null si se ha alcanzado el máximo permitido.
      */
     @Override
     public Monstruo generarMonstruos(int nivel) {
@@ -34,10 +34,10 @@ public class GestorMonstruos implements GestoresInterface {
     }
     
     /**
-     * 
-     * @param m monstruo eliminado
-     * @param v valiente que recibe experiencia
-     * Metodo que devuelve exp en funcion del nivel del monstruo
+     * Procesa la eliminación de un monstruo, calcula la experiencia otorgada y la suma al valiente.
+     * @author Marcos
+     * @param m El monstruo que ha sido derrotado.
+     * @param v El valiente que recibe los puntos de experiencia.
      */
     @Override
     public void eliminarMonstruos(Monstruo m, Valiente v) {
@@ -48,10 +48,20 @@ public class GestorMonstruos implements GestoresInterface {
         v.setExperiencia(v.getExperiencia() + dropExperiencia);
     }
 
+    /**
+     * Obtiene la cantidad total de monstruos generados hasta el momento.
+     * @author Marcos
+     * @return El valor actual del contador de monstruos.
+     */
     public static int getContadorMonstruos() {
         return contadorMonstruos;
     }
 
+    /**
+     * Método de la interfaz no implementado en esta clase.
+     * @author Marcos
+     * @return null ya que esta clase no gestiona valientes.
+     */
     @Override
     public Valiente crearValientesIniciales() {
         return null;

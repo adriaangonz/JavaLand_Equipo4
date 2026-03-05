@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package javaland_equipo4;
 
 import java.util.Scanner;
 import javaland_interfaces.*;
 
 /**
- *
- * @author Adrian, Saul(pasivas)
+ * Clase que gestiona la lógica de los enfrentamientos entre Valientes y Monstruos.
+ * @author Adrian (Pasivas por Saul)
  */
 public class Combate implements CombateInterface {
 
@@ -24,11 +21,11 @@ public class Combate implements CombateInterface {
     private final GestorMonstruos gestor = new GestorMonstruos();
     
     /**
-     * 
-     * @param valiente
-     * @param monstruo
-     * @return resultado del combate
-     * Metodo que inicia el combate contra un monstruo
+     * Método que inicia el combate contra un monstruo y gestiona el bucle de turnos e iniciativa.
+     * @author Adrian
+     * @param valiente El personaje del jugador.
+     * @param monstruo El enemigo a enfrentar.
+     * @return true si el valiente sobrevive al combate, false si muere.
      */
     @Override
     public boolean iniciarCombate(Valiente valiente, Monstruo monstruo) {
@@ -54,10 +51,10 @@ public class Combate implements CombateInterface {
     }
     
     /**
-     * 
-     * @param v
-     * @param m
-     * Metodo para aplicar pasivas
+     * Aplica los efectos de pasivas que ocurren al inicio de cada turno.
+     * @author Saul
+     * @param v El valiente que posee el equipamiento.
+     * @param m El monstruo enfrentado.
      */
     private void aplicarPasivasInicioTurno(Valiente v, Monstruo m) {
         if (v.getEscudo() != null && v.getEscudo().getIdPasiva() == 5) {
@@ -66,12 +63,13 @@ public class Combate implements CombateInterface {
             System.out.println(GREEN + "✦ [PASIVA: RESTOS] La armadura repara tus circuitos. +" + cura + " HP" + RESET);
         }
     }
+
     /**
-     * 
-     * @param <T>
-     * @param atacante
-     * @param defensor
-     * Metodo generico para que pasen los turnos entre monstruo y valiente
+     * Gestiona el turno de un personaje, permitiendo elegir acciones si es un Valiente o atacando automáticamente si es un Monstruo.
+     * @author Adrian
+     * @param <T> Tipo genérico para los personajes en combate.
+     * @param atacante El personaje que realiza la acción este turno.
+     * @param defensor El personaje que recibe la acción.
      */
     @Override
     public <T> void turno(T atacante, T defensor) {
@@ -115,23 +113,23 @@ public class Combate implements CombateInterface {
                         }
                     }
                     case "3" -> {
-                        String valiente = v.getNombre().toLowerCase();
+                        String valienteNombre = v.getNombre().toLowerCase();
                         boolean puedeUsarHabilidad = true;
 
                         //comprobacion para que no muera al usar la habilidad
-                        if (valiente.contains("guerrero") && v.getArma() == null) {
+                        if (valienteNombre.contains("guerrero") && v.getArma() == null) {
                             System.out.println(RED + "No tienes un arma equipada para realizar este sacrificio." + RESET);
                             puedeUsarHabilidad = false;
-                        } else if (valiente.contains("paladin") && v.getVida() <= 20) {
+                        } else if (valienteNombre.contains("paladin") && v.getVida() <= 20) {
                             System.out.println(RED + "¡VIDA INSUFICIENTE! El sacrificio te mataría." + RESET);
                             puedeUsarHabilidad = false;
-                        } else if (valiente.contains("mago") && v.getVida() <= 25) {
+                        } else if (valienteNombre.contains("mago") && v.getVida() <= 25) {
                             System.out.println(RED + "¡VIDA INSUFICIENTE! Necesitas al menos 26 HP." + RESET);
                             puedeUsarHabilidad = false;
-                        } else if (valiente.contains("picaro") && v.getVida() <= 15) {
+                        } else if (valienteNombre.contains("picaro") && v.getVida() <= 15) {
                             System.out.println(RED + "¡VIDA INSUFICIENTE! Necesitas al menos 16 HP." + RESET);
                             puedeUsarHabilidad = false;
-                        } else if (!valiente.contains("guerrero") && !valiente.contains("paladin") && !valiente.contains("mago") && !valiente.contains("picaro") && v.getVida() <= 10) {
+                        } else if (!valienteNombre.contains("guerrero") && !valienteNombre.contains("paladin") && !valienteNombre.contains("mago") && !valienteNombre.contains("picaro") && v.getVida() <= 10) {
                             System.out.println(RED + "¡VIDA INSUFICIENTE! Estás demasiado débil." + RESET);
                             puedeUsarHabilidad = false;
                         }
@@ -151,12 +149,13 @@ public class Combate implements CombateInterface {
             ejecutarAtaque(Atacante, Defensor);
         }
     }
+
     /**
-     * 
-     * @param <T>
-     * @param atacante
-     * @param defensor
-     * Metodo generico que calcula y ejecuta un ataque
+     * Calcula y ejecuta un ataque físico, aplicando probabilidades de acierto y pasivas de daño/defensa.
+     * @author Adrian (Pasivas por Saul)
+     * @param <T> Tipo genérico de los personajes.
+     * @param atacante Personaje que golpea.
+     * @param defensor Personaje que intenta esquivar o mitigar.
      */
     private <T> void ejecutarAtaque(T atacante, T defensor) {
         Personaje Atacante = (Personaje) atacante;
@@ -174,7 +173,7 @@ public class Combate implements CombateInterface {
             }
         }
 
-        // Corrección de seguridad para valorEscudo (manteniendo tu lógica)
+        
         if (defensor instanceof Valiente && ((Valiente) defensor).getEscudo() != null) {
             valorEscudo = ((Valiente) defensor).getEscudo().getDefensa();
         }
@@ -192,7 +191,7 @@ public class Combate implements CombateInterface {
             if (Atacante instanceof Valiente v && v.getArma() != null) {
                 int id = v.getArma().getIdPasiva();
                 if (id == 2 && (Math.random() * 100) < 30) {
-                    System.out.println(RED + " [PASIVA: CRITICO] Dano duplicado!" + RESET);
+                    System.out.println(RED + " [PASIVA: CRITICO] Daño duplicado!!!!! " + RESET);
                     cantidad *= 2;
                 }
                 if (id == 3) {
@@ -231,10 +230,11 @@ public class Combate implements CombateInterface {
     }
     
     /**
-     * 
-     * @param valiente
-     * @param monstruo
-     * @return Si esta vivo el valiente
+     * Finaliza el combate, otorgando experiencia y subiendo nivel si el Valiente ha ganado.
+     * @author Adrian
+     * @param valiente El jugador.
+     * @param monstruo El enemigo derrotado.
+     * @return true si el valiente terminó vivo, false si murió.
      */
     @Override
     public boolean combateTerminado(Valiente valiente, Monstruo monstruo) {
