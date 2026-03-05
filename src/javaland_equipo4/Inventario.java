@@ -6,13 +6,13 @@ import javaland_interfaces.InventarioInterface;
 /**
  * Clase que gestiona el almacenamiento de objetos del Valiente.
  * Permite añadir, eliminar, mostrar y usar objetos (Armas, Escudos y Plantas).
- * @author Diego
+ * @author Adrian
  */
 public class Inventario implements InventarioInterface {
 
     /**
      * Constructor por defecto del inventario.
-     * @author Diego
+     * @author Adrian
      */
     public Inventario() {
 
@@ -32,7 +32,7 @@ public class Inventario implements InventarioInterface {
     /**
      * Agrega un objeto al inventario en el primer hueco libre.
      * Si el inventario está lleno, permite al usuario elegir qué objeto descartar para hacer sitio.
-     * @author Diego
+     * @author Adrian
      * @param obj El objeto que se intenta agregar al sistema.
      */
     @Override
@@ -76,7 +76,7 @@ public class Inventario implements InventarioInterface {
 
     /**
      * Devuelve el objeto almacenado en un índice específico del inventario.
-     * @author Diego
+     * @author Adrian
      * @param indice El índice del hueco (0 a 3).
      * @return El objeto en dicha posición o null si está vacío o fuera de rango.
      */
@@ -89,7 +89,7 @@ public class Inventario implements InventarioInterface {
 
     /**
      * Elimina un objeto del inventario vaciando el hueco correspondiente.
-     * @author Diego
+     * @author Adrian
      * @param indice El índice del objeto a eliminar.
      */
     public void eliminarObjeto(int indice) {
@@ -101,7 +101,7 @@ public class Inventario implements InventarioInterface {
     /**
      * Permite al usuario usar o equipar un objeto del inventario.
      * Maneja la lógica de comparación de estadísticas y el intercambio de equipo.
-     * @author Diego
+     * @author Adrian
      * @param opcion El índice del objeto en formato String.
      * @param valiente El personaje que recibirá los efectos o el equipo.
      */
@@ -192,7 +192,7 @@ public class Inventario implements InventarioInterface {
     /**
      * Muestra visualmente el estado del inventario en la interfaz de consola.
      * Utiliza colores y formato de tabla para detallar cada objeto y su estadística.
-     * @author Diego
+     * @author Adrian
      */
     @Override
     public void mostrarInventario() {
@@ -247,7 +247,7 @@ public class Inventario implements InventarioInterface {
 
     /**
      * Traduce el identificador numérico de una pasiva a su nombre legible.
-     * @author Diego
+     * @author Adrian
      * @param id El identificador de la pasiva.
      * @return El nombre descriptivo de la habilidad pasiva.
      */
